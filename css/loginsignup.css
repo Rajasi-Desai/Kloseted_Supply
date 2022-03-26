@@ -13,3 +13,12 @@ button
 {
     margin-left: 50px;
 }
+
+#wrap
+{
+    background-color: #5b7f95;
+    border: 2px solid;
+    border-color: #881c1c;
+    margin-left: 500px;
+    margin-right: 500px;
+}
