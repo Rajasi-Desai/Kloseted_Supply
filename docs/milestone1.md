@@ -72,5 +72,5 @@ Map page to find locations
 
 1. Rajasi: I made the Map page and the Header/Navigation bar for the website. I also added the Cart funtionality with the dropdown and worked on the markdown file.
 2. Grace: 
-3. Isi:
+3. Isi: I made the checkout page and helped with the general layout and CSS and of the website.
 4. Aryan: I made the login page as well as the sign up page.
