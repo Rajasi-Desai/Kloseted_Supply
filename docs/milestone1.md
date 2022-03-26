@@ -45,10 +45,32 @@ Checkout page
 Map page to find locations
 ![Map](/docs/images/Map.png "Map page to find locations")
 
+# Website mock up
+
+Page to login
+![Login](/docs/images/Header.png "Page to login")
+
+Sign up box
+![Sign up](/docs/images/Header.png "Sign up page")
+
+Homepage with all information
+![Homepage](/docs/images/Header.png "Homepage")
+
+Product page
+![Product page](/docs/images/Header.png "Product page")
+
+Product page with the drop down cart
+![Product page](/docs/images/Header.png "Product page with the drop down cart")
+
+Checkout page
+![Checkout](/docs/images/Header.png "Checkout page")
+
+Map page to find locations
+![Map](/docs/images/Header.png "Map page to find locations")
 
 # Contribution
 
-1. Rajasi: 
+1. Rajasi: I made the Map page and the Header/Navigation bar for the website. I also added the Cart funtionality with the dropdown and worked on the markdown file.
 2. Grace: 
 3. Isi:
 4. Aryan:

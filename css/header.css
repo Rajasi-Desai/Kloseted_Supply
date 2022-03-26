@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: maroon;
+  background-color: #881c1c;
   z-index: -2;
 }
 
@@ -31,14 +31,6 @@
   background-color: black;
 }
 
-.dropbtn {
-  background-color: #04AA6D;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-}
-
 .dropdown-content {
   display: none;
   position: absolute;
@@ -58,5 +50,3 @@
 .dropdown-content a:hover {background-color: #ddd;}
 
 .dropdown:hover .dropdown-content {display: block;}
-
-.dropdown:hover .dropbtn {background-color: #3e8e41;}
