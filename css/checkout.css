@@ -1,0 +1,23 @@
+.quantity .increment {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.quantity .decrement {
+  display: block;
+  margin-top: 5px;
+}
+
+.quantity .ammount {
+  font-size: 30px;
+}
+
+.quantity .ammount:after {
+  content: '\00D7';
+}
+
+.icon img {
+  width: 100px;
+  height: 100px;
+  border: 1px solid;
+}
