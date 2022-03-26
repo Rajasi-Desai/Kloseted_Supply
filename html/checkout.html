@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="main.css" /> -->
     <link rel="stylesheet" type="text/css" href="../css/header.css" />
     <link rel="stylesheet" type="text/css" href="../css/checkout.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Lora"/>
   </head>
 
   <body>
@@ -18,14 +19,20 @@
         <li class="item"><a href="product.html">Form</a> </li>
         <li class="item"><a href="map.html">Map</a> </li>
         <li class="item" style="float:right"><a href="login.html">Login</a> </li>
+        <li class="item" style="float:right"><a href="signup.html">Sign Up</a> </li>
         <li class="item" style="float:right"><a class="active" href="checkout.html">Checkout</a></li>
-        <li class="item" style="float:right"><a href="index.html">Cart</a> </li> 
+        <li class="item dropdown" style="float:right"><a href="#" id = "cart" class = dropdown> Cart </a> 
+          <div class="dropdown-content">
+            <a href="#">Item 1</a>
+            <a href="#">Item 2</a>
+            <a href="#">Item 3</a>
+          </div>
+        </li> 
       </ul>  
   </header>
-
-  <p>i am in the checkout page</p>
-  <h2>Kart Checkout</h2>
-    <table id="cart">
+  <form>
+    <h1>Kart Checkout</h2>
+    <table>
       <tr>
         <td class="quantity">
           <input class="increment" type="button" value="+"/>
@@ -69,8 +76,9 @@
           <img src="https://t4.ftcdn.net/jpg/01/71/86/91/240_F_171869115_PvRUK93AliH7mpT76g408PWXCU23BPEQ.jpg"/>
         </td>
         <td class="name">Tampons</span>
-      </tr> 
+      </tr>
     </table>
-    <input type="button" value="Checkout"/>
+    <input id="checkout" type="button" value="&check;Checkout"/>
+  </form>
   </body>
 </html>
