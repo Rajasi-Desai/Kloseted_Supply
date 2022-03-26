@@ -17,20 +17,31 @@
         <li class="item"><a class="active" href="product.html">Form</a> </li>
         <li class="item"><a href="map.html">Map</a> </li>
         <li class="item" style="float:right"><a href="login.html">Login</a> </li>
+        <li class="item" style="float:right"><a href="index.html">Sign Up</a> </li>
         <li class="item" style="float:right"><a href="checkout.html">Checkout</a></li>
-        <li class="item" style="float:right"><a href="index.html">Cart</a> </li> 
+        <li class="item dropdown" style="float:right"><a href="#" id = "cart" class = dropdown> Cart </a> 
+          <div class="dropdown-content">
+            <a href="#">Item 1</a>
+            <a href="#">Item 2</a>
+            <a href="#">Item 3</a>
+          </div>
+        </li> 
       </ul>  
     </header>
-
-    <p>i am in the form page</p>
-
     <div class="row">
-      <div class="column-filter" style="background-color: #aaa">
-        <h2>Column Filter</h2>
-        <p>Categories</p>
+      <div class="column-filter">
+        <h2>Filter</h2>
+        <input type="text" placeholder="Search..">
+        <p>Filter Categories</p>
+        <input type="checkbox" id="cat1" name="cat1" value="toilet">
+        <label for="toiletries"> Toiletries </label><br>
+        <input type="checkbox" id="cat2" name="cat2" value="haircare">
+        <label for="haircare"> Hair care</label><br>
+        <input type="checkbox" id="cat3" name="cat3" value="personal">
+        <label for="personal"> Personal Care</label><br> 
       </div>
-      <div class="column-product" style="background-color: #bbb">
-        <h2>Column 2</h2>
+      <div class="column-product">
+        <h2>Products</h2>
         <div class="grid-container">
           <div class="grid-item">
             <p>Toilet Paper</p>
@@ -70,7 +81,16 @@
           </div>
 
         </div> 
-        <p>Some text..</p>
+        <p>This would be changed into JS to add in as many grid itesm needed for how many products there are. And also will add in the animation in JS for the image and tags as seen below.</p>
+        <div class="card-container">
+          <div class="card-picture-container">
+            <img src="../img/toilet-paper.jpeg" alt="Toilet Paper"/> 
+          </div>
+          <div class="card-picture-tags">
+            <p>Organic</p>
+            <p>Unscented</p>
+          </div>
+        </div>
       </div>
     </div>
 

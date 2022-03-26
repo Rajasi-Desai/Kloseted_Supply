@@ -3,7 +3,8 @@
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: maroon;
+  background-color: #881c1c;
+  z-index: -2;
 }
 
 .item {
@@ -25,3 +26,27 @@
 .active {
     background-color:black;
   }
+
+#cart:hover{
+  background-color: black;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
