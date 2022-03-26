@@ -4,15 +4,20 @@
   
   /* Create two equal columns that floats next to each other */
   .column-filter {
+    display: block;
     float: left;
     width: 20%;
+    height: 794px;
     padding: 10px;
+    background-color: #ece9d4;
   }
 
   .column-product {
     float: left;
     width: 80%;
+    height: 100%;
     padding: 10px;
+    background-color:#ece9d4;
   }
   
   /* Clear floats after the columns */
@@ -25,20 +30,21 @@
   .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    background-color: maroon;
+    background-color: #881c1c;
     padding: 10px;
   }
   .grid-item {
-    background-color: rgba(255, 255, 255, 0.8);
+    /* background-color: rgba(255, 255, 255, 0.8); */
     border: 1px solid rgba(0, 0, 0, 0.8);
     padding: 40px;
     font-size: 30px;
     text-align: center;
+    background-color: #5b7f95;
   }
 
   /* Card containers */
   .card-container {
-    position: abosulute;
+    position: absolute;
     display: flex;
     flex-direction: column;
     width: 320px;
