@@ -8,6 +8,7 @@
     <!-- <script type="module" src="main.js" defer></script>
     <link rel="stylesheet" href="main.css" /> -->
     <link rel="stylesheet" type="text/css" href="../css/header.css" />
+    <link rel="stylesheet" type="text/css" href="../css/checkout.css" />
   </head>
 
   <body>
@@ -24,37 +25,61 @@
 
   <p>i am in the checkout page</p>
   <div id="cart">
-    <ul>
-      <li>
-        <span>3</span>
-        <span>&times;</span>
-        <input type="button" value="+"/>
-        <input type="button" value="&minus;"/>
-        <span>Toilet paper</span>
-      </li>
-      <li>
-        <span>2</span>
-        <span>&times;</span>
-        <input type="button" value="+"/>
-        <input type="button" value="&minus;"/>
-        <span>Shampoo</span>
-      </li>
-      <li>
-        <span>1</span>
-        <span>&times;</span>
-        <input type="button" value="+"/>
-        <input type="button" value="&minus;"/>
-        <span>Soap</span>
-      </li>
-      <li>
-        <span>4</span>
-        <span>&times;</span>
-        <input type="button" value="+"/>
-        <input type="button" value="&minus;"/>
-        <span>Tampons</span>
-      </li>
-      <input type="button" value="Checkout"/>
-    </ul>
+    <h2>Kart Checkout</h2>
+    <table>
+      <tr>
+        <td>
+          <span class="quantity">3</span>&times;
+        </td>
+        <td>
+          <img src="https://t3.ftcdn.net/jpg/03/41/60/00/240_F_341600000_1Zk4XnGVK4chHl5mhys2r9QgenVSkPGc.jpg"/>
+        </td>
+        <td>
+          <input class="increment-quantity" type="button" value="+"/>
+          <input class="decrement-quantity" type="button" value="&minus;"/>
+        </td>
+        <td>Toilet paper</td>
+      </tr>
+      <tr>
+        <td>
+          <span class="quantity">2</span>&times;
+        </td>
+        <td>
+          <img src="https://t3.ftcdn.net/jpg/03/41/63/00/240_F_341630021_g5leQUft68b2LzOU4u69BhF3kYwklANH.jpg"/>
+        </td>
+        <td>
+          <input class="increment-quantity" type="button" value="+"/>
+          <input class="decrement-quantity" type="button" value="&minus;"/>
+        </td>
+        <td>Shampoo</td>
+      </tr>
+      <tr>
+        <td>
+          <span class="quantity">3</span>&times;
+        </td>
+        <td>
+          <img src="https://t4.ftcdn.net/jpg/03/41/62/99/240_F_341629951_b13QCUcziOOuY3pvAAUg5Q7Y0wJmlBLC.jpg"/>
+        </td>
+        <td>
+          <input class="increment-quantity" type="button" value="+"/>
+          <input class="decrement-quantity" type="button" value="&minus;"/>
+        </td>
+        <td>Conditioner</td>
+      </tr>
+      <tr>
+        <td>
+          <span class="quantity">3</span>&times;
+        </td>
+        <td>
+          <img src="https://t4.ftcdn.net/jpg/01/71/86/91/240_F_171869115_PvRUK93AliH7mpT76g408PWXCU23BPEQ.jpg"/>
+        </td>
+        <td>
+          <input class="increment-quantity" type="button" value="+"/>
+          <input class="decrement-quantity" type="button" value="&minus;"/>
+        </td>
+        <td>Tampons</td>
+      </tr>
+    </table>
   </div>
   </body>
 </html>
