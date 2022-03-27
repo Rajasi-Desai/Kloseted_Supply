@@ -71,6 +71,6 @@ Map page to find locations
 # Contribution
 
 1. Rajasi: I made the Map page and the Header/Navigation bar for the website. I also added the Cart funtionality with the dropdown and worked on the markdown file.
-2. Grace: 
+2. Grace: I made the product page (called 'form' on the site) which included the grid of products and a prototype of an image that will appear when hovering over a product word. Also made filter/search area to filter through the grid of items.
 3. Isi: I made the checkout page and helped with the general layout and CSS and of the website.
 4. Aryan: I made the login page as well as the sign up page.
