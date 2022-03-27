@@ -28,45 +28,45 @@ This relates to other existing applications through the existence of a form that
 # Wireframe
 
 Header for the website
-![Header](/docs/images/Header.png "Header for the website")
+![Header](../docs/images/wireframe/header.png "Header for the website")
 
 Page to login
-![Login](/docs/images/Login.jpg "Page to login")
+![Login](../docs/images/wireframe/login.jpg "Page to login")
 
 Sign up box
-![Sign up](/docs/images/SignUpBox.jpg "Sign up box")
+![Sign up](../docs/images/wireframe/signup.jpg "Sign up box")
 
 Product page
-![Product page](/docs/images/ProductWireframe.png "Product page")
+![Product page](../docs/images/wireframe/product.png "Product page")
 
 Checkout page
-![Checkout](/docs/images/Checkout.jpg "Checkout page")
+![Checkout](../docs/images/wireframe/checkout.jpg "Checkout page")
 
 Map page to find locations
-![Map](/docs/images/Map.png "Map page to find locations")
+![Map](../docs/images/wireframe/map.png "Map page to find locations")
 
 # Website mock up
 
 Page to login
-![Login](/docs/images/Header.png "Page to login")
+![Login](../docs/images/mockup/header.png "Page to login")
 
 Sign up box
-![Sign up](/docs/images/Header.png "Sign up page")
+![Sign up](../docs/images/mockup/signup.png "Sign up page")
 
 Homepage with all information
-![Homepage](/docs/images/Header.png "Homepage")
+![Homepage](../docs/images/mockup/homepage.png "Homepage")
 
 Product page
-![Product page](/docs/images/Header.png "Product page")
+![Product page](../docs/images/mockup/product.png "Product page")
 
 Product page with the drop down cart
-![Product page](/docs/images/Header.png "Product page with the drop down cart")
+![Product page](../docs/images/mockup/dropdown.ong "Product page with the drop down cart")
 
 Checkout page
-![Checkout](/docs/images/Header.png "Checkout page")
+![Checkout](../docs/images/mockup/checkout.png "Checkout page")
 
 Map page to find locations
-![Map](/docs/images/Header.png "Map page to find locations")
+![Map](../docs/images/mockup/map.png "Map page to find locations")
 
 # Contribution
 
