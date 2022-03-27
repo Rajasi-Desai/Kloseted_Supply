@@ -27,50 +27,62 @@ This relates to other existing applications through the existence of a form that
 
 # Wireframe
 
-Header for the website
+### Header for the website
 ![Header](../docs/img/wireframe/header.png "Header for the website")
 
-Page to login
+### Page to login
 ![Login](../docs/img/wireframe/login.jpg "Page to login")
 
-Sign up box
+### Sign up page
 ![Sign up](../docs/img/wireframe/signup.jpg "Sign up box")
 
-Product page
+### Product page
 ![Product page](../docs/img/wireframe/product.png "Product page")
 
-Checkout page
+### Checkout page
 ![Checkout](../docs/img/wireframe/checkout.jpg "Checkout page")
 
-Map page to find locations
+### Map page to find locations
 ![Map](../docs/img/wireframe/map.png "Map page to find locations")
 
 # Website mock up
 
-Page to login
+### Page to login
 ![Login](../docs/img/mockup/login.png "Page to login")
 
-Sign up box
+### Sign up page
 ![Sign up](../docs/img/mockup/signup.png "Sign up page")
 
-Homepage with all information
+### Homepage with all information
+
 ![Homepage](../docs/img/mockup/index.png "Homepage")
 
-Product page
+### Product page
+
 ![Product page](../docs/img/mockup/product.png "Product page")
 
-Product page with the drop down cart
+### Product page with the drop down cart
+
 ![Product page](../docs/img/mockup/dropdown.png "Product page with the drop down cart")
 
-Checkout page
+### Checkout page
+
 ![Checkout](../docs/img/mockup/checkout.png "Checkout page")
 
-Map page to find locations
+### Map page to find locations
+
 ![Map](../docs/img/mockup/map.png "Map page to find locations")
 
 # Contribution
 
-1. Rajasi: I made the Map page and the Header/Navigation bar for the website. I also added the Cart funtionality with the dropdown and worked on the markdown file.
-2. Grace: I made the product page (called 'form' on the site) which included the grid of products and a prototype of an image that will appear when hovering over a product word. Also made filter/search area to filter through the grid of items.
-3. Isi: I made the checkout page and helped with the general layout and CSS and of the website.
-4. Aryan: I made the login page as well as the sign up page.
+### Rajasi: 
+I made the Map page and the Header/Navigation bar for the website. I also added the Cart funtionality with the dropdown and worked on the markdown file.
+
+### Grace: 
+I made the product page (called 'form' on the site) which included the grid of products and a prototype of an image that will appear when hovering over a product word. Also made filter/search area to filter through the grid of items.
+
+### Isi: 
+I made the checkout page and helped with the general layout and CSS and of the website.
+
+### Aryan: 
+I made the login page as well as the sign up page.
