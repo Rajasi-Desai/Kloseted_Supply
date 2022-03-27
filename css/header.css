@@ -29,7 +29,11 @@
 
 .active {
     background-color:black;
-  }
+}
+
+.rightItem {
+  float:right
+}
 
 #cart:hover{
   background-color: black;
