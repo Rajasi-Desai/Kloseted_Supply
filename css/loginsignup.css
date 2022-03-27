@@ -1,3 +1,11 @@
+* {
+    font-family: 'Lora';
+  }
+
+body {
+    background-color: #ece9d4;
+}
+
 h1 
 {
     text-align: center;
