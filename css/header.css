@@ -1,3 +1,7 @@
+* {
+  font-family: 'Lora';
+}
+
 .topnav {
   list-style-type: none;
   margin: 0;
@@ -25,7 +29,11 @@
 
 .active {
     background-color:black;
-  }
+}
+
+.rightItem {
+  float:right
+}
 
 #cart:hover{
   background-color: black;
