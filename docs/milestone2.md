@@ -27,3 +27,17 @@
 4. `/item/id/update?description=<value>`: Allows to update an item's description
 5. `/item/create?name=<item_name>&quantity=<quantity>&tag=<tag_values>&description=<desc_value>`: Allows for creating an item for the database.
 6. `/item/id/delete` : Deletes the item from the database
+
+# Front-end Implementation
+
+### Create
+![<placeholder>](<placeholder> "<placeholder>")
+
+### Read
+![<placeholder>](<placeholder> "<placeholder>")
+
+### Update
+![<placeholder>](<placeholder> "<placeholder>")
+
+### Delete
+![<placeholder>](<placeholder> "<placeholder>")

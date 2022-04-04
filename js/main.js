@@ -1,3 +1,8 @@
 //the main file that handles everything
 
-function createUser(username, password, checkout, cart){}
+import {Cart} from "cart.js";
+//import {User} from "user.js";
+
+function createUser(username, password, checkout, cart){
+    //const currentUser = new User();
+}
