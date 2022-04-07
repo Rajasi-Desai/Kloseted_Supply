@@ -2,7 +2,7 @@
 
 class User
 {
-    
+    // Declare variables with # so they aren't publicly accessible
     constructor(username, password, checkout, cart)
     {
         this.username = username;
