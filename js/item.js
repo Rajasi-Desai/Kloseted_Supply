@@ -3,10 +3,10 @@
 //what am i doing 
 
 class Item {
-    constructor(name, tag, stock, description){
+    constructor(name, tags, stock, description){
         this.id
         this.name = name
-        this.tag = tag
+        this.tags = tags
         this.stock = stock
         this.description = description
     }
