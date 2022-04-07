@@ -12,6 +12,7 @@ class Cart {
   
     constructor () {
         this.cart = {};
+        this.id
     }
 
     add (item) {
