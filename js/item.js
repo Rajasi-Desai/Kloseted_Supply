@@ -3,11 +3,11 @@
 //what am i doing 
 
 class Item {
-    constructor(name, tag, quantity, description){
+    constructor(name, tag, stock, description){
         this.id
         this.name = name
         this.tag = tag
-        this.quantity = quantity
+        this.stock = stock
         this.description = description
     }
 
@@ -15,8 +15,8 @@ class Item {
         this.tag = t;
     }
 
-    updateQuantity(q){
-        this.quantity = q;
+    updateQuantity(s){
+        this.stock = s;
     }
 
     updateDescription(d){

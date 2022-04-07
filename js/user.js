@@ -16,7 +16,7 @@ class User
         return this.username;
     }
 
-    set username(newUsername) // S
+    set username(newUsername) // Should make this unique
     {
         this.username = newUsername;
     }
