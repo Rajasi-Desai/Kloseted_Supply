@@ -1,45 +1,75 @@
-// for all cart related functions
+import {Item} from './item.js';
 
-import * as http from 'http';
-import * as url from 'url';
-import { readFile, writeFile } from 'fs/promises';
-
-//cart: [{item, quantity}]
+/**
+ * @property {number} id
+ * @property {Object<Item, number>} items
+ */
 
 class Cart {
-  #items;
-  #id;
-  
-    constructor () {
-        this.cart = {};
-        this.id
-    }
-
-    add (item) {
-        //add to cart
-        this.cart[item] = 1;
-    }
-
-    updateIncrement (item) {
-        //update item count
-        this.cart[item] += 1;
-    }
-
-    updateDecrement (item) {
-        //update item count
-        this.cart[item] -= 1;
-    }
-
-    delete (item) {
-        //delete item
-        delete this.cart[item];
-    }
-
-    read (){
-        //returns the entire cart
-        return this.cart;
-    }
+    #id;
+    #items;
     
+    /** @param {number} id */
+    constructor (id) {
+        if (!typeof id === 'number') {
+            console.error(`Cannot create cart with identifier of type ${typeof id}`);
+        }
+
+        this.#id = id;
+        this.#items = {};
+    }
+
+    get id() {
+        return this.#id;
+    }
+
+    get items() {
+        return this.#items;
+    }
+  
+    /** @param {Item} item */
+    add(item) {
+        if (!item instanceof Item) {
+            console.error(`Cannot add ${typeof item} to Cart ${this.#id}`);
+        }
+        if (item in items) {
+            console.error(`Item ${item.id} already in Cart ${this.#id}`);
+        }
+        this.#items[item] = 1;
+    }
+        
+    /** @param {Item} item */
+     remove(item) {
+        if (!item instanceof Item) {
+            console.error(`Cannot add ${typeof item} to Cart ${this.#id}`);
+        }
+        if (!item in items) {
+            console.error(`Item ${item.id} not in Cart ${this.#id}`);
+        }
+        delete this.#items[item];
+    }
+
+     /** @param {Item} item */
+    increment(item) {
+        if (!item instanceof Item) {
+            console.error(`Cannot increment quantity of ${typeof item}`);
+        }
+        if (!item in items) {
+            console.error(`Item ${item.id} not in Cart ${this.#id}`);
+        }
+        this.#items[item]++;
+    }
+
+    /** @param {Item} item */
+    decrement(item) {
+        if (!item instanceof Item) {
+            console.error(`Cannot decrement quantity of ${typeof item}`);
+        }
+        if (!item in items) {
+            console.error(`Item ${item.id} not in Cart ${this.#id}`);
+        }
+        this.#items[item]--;
+    }
 }
 
 export {Cart};
