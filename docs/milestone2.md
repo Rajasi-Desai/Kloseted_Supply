@@ -8,10 +8,11 @@
 3. `/user/id/update?password=<new_password>`: Update user's password
 
 ### Cart
-1. `/user/id/cart/increment?item=<item_name>` : To increment the item in the user's cart
-2. `/user/id/cart/decrement?item=<item_name>` : To decrement the item in the user's cart
-3. `/user/id/cart/delete?item=<item_name>` : Completely removes an item from the user's cart
-4. `/user/id/cart/empty` : Removes all items from the user's cart
+1. `/user/id/cart/add?item=<item_name>` : To add the item to the user's cart
+2. `/user/id/cart/increment?item=<item_name>` : To increment the item in the user's cart
+3. `/user/id/cart/decrement?item=<item_name>` : To decrement the item in the user's cart
+4. `/user/id/cart/delete?item=<item_name>` : Completely removes an item from the user's cart
+5. `/user/id/cart/empty` : Removes all items from the user's cart
 
 ### Checkout
 1. `/user/id/checkout/view`: Allows user to view items and checkout
