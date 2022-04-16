@@ -1,3 +1,5 @@
+const { faker } = require('@faker-js/faker');
+
 /**
  * @property {number} id
  * @property {string} name

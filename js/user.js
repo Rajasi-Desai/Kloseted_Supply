@@ -1,4 +1,5 @@
 import {Cart} from './cart.js';
+const { faker } = require('@faker-js/faker');
 
 /**
  * @property {string} id

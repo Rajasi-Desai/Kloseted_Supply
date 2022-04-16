@@ -1,4 +1,5 @@
 import {Item} from './item.js';
+const { faker } = require('@faker-js/faker');
 
 /**
  * @property {number} id

@@ -2,6 +2,7 @@
 import express from 'express';
 import logger from 'morgan';
 import { readFile, writeFile } from 'fs/promises';
+const { faker } = require('@faker-js/faker');
 
 //ENDPOINT FUNCTIONS
 
