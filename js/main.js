@@ -1,5 +1,7 @@
 //The main file that runs everything
 
+import {Cart} from "./cart";
+
 let cartIdCounter = 0;
 let itemIdCounter = 0;
 

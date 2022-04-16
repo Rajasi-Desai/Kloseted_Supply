@@ -70,6 +70,10 @@ class Cart {
         }
         this.#items[item]--;
     }
+
+    empty() {
+      this.#items = {};
+    }
 }
 
 export {Cart};
