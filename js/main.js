@@ -1,5 +1,5 @@
 //The main file that runs everything
-// import { PRODUCTS } from "./productNames.js"
+import { products } from "./productNames.js";
 // import {Cart} from "./cart.js";
 
 let cartIdCounter = 0;
@@ -27,34 +27,6 @@ function displayCartItem(itemId){
     document.getElementById("currentCart").appendChild(newItemDiv);   
 }
 
-const PRODUCTS = ['Bar Soap',
-'Liquid Soap',
-'Shampoo',
-'Conditioner',
-'Body Wash',
-'Floss',
-'Toothbrush',
-'Toothpaste',
-'Deodorant',
-'Shaving Cream',
-'Hair Moisturizer',
-'Hair Oil',
-'Sponge',
-'Dish soap',
-'Disinfectant wipes',
-'Hand Sanitizer',
-'Lotion',
-'Band aids',
-'Lip Balm',
-'Pads',
-'Tampons',
-'Baby wipes',
-'Diaper Rash cream',
-'Diapers',
-'Toilet Paper',
-'Paper Towels',
-'Facial Tissue']
-
 function displayProductGridItem(productName){
     const newItemDiv = document.createElement("div");
     const name = document.createElement("p");
@@ -76,7 +48,7 @@ function displayProductGridItem(productName){
 }
 
 function build(){
-    PRODUCTS.forEach((p) => displayProductGridItem(p));
+    products.forEach((p) => displayProductGridItem(p));
 }
 
 build()
