@@ -8,9 +8,12 @@ function displayProductGridItem(productName){
     name.textContent = productName
     quant.setAttribute("type", "number");
     quant.setAttribute("value", "0");
+    quant.setAttribute("min", "2");
+    quant.setAttribute("max", "5");
 
     name.setAttribute("id", `product-listing-name-${productName}`);
     quant.setAttribute("id",`product-listing-quant-${productName}`);
+    
     newItemDiv.setAttribute("id", `product-listing-div-${productName}`);
 
     newItemDiv.classList.add("grid-item");
