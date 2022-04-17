@@ -36,6 +36,7 @@ function displayProductGridItem(productName){
     name.textContent = productName
     quant.setAttribute("type", "number");
     quant.setAttribute("value", "0");
+    quant.setAttribute("min", "0");
 
     name.setAttribute("id", `product-listing-name-${productName}`);
     quant.setAttribute("id",`product-listing-quant-${productName}`);
