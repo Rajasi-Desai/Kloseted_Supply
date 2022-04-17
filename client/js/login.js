@@ -3,3 +3,8 @@
 // Also also, send an alert if the username and password don't match an existing user
 // Keep "is logged in" true or false in local storage
 // Keep the user's id in local storage if they're logged in as well
+
+const usernameinput = document.getElementById("usernameinput");
+const passwordinput = document.getElementById("passwordinput");
+const rememberme = document.getElementById("rememberme");
+const loginbutton = document.getElementById("loginbutton");
