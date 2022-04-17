@@ -1,4 +1,4 @@
- const PRODUCTS = ['Bar Soap',
+ export const products = ['Bar Soap',
  'Liquid Soap',
  'Shampoo',
  'Conditioner',
@@ -24,4 +24,5 @@
  'Diapers',
  'Toilet Paper',
  'Paper Towels',
- 'Facial Tissue']
+ 'Facial Tissue'];
+

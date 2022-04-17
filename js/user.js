@@ -11,7 +11,11 @@ class User {
     #password;
     #cart;
 
-    constructor(id, password) {
+    /**
+     * @param {string} id 
+     * @param {string} [password]
+     */
+    constructor(id, password = '', cart = new Cart()) {
         if (typeof id !== 'string') {
             console.error(`Cannot create user with identifier of type ${typeof id}`);
         }
@@ -39,7 +43,7 @@ class User {
     /** @param {string} password */
     set password(password) {
         if (typeof password !== 'string') {
-            console.error(`Cannot set password to ${typeof password}`);
+            console.error(`Cannot set password of User ${this.#id} to ${typeof password}`);
         }
         this.#password = password;
     }
