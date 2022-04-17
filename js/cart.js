@@ -1,31 +1,22 @@
 import {Item} from './item.js';
-const { faker } = require('@faker-js/faker');
+const {faker} = require('@faker-js/faker');
 
-/**
- * @property {number} id
- * @property {Object<Item, number>} items
- */
-
+/** @property {Map<Item, number>} contents */
 class Cart {
-    #id;
-    #items;
+    #contents;
     
-    /** @param {number} id */
-    constructor (id) {
-        if (!typeof id === 'number') {
-            console.error(`Cannot create cart with identifier of type ${typeof id}`);
+    /** @param {Array<Array<Item, number>>} [contents] */
+    constructor (contents = [[]]) {
+        if (!contents instanceof Array) {
+            console.error(`Cannot create cart with contents of type ${typeof contents}`);
+        }
+        if (!contents.every(a => a.length === 2 && a[0]
+                            instanceof Item &&
+                            typeof a[1] === 'number')) {
+            console.error('Cart contents Array must have elements of type Array<Item, number>');
         }
 
-        this.#id = id;
-        this.#items = {};
-    }
-
-    get id() {
-        return this.#id;
-    }
-
-    get items() {
-        return this.#items;
+        this.#contents = new Map(contents);
     }
   
     /** @param {Item} item */
@@ -33,10 +24,10 @@ class Cart {
         if (!item instanceof Item) {
             console.error(`Cannot add ${typeof item} to Cart ${this.#id}`);
         }
-        if (item in items) {
+        if (this.#contents.has(item)) {
             console.error(`Item ${item.id} already in Cart ${this.#id}`);
         }
-        this.#items[item] = 1;
+        this.#contents.set(item, 1);
     }
         
     /** @param {Item} item */
@@ -44,10 +35,10 @@ class Cart {
         if (!item instanceof Item) {
             console.error(`Cannot add ${typeof item} to Cart ${this.#id}`);
         }
-        if (!item in items) {
+        if (!this.#contents.has(item)) {
             console.error(`Item ${item.id} not in Cart ${this.#id}`);
         }
-        delete this.#items[item];
+        this.#contents.delete(item);
     }
 
      /** @param {Item} item */
@@ -55,10 +46,10 @@ class Cart {
         if (!item instanceof Item) {
             console.error(`Cannot increment quantity of ${typeof item}`);
         }
-        if (!item in items) {
+        if (!this.#contents.has(item)) {
             console.error(`Item ${item.id} not in Cart ${this.#id}`);
         }
-        this.#items[item]++;
+        this.#contents.set(item, ++this.#contents.get(item));
     }
 
     /** @param {Item} item */
@@ -66,14 +57,14 @@ class Cart {
         if (!item instanceof Item) {
             console.error(`Cannot decrement quantity of ${typeof item}`);
         }
-        if (!item in items) {
+        if (!this.#contents.has(item)) {
             console.error(`Item ${item.id} not in Cart ${this.#id}`);
         }
-        this.#items[item]--;
+        this.#contents.set(item, --this.#contents.get(item));
     }
 
     empty() {
-      this.#items = {};
+      this.#contents.clear()
     }
 }
 

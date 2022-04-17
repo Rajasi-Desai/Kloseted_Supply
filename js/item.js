@@ -1,11 +1,11 @@
-const { faker } = require('@faker-js/faker');
+//const { faker } = require('@faker-js/faker');
 
 /**
  * @property {number} id
  * @property {string} name
  * @property {number} stock
  * @property {string} description
- * @property {Array<string>} tags
+ * @property {Set<string>} tags
  */
 class Item {
     #id;
@@ -16,12 +16,13 @@ class Item {
 
     /**
      * @param {number} id
-     * @param {string} name
-     * @param {number} stock
-     * @param {string} description
-     * @param {Array<string>} tags
+     * @param {string} [name]
+     * @param {number} [stock]
+     * @param {string} [description]
+     * @param {Array<string>} [tags]
+     * @returns {Item}
      **/
-    constructor(id, name, stock, description, tags){
+    constructor(id, name = '', stock = 0, description = '', tags = []) {
         if (typeof id !== 'number') {
             console.error(`Cannot create item with identifier of type ${typeof id}`);
         }
@@ -37,15 +38,15 @@ class Item {
         if (!tags instanceof Array) {
             console.error(`Cannot create item with tags of type ${typeof tags}`);
         }
-        if (tags.some(t => typeof t !== 'string')) {
+        if (!tags.length && !tags.every(t => typeof t === 'string')) {
             console.error(`Cannot create item with tag of type ${typeof tags.find(t => typeof t !== 'string')}`);
         }
 
-        this.id = id;
-        this.name = name;
-        this.tags = tags;
-        this.stock = stock;
-        this.description = description;
+        this.#id = id;
+        this.#name = name;
+        this.#stock = stock;
+        this.#description = description;
+        this.#tags = new Set(tags);
     }
 
     get id() {
@@ -80,20 +81,36 @@ class Item {
         return this.#tags;
     }
 
-    /** @param {string} tag */
-    addTag(tag) {
-        if (typeof tag !== 'string') {
-            console.error(`Cannot add tag of type ${typeof stock} to Item ${this.#id}`);
-        }
-        this.#tags.push(tag);
+    /** @param tags */
+    set tags(tags) {
+      if (!tags instanceof Array) {
+        console.error(`Cannot set tags of Item ${this.#id} with type ${typeof tags}`);
+      }
+      if (!tags.length && !tags.every(t => typeof t === 'string')) {
+        console.error(`Cannot set tags of Item ${this.#id} with type ${typeof tags.find(t => typeof t !== 'string')}`);
+      }
     }
 
     /** @param {string} tag */
-    removeTag(tag) {
+    tag(tag) {
         if (typeof tag !== 'string') {
-            console.error(`Cannot remove tag of type ${typeof stock} from Item ${this.#id}`);
+            console.error(`Cannot tag Item ${this.#id} with type of ${typeof stock}`);
         }
-        this.#tags.filter(t => t === tag);
+        if (this.#tags.has(tag)) {
+            console.error(`Item ${this.id} already has tag "${tag}"`);
+        }
+        this.#tags.add(tag);
+    }
+
+    /** @param {string} tag */
+    untag(tag) {
+        if (typeof tag !== 'string') {
+            cconsole.error(`Cannot untag Item ${this.#id} with type of ${typeof stock}`);
+        }
+        if (!this.#tags.has(tag)) {
+            console.error(`Cannot detag "${tag}" from Item ${this.#id}`);
+        }
+        this.#tags.delete(tag);
     }
 
     get description() {
