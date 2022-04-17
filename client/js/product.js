@@ -11,7 +11,7 @@ function displayProductGridItem(productName){
     quant.setAttribute("min", 0);
     quant.setAttribute("max", 5);
 
-    name.setAttribute("id", `product-listing-name-${productName}`);
+    name.setAttribute("id", `product-category-name-${productName}`);
     quant.setAttribute("id",`product-listing-quant-${productName}`);
     
     newItemDiv.setAttribute("id", `product-listing-div-${productName}`);
