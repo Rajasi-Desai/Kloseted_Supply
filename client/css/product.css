@@ -3,7 +3,7 @@
   }
   
   /* Create two equal columns that floats next to each other */
-  .column-filter {
+  #column-filter {
     display: block;
     float: left;
     width: 20%;

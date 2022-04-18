@@ -1,8 +1,7 @@
-//MAKE SEPARATE FOLDERS FOR SERVER AND CLIENT??
 import express from 'express';
 import logger from 'morgan';
-import { readFile, writeFile } from 'fs/promises';
-const { faker } = require('@faker-js/faker');
+import {readFile, writeFile} from 'fs/promises';
+import {faker} from '@faker-js/faker';
 
 //ENDPOINT FUNCTIONS
 
@@ -10,27 +9,31 @@ const { faker } = require('@faker-js/faker');
 
 //CART
 
-async function addItem(response, item){
+async function addItem(response, item, cart){
     response.status(200).json({ message: `${item} added to cart`});
 }
 
-async function incrementItem(response, item){
+async function incrementItem(response, item, cart){
     response.status(200).json({ message: `${item} incremented`});
 }
 
-async function decrementItem(response, item){
+async function decrementItem(response, item, cart){
     response.status(200).json({ message: `${item} decremented`});
 }
 
-async function deleteItem(response, item){
+async function deleteItem(response, item, cart){
     response.status(200).json({ message: `${item} deleted`});
 }
 
-async function emptyCart(response){
+async function emptyCart(response, cart){
     response.status(200).json({ message: `Cart emptied`});
 }
 
 //CHECKOUT
+
+async function displayItems(response){
+    
+}
 
 //ITEM
 
@@ -86,35 +89,35 @@ app.put('/user/id/update?password=<new_password>', async (request, response) => 
 app.post('/user/id/cart/add', async (request, response) => {
     //await reload(JSONfile); Reload old stuff
     const options = request.body;
-    addItem(response, options.item);
+    addItem(response, options.item, options.cart);
     //await saveRecords(); //save stuff
 });
 
 app.put('/user/id/cart/increment', async (request, response) => {
     //await reload(JSONfile); Reload old stuff
-    const options = request.query;
-    incrementItem(response, options.item);
+    const options = request.body;
+    incrementItem(response, options.item, options.cart);
     //await saveRecords(); //save stuff
 });
 
 app.put('/user/id/cart/decrement', async (request, response) => {
     //await reload(JSONfile); Reload old stuff
-    const options = request.query;
-    decrementItem(response, options.item);
+    const options = request.body;
+    decrementItem(response, options.item, options.cart);
     //await saveRecords(); //save stuff
 });
 
 app.delete('/user/id/cart/delete', async (request, response) => {
     //await reload(JSONfile); Reload old stuff
-    const options = request.query;
-    deleteItem(response, options.item);
+    const options = request.body;
+    deleteItem(response, options.item, options.cart);
     //await saveRecords(); //save stuff
 });
   
 app.get('/user/id/cart/empty', async (request, response) => {
     //await reload(JSONfile); Reload old stuff
-    //const options = request.query;
-    emptyCart(response);
+    const options = request.body;
+    emptyCart(response, options.cart);
     //await saveRecords(); //save stuff
 });
 

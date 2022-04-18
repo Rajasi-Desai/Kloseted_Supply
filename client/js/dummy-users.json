@@ -1,0 +1,32 @@
+[
+    {
+      "id": "amangalik",
+      "password": "Mitski",
+      "cart": [
+          [{
+            "id": 1,
+            "name": "Bar Soap",
+            "stock": 2,
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "tags": ["Organic", "Unscented", "Hair Product"]
+            },
+            2
+          ],
+          [{
+            "id": 2,
+            "name": "Liquid Soap",
+            "stock": 4,
+            "description": "Nulla blandit nulla sit amet fringilla accumsan.",
+            "tags": ["Organic", "Unscented", "Hair Product"]
+            }, 3],
+          [{
+            "id": 3,
+            "name": "Shampoo",
+            "stock": 6,
+            "description": "Phasellus porttitor erat nec enim sagittis tristique.",
+            "tags": ["Organic", "Unscented", "Hair Product"]
+            }, 4
+          ]
+      ]
+    }
+]

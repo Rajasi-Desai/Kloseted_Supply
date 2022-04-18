@@ -1,0 +1,53 @@
+* {
+  font-family: 'Lora';
+}
+
+form {
+  margin-top: -10px;
+  background-color: #ece9d4;
+}
+
+h1 {
+  margin: 10px 0 0 10px;
+}
+
+table {
+  background-color: #881c1c;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+td {
+  background-color: #5b7f95;
+  padding: 10px;
+  border: 1px solid;
+}
+
+.quantity .increment {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.quantity .decrement {
+  display: block;
+  margin-top: 5px;
+}
+
+.quantity .ammount {
+  font-size: 30px;
+}
+
+.quantity .ammount:after {
+  content: '\00D7';
+}
+
+.icon img {
+  width: 100px;
+  height: 100px;
+  border: 1px solid;
+}
+
+#checkout {
+  margin: 10px;
+  font-size: 30px;
+}

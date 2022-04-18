@@ -7,6 +7,8 @@
     "doc": "docs"
   },
   "scripts": {
+    "deploy": "copyfiles client/* server/* .env package*.json deploy",
+    "start": "node ./server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,9 +24,12 @@
   "description": "",
   "dependencies": {
     "express": "^4.17.3",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "dotenv": "^16.0.0",
+    "pg": "^8.7.3"
   },
   "devDependencies": {
-    "@faker-js/faker": "^6.1.2"
+    "@faker-js/faker": "^6.1.2",
+    "copyfiles": "^2.4.1"
   }
 }

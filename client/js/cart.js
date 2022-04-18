@@ -1,5 +1,5 @@
 import {Item} from './item.js';
-const {faker} = require('@faker-js/faker');
+import {faker} from '@faker-js/faker';
 
 /** @property {Map<Item, number>} contents */
 class Cart {

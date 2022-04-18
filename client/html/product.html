@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Kloseted Supply Form</title>
+    <!-- <script type="module" src="main.js" defer></script> -->
+
+    <link rel="stylesheet" href="../css/product.css" />
+    <link rel="stylesheet" type="text/css" href="../css/header.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://fonts.googleapis.com/css?family=Lora"
+    />
+  </head>
+
+  <body>
+    <header>
+      <ul class="topnav">
+        <li class="item"><a href="index.html">Homepage</a></li>
+        <li class="item"><a class="active" href="product.html">Form</a></li>
+        <li class="item"><a href="map.html">Map</a></li>
+        <li class="item rightItem"><a href="login.html">Login</a></li>
+        <li class="item rightItem"><a href="signup.html">Sign Up</a></li>
+        <li class="item rightItem"><a href="checkout.html">Checkout</a></li>
+        <li class="item dropdown rightItem">
+          <a href="#" id="cart" class="dropdown"> Cart </a>
+          <div class="dropdown-content" id="currentCart">
+            <a href="#">You have 0 items in your cart</a>
+          </div>
+        </li>
+      </ul>
+    </header>
+    <div class="row">
+      <div id="column-filter">
+        <h2>Filter</h2>
+        <input type="text" placeholder="Search.." />
+        <p>Filter Categories</p>
+      </div>
+      <div class="column-product">
+        <h2>Products</h2>
+        <div id="grid-container"></div>
+
+        <!-- <div class="card-container">
+          <div class="card-picture-container">
+            <img src="../img/toilet-paper.jpg" alt="Toilet Paper"/> 
+          </div>
+          <div class="card-picture-tags">
+            <p>Organic</p>
+            <p>Unscented</p>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </body>
+  <script type="module" src="../js/main.js" defer></script>
+</html>
