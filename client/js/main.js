@@ -43,7 +43,7 @@ function displayCartItem(itemId) {
     document.getElementById("currentCart").appendChild(newItemDiv);
 }
 
-async function getAllItems(){
+async function getAllItems() {
     let allItems = await fetch("../js/dummy-items.json");
     return allItems.json();
 }
@@ -70,6 +70,9 @@ function displayProductGridItem(productName) {
 
 async function buildProductGrid() {
     let products = await getAllItems();
+    if (categoryFilteredIds.length > 0){
+        products = products.filter((p) => p.tags.some((tag) => categoryFilteredIds.some((id) => id === tag)))
+    }
     products.forEach((p) => displayProductGridItem(p.name));
 }
 
@@ -92,6 +95,8 @@ let categoryFilter = [
     { labelName: 'Paper Products', checkBoxTag: 'paperproducts' }
 ]
 
+
+
 function displayFilterMenuItem(categoryLabel, categoryTag) {
     const newItemDiv = document.createElement("div");
     const check = document.createElement("input");
@@ -103,6 +108,7 @@ function displayFilterMenuItem(categoryLabel, categoryTag) {
 
     label.setAttribute("id", `filter-label-name-${categoryLabel}`);
     check.setAttribute("id", `filter-check-${categoryTag}`);
+    check.setAttribute("value", categoryLabel);
 
     newItemDiv.setAttribute("id", `product-filter-div-${categoryTag}`);
 
@@ -111,12 +117,36 @@ function displayFilterMenuItem(categoryLabel, categoryTag) {
     document.getElementById("column-filter").appendChild(newItemDiv);
 }
 
-function buildFilterMenu(){
+function buildFilterMenu() {
     categoryFilter.forEach((item) => displayFilterMenuItem(item.labelName, item.checkBoxTag))
 }
 
 buildFilterMenu();
 buildProductGrid();
+
+let categoryIds = ['filter-check-hygiene',
+    'filter-check-hair-care',
+    'filter-check-body-care',
+    'filter-check-dental-care',
+    'filter-check-natural-hair',
+    'filter-check-cleaning',
+    'filter-check-skincare-firstaid',
+    'filter-check-menstrual',
+    'filter-check-babyitems',
+    'filter-check-paperproducts'];
+
+let categoryFilteredIds = []
+categoryIds.forEach((id) => {
+    document.getElementById(id).addEventListener("change", function(){
+        if (this.checked === true){
+            categoryFilteredIds.push(this.value)
+        } else {
+            categoryFilteredIds = categoryFilteredIds.filter(id => id !== this.value)
+        }
+        document.getElementById("grid-container").innerHTML = "";
+        buildProductGrid();
+    })
+})
 
 //test
 //displayCartItem(4);
