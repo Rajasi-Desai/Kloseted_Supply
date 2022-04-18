@@ -70,6 +70,9 @@ function buildProductGrid() {
 
 let categoryFilter = [
     { labelName: 'Hygiene', checkBoxTag: 'hygiene' },
+    { labelName: 'Hair Care', checkBoxTag: 'hair-care' },
+    { labelName: 'Body Care', checkBoxTag: 'body-care' },
+    { labelName: 'Dental Care', checkBoxTag: 'dental-care' },
     {
         labelName: 'Products for Natural Hair',
         checkBoxTag: 'natural-hair'

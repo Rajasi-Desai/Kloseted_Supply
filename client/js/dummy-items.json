@@ -4,188 +4,188 @@
       "name": "Bar Soap",
       "stock": 2,
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Hygiene"]
     },
     {
       "id": 2,
       "name": "Liquid Soap",
       "stock": 4,
       "description": "Nulla blandit nulla sit amet fringilla accumsan.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Hygiene"]
     },
     {
       "id": 3,
       "name": "Shampoo",
       "stock": 6,
       "description": "Phasellus porttitor erat nec enim sagittis tristique.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Hair Care"]
     },
     {
       "id": 4,
       "name": "Conditioner",
       "stock": 8,
       "description": "Aliquam tempor nisl a scelerisque fringilla.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Hair Care"]
     },
     {
       "id": 5,
       "name": "Body Wash",
       "stock": 10,
       "description": "Donec auctor magna eu placerat rutrum.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Body Care"]
     },
     {
       "id": 6,
       "name": "Floss",
       "stock": 12,
       "description": "Pellentesque vitae tellus vestibulum libero auctor faucibus ultricies id leo.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Dental Care"]
     },
     {
       "id": 7,
       "name": "Toothbrush",
       "stock": 14,
       "description": "Fusce vitae tellus eleifend dui tincidunt blandit.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Dental Care"]
     },
     {
       "id": 8,
       "name": "Toothpaste",
       "stock": 16,
       "description": "Aliquam a enim convallis urna imperdiet auctor ac eu leo.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Dental Care"]
     },
     {
       "id": 9,
       "name": "Deodorant",
       "stock": 18,
       "description": "Nulla blandit leo non iaculis efficitur.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Body Care"]
     },
     {
       "id": 10,
       "name": "Shaving Cream",
       "stock": 20,
       "description": "Suspendisse pharetra tortor at dapibus varius.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Body Care"]
     },
     {
       "id": 11,
       "name": "Hair Moisturizer",
       "stock": 22,
       "description": "Proin a erat at odio semper hendrerit vitae eu ante.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Hair Care"]
     },
     {
       "id": 12,
       "name": "Hair Oil",
       "stock": 24,
       "description": "Morbi scelerisque lectus id risus mattis dapibus.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Hair Care"]
     },
     {
       "id": 13,
       "name": "Sponge",
       "stock": 26,
       "description": "Ut pretium turpis eu nisl finibus pulvinar.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Cleaning"]
     },
     {
       "id": 14,
       "name": "Dish soap",
       "stock": 28,
       "description": "Aenean ullamcorper sem a aliquam finibus.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Cleaning"]
     },
     {
       "id": 15,
       "name": "Disinfectant wipes",
       "stock": 30,
       "description": "Pellentesque sagittis neque nec sem varius, vitae lacinia purus ultricies.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Cleaning"]
     },
     {
       "id": 16,
       "name": "Hand Sanitizer",
       "stock": 32,
       "description": "Sed dignissim augue vel augue ullamcorper, sit amet ornare tellus porttitor.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Cleaning"]
     },
     {
       "id": 17,
       "name": "Lotion",
       "stock": 34,
       "description": "Donec vitae urna convallis est mollis malesuada nec id eros.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Body Care"]
     },
     {
       "id": 18,
       "name": "Band aids",
       "stock": 36,
       "description": "Aliquam elementum arcu eu nunc hendrerit, efficitur posuere sem tincidunt.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "First Aid"]
     },
     {
       "id": 19,
       "name": "Lip Balm",
       "stock": 38,
       "description": "Aliquam venenatis purus sit amet lacus egestas, id condimentum est placerat.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Body Care"]
     },
     {
       "id": 20,
       "name": "Pads",
       "stock": 40,
       "description": "Nulla euismod libero vitae massa bibendum scelerisque.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Menstrual Products"]
     },
     {
       "id": 21,
       "name": "Tampons",
       "stock": 42,
       "description": "Nulla tincidunt velit vitae nulla interdum congue.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Menstrual Products"]
     },
     {
       "id": 22,
       "name": "Baby wipes",
       "stock": 44,
       "description": "Nullam et nisi eget nulla fermentum laoreet ut mollis dolor.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Baby Items"]
     },
     {
       "id": 23,
       "name": "Diaper Rash cream",
       "stock": 46,
       "description": "Vivamus laoreet nibh vel porttitor porttitor.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Baby Items"]
     },
     {
       "id": 24,
       "name": "Diapers",
       "stock": 48,
       "description": "Vivamus pulvinar lorem sed tellus pretium ultrices.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Baby Items"]
     },
     {
       "id": 25,
       "name": "Toilet Paper",
       "stock": 50,
       "description": "Proin a erat eu sem feugiat pretium.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Paper Products"]
     },
     {
       "id": 26,
       "name": "Paper Towels",
       "stock": 52,
       "description": "Ut dapibus turpis quis enim consequat iaculis.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Paper Products"]
     },
     {
       "id": 27,
       "name": "Facial Tissue",
       "stock": 54,
       "description": "Praesent mollis lacus bibendum est fermentum luctus.",
-      "tags": ["Organic", "Unscented", "Hair Product"]
+      "tags": ["Organic", "Unscented", "Paper Products"]
     }
 ]
