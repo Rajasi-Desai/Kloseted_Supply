@@ -88,28 +88,28 @@
       "name": "Sponge",
       "stock": 26,
       "description": "Ut pretium turpis eu nisl finibus pulvinar.",
-      "tags": ["Organic", "Unscented", "Cleaning"]
+      "tags": ["Organic", "Unscented", "Cleaning Products"]
     },
     {
       "id": 14,
       "name": "Dish soap",
       "stock": 28,
       "description": "Aenean ullamcorper sem a aliquam finibus.",
-      "tags": ["Organic", "Unscented", "Cleaning"]
+      "tags": ["Organic", "Unscented", "Cleaning Products"]
     },
     {
       "id": 15,
       "name": "Disinfectant wipes",
       "stock": 30,
       "description": "Pellentesque sagittis neque nec sem varius, vitae lacinia purus ultricies.",
-      "tags": ["Organic", "Unscented", "Cleaning"]
+      "tags": ["Organic", "Unscented", "Cleaning Products"]
     },
     {
       "id": 16,
       "name": "Hand Sanitizer",
       "stock": 32,
       "description": "Sed dignissim augue vel augue ullamcorper, sit amet ornare tellus porttitor.",
-      "tags": ["Organic", "Unscented", "Cleaning"]
+      "tags": ["Organic", "Unscented", "Cleaning Products"]
     },
     {
       "id": 17,
