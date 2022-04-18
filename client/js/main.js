@@ -19,10 +19,28 @@ function displayCartItem(itemId) {
     plusButton.classList.add("cartButton");
     minusButton.classList.add("cartButton");
 
+    const quantityDefault = document.createElement("span");
+    quantityDefault.appendChild(document.createTextNode("1"));
+    quantityDefault.setAttribute("id", "number-of-items");
+
+    /*
+    const rightDiv = document.createElement("div");
+    rightDiv.appendChild(plusButton);
+    rightDiv.appendChild(quantityDefault);
+    rightDiv.appendChild(minusButton);
+    rightDiv.classList.add("right-div");
+
+    */
+
+
     newItemDiv.classList.add("cartItem");
+    newItemDiv.appendChild(document.createTextNode(products[itemId]));
+    //newItemDiv.appendChild(rightDiv);
     newItemDiv.appendChild(plusButton);
+    newItemDiv.appendChild(quantityDefault);
     newItemDiv.appendChild(minusButton);
 
+    //console.log("in");
     document.getElementById("currentCart").appendChild(newItemDiv);
 }
 
@@ -94,3 +112,6 @@ function buildFilterMenu(){
 buildFilterMenu();
 
 buildProductGrid();
+
+//test
+//displayCartItem(4);

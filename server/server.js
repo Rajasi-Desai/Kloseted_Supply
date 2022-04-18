@@ -3,40 +3,73 @@ import logger from 'morgan';
 import {readFile, writeFile} from 'fs/promises';
 import {faker} from '@faker-js/faker';
 
-//ENDPOINT FUNCTIONS
-
+//ENDPOINT FUNCTIONS//
 //LOGIN 
+
+async function registerUser(name, password, id, cart){
+    response.status(200);
+}
+
+//async???
+async function loginUser(name, password){
+    response.status(200);
+}
+
+async function updatePassword(user, new_password){
+    response.status(200);
+}
 
 //CART
 
-async function addItem(response, item, cart){
+async function addItemCart(response, item, cart){
+    cart.add(item);
     response.status(200).json({ message: `${item} added to cart`});
 }
 
-async function incrementItem(response, item, cart){
+async function incrementItemCart(response, item, cart){
+    cart.increment(item);
     response.status(200).json({ message: `${item} incremented`});
 }
 
-async function decrementItem(response, item, cart){
+async function decrementItemCart(response, item, cart){
+    cart.decrement(item);
     response.status(200).json({ message: `${item} decremented`});
 }
 
-async function deleteItem(response, item, cart){
+async function deleteItemCart(response, item, cart){
+    cart.remove(item);
     response.status(200).json({ message: `${item} deleted`});
 }
 
 async function emptyCart(response, cart){
+    cart.empty();
     response.status(200).json({ message: `Cart emptied`});
 }
 
 //CHECKOUT
 
 async function displayItems(response){
-    
+    response.status(200);
 }
 
 //ITEM
 
+async function getItem(item) {
+    response.status(200).json({ id: item.id(), name:item.name(), stock: item.stock(), tags: item.tags(), description: item.description()});
+}
+
+async function createItem(id, name, tags, description, stock){
+    //use item.js
+    response.status(200);
+}
+
+async function updateItem(){
+    response.status(200);
+}
+
+async function deleteItem(){
+    response.status(200);
+}
 
 //running the server
 const app = express();
@@ -69,9 +102,10 @@ app.get('/user/login', async (request, response) => {
     //await saveRecords(); //save stuff
 });
 
-app.put('/user/id/update?password=<new_password>', async (request, response) => {
+app.put('/user/id/update', async (request, response) => {
     //await reload(JSONfile); Reload old stuff
     const options = request.body;
+    //options.password
     //addItem(response, options.item);
     //await saveRecords(); //save stuff
 });
@@ -89,28 +123,28 @@ app.put('/user/id/update?password=<new_password>', async (request, response) => 
 app.post('/user/id/cart/add', async (request, response) => {
     //await reload(JSONfile); Reload old stuff
     const options = request.body;
-    addItem(response, options.item, options.cart);
+    addItemCart(response, options.item, options.cart);
     //await saveRecords(); //save stuff
 });
 
 app.put('/user/id/cart/increment', async (request, response) => {
     //await reload(JSONfile); Reload old stuff
     const options = request.body;
-    incrementItem(response, options.item, options.cart);
+    incrementItemCart(response, options.item, options.cart);
     //await saveRecords(); //save stuff
 });
 
 app.put('/user/id/cart/decrement', async (request, response) => {
     //await reload(JSONfile); Reload old stuff
     const options = request.body;
-    decrementItem(response, options.item, options.cart);
+    decrementItemCart(response, options.item, options.cart);
     //await saveRecords(); //save stuff
 });
 
 app.delete('/user/id/cart/delete', async (request, response) => {
     //await reload(JSONfile); Reload old stuff
     const options = request.body;
-    deleteItem(response, options.item, options.cart);
+    deleteItemCart(response, options.item, options.cart);
     //await saveRecords(); //save stuff
 });
   
@@ -162,7 +196,8 @@ app.get('/item/id/view', async (request, response) => {
 
 app.put('/item/id/update', async (request, response) => {
     //await reload(JSONfile); Reload old stuff
-    const options = request.query;
+    const options = request.body;
+    //options.quantity; options.tag; options.description
     //emptyCart(response);
     //await saveRecords(); //save stuff
 });

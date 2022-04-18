@@ -1,0 +1,9 @@
+.cartButton {
+    float: right;
+    align-items: right;
+}
+
+.right-div {
+    align-content: center;
+    float: right;
+}
