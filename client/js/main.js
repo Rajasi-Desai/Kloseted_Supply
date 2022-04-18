@@ -1,5 +1,4 @@
 //The main file that runs everything
-// import { products } from "./productNames.js";
 // import {Cart} from "./cart.js";
 let cartIdCounter = 0;
 let itemIdCounter = 0;
