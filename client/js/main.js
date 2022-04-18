@@ -1,5 +1,5 @@
 //The main file that runs everything
-import { products } from "./productNames.js";
+// import { products } from "./productNames.js";
 // import {Cart} from "./cart.js";
 let cartIdCounter = 0;
 let itemIdCounter = 0;
@@ -44,6 +44,11 @@ function displayCartItem(itemId) {
     document.getElementById("currentCart").appendChild(newItemDiv);
 }
 
+async function getAllItems(){
+    let allItems = await fetch("../js/dummy-items.json");
+    return allItems.json();
+}
+
 function displayProductGridItem(productName) {
     const newItemDiv = document.createElement("div");
     const name = document.createElement("p");
@@ -64,8 +69,9 @@ function displayProductGridItem(productName) {
     document.getElementById("grid-container").appendChild(newItemDiv);
 }
 
-function buildProductGrid() {
-    products.forEach((p) => displayProductGridItem(p));
+async function buildProductGrid() {
+    let products = await getAllItems();
+    products.forEach((p) => displayProductGridItem(p.name));
 }
 
 let categoryFilter = [
@@ -98,14 +104,12 @@ function displayFilterMenuItem(categoryLabel, categoryTag) {
 
     label.setAttribute("id", `filter-label-name-${categoryLabel}`);
     check.setAttribute("id", `filter-check-${categoryTag}`);
-    check.setAttribute("value", categoryTag)
+
     newItemDiv.setAttribute("id", `product-filter-div-${categoryTag}`);
 
     newItemDiv.appendChild(check);
     newItemDiv.appendChild(label);
     document.getElementById("column-filter").appendChild(newItemDiv);
-
-
 }
 
 function buildFilterMenu(){
@@ -113,7 +117,6 @@ function buildFilterMenu(){
 }
 
 buildFilterMenu();
-
 buildProductGrid();
 
 //test
