@@ -36,6 +36,7 @@ if(localStorage.getItem("loggedIn") === "true")
   logintab.innerHTML = "<a class='active' href='login.html'>Logout</a>";
   logintab.onclick = function() {
     localStorage.setItem("loggedIn", "false");
+    localStorage.removeItem("id");
     window.location.reload();
   };
 }
@@ -73,6 +74,7 @@ function login()
         localStorage.removeItem("password");
       }
       window.localStorage.setItem("loggedIn", "true");
+      window.localStorage.setItem("id", usernameinput.value);
       window.location.reload();
       return;
     }
