@@ -15,9 +15,11 @@ async function loginUser(name, password){
     response.status(200);
 }
 
+/*
 async function updatePassword(user, new_password){
     response.status(200);
 }
+*/
 
 //CART
 
@@ -52,6 +54,7 @@ async function displayItems(response){
     response.status(200);
 }
 
+/*
 //ITEM
 
 async function getItem(item) {
@@ -70,6 +73,8 @@ async function updateItem(){
 async function deleteItem(){
     response.status(200);
 }
+
+*/
 
 //running the server
 const app = express();
@@ -176,16 +181,15 @@ app.get('/user/id/cart', async (request, response) => {
     //await saveRecords(); //save stuff
 });
 
-
-//ITEM ENDPOINTS
 /*
+//ITEM ENDPOINTS
+
 1. `/item/id/view`: Allows for viewing a item which will self contain it's tag information, quantity, and description
 2. `/item/id/update?quantity=<value>`: Allows to update an item's quantity
 3. `/item/id/update?tag=<value>` : Allows to update the item's tags.
 4. `/item/id/update?description=<value>`: Allows to update an item's description
 5. `/item/create?name=<item_name>&quantity=<quantity>&tag=<tag_values>&description=<desc_value>`: Allows for creating an item for the database.
 6. `/item/id/delete` : Deletes the item from the database
-*/
 
 app.get('/item/id/view', async (request, response) => {
     //await reload(JSONfile); Reload old stuff
@@ -215,6 +219,8 @@ app.delete('/item/id/delete', async (request, response) => {
     //emptyCart(response);
     //await saveRecords(); //save stuff
 });
+
+*/
 
 
 //start the port and listen commands
