@@ -8,10 +8,13 @@ const usernameinput = document.getElementById("usernameinput");
 const passwordinput = document.getElementById("passwordinput");
 const rememberme = document.getElementById("rememberme");
 const loginbutton = document.getElementById("loginbutton");
+const logintab = document.getElementById("logintab");
 
-const localStorage = Window.localStorage;
+const localStorage = window.localStorage;
 
-let response = await fetch("https://github.com/Rajasi-Desai/326-final-clockwork/blob/a4cd0b6484227f891ed011bde80001f779c86ff8/client/js/dummy-users.json");
+console.log(localStorage);
+
+let response = await fetch("../js/dummy-users.json");
 if(response.ok)
 {
   var users = await response.json();
@@ -25,6 +28,16 @@ if(localStorage.getItem("username") !== null && localStorage.getItem("password")
 {
   usernameinput.value = localStorage.getItem("username");
   passwordinput.value = localStorage.getItem("password");
+  rememberme.value = "on";
+}
+
+if(localStorage.getItem("loggedIn") === true)
+{
+  logintab.innerHTML = "Log Out";
+}
+else
+{
+  logintab.innerHTML = "Login";
 }
 
 loginbutton.addEventListener("click", login);
@@ -44,7 +57,7 @@ function login()
     let user = users[i];
     if(user["id"] === usernameinput.value && user["password"] === passwordinput.value)
     {
-      if(rememberme.value === true)
+      if(rememberme.value === "on")
       {
         localStorage.setItem("username", usernameinput.value);
         localStorage.setItem("password", passwordinput.value);
@@ -54,6 +67,10 @@ function login()
         localStorage.removeItem("username");
         localStorage.removeItem("password");
       }
+      window.localStorage.setItem("loggedIn", true);
+      window.location.reload();
+      return;
     }
   }
+  window.alert("Not a valid account!");
 }
