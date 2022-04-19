@@ -31,13 +31,19 @@ if(localStorage.getItem("username") !== null && localStorage.getItem("password")
   rememberme.value = "on";
 }
 
-if(localStorage.getItem("loggedIn") === true)
+if(localStorage.getItem("loggedIn") === "true")
 {
-  logintab.innerHTML = "Log Out";
+  logintab.innerHTML = "<a class='active' href='login.html'>Logout</a>";
+  logintab.onclick = function() {
+    localStorage.setItem("loggedIn", "false");
+    window.location.reload();
+    return false;
+  };
 }
 else
 {
-  logintab.innerHTML = "Login";
+  logintab.innerHTML = "<a class='active' href='login.html'>Login</a>";
+  logintab.onclick = function() {return false;};
 }
 
 loginbutton.addEventListener("click", login);
@@ -67,7 +73,7 @@ function login()
         localStorage.removeItem("username");
         localStorage.removeItem("password");
       }
-      window.localStorage.setItem("loggedIn", true);
+      window.localStorage.setItem("loggedIn", "true");
       window.location.reload();
       return;
     }
