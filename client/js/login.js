@@ -63,7 +63,7 @@ function login()
     let user = users[i];
     if(user["id"] === usernameinput.value && user["password"] === passwordinput.value)
     {
-      if(rememberme.value === "on")
+      if(rememberme.checked)
       {
         localStorage.setItem("username", usernameinput.value);
         localStorage.setItem("password", passwordinput.value);
