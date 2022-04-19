@@ -9,6 +9,8 @@ const passwordinput = document.getElementById("passwordinput");
 const rememberme = document.getElementById("rememberme");
 const loginbutton = document.getElementById("loginbutton");
 
+const localStorage = Window.localStorage;
+
 let response = await fetch("https://github.com/Rajasi-Desai/326-final-clockwork/blob/a4cd0b6484227f891ed011bde80001f779c86ff8/client/js/dummy-users.json");
 if(response.ok)
 {
@@ -17,4 +19,41 @@ if(response.ok)
 else
 {
   alert("HTTP-Error: " + response.status);
+}
+
+if(localStorage.getItem("username") !== null && localStorage.getItem("password") !== null)
+{
+  usernameinput.value = localStorage.getItem("username");
+  passwordinput.value = localStorage.getItem("password");
+}
+
+loginbutton.addEventListener("click", login);
+
+function login()
+{
+  if(usernameinput.value === "")
+  {
+    window.alert("Must enter a username!");
+  }
+  else if(passwordinput.value === "")
+  {
+    window.alert("Must enter a password!");
+  }
+  for(let i = 0; i < users.length; i++)
+  {
+    let user = users[i];
+    if(user["id"] === usernameinput.value && user["password"] === passwordinput.value)
+    {
+      if(rememberme.value === true)
+      {
+        localStorage.setItem("username", usernameinput.value);
+        localStorage.setItem("password", passwordinput.value);
+      }
+      else
+      {
+        localStorage.removeItem("username");
+        localStorage.removeItem("password");
+      }
+    }
+  }
 }
