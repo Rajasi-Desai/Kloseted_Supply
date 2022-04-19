@@ -37,13 +37,12 @@ if(localStorage.getItem("loggedIn") === "true")
   logintab.onclick = function() {
     localStorage.setItem("loggedIn", "false");
     window.location.reload();
-    return false;
   };
 }
 else
 {
   logintab.innerHTML = "<a class='active' href='login.html'>Login</a>";
-  logintab.onclick = function() {return false;};
+  logintab.removeAttribute("onlick");
 }
 
 loginbutton.addEventListener("click", login);

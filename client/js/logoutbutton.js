@@ -1,5 +1,7 @@
-// Event listeners to increment and decrement from the cart
-// Event listener on checkout button to decrement the stock of items. Should also alert uesr if there isn't enough stock
+// Event listener for signup button to create a new user
+// Check that the passwords match
+// Use remember me
+// The sign up button, when successful, should also log in the new user
 
 const logintab = document.getElementById("logintab");
 if(localStorage.getItem("loggedIn") === "true")
