@@ -1,5 +1,7 @@
 # Endpoints
 
+We are dividing the endpoints in such a way that there are two separate parts. One is for the User and what they would want to do while shopping and the other is for the Admin so that they can change things related to stock of each product. 
+
 ## User endpoints
 
 ### Login
@@ -29,6 +31,7 @@
 5. `/item/create?name=<item_name>&quantity=<quantity>&tag=<tag_values>&description=<desc_value>`: Allows for creating an item for the database.
 6. `/item/id/delete` : Deletes the item from the database
 
+
 # Front-end Implementation
 
 ### Create
@@ -42,3 +45,23 @@
 
 ### Delete
 ![<placeholder>](<placeholder> "<placeholder>")
+
+
+# Deployment
+
+Link to the hosted application:
+<add link here>
+
+
+# Contribution
+
+### Rajasi: 
+I worked on the cart implementation and worked on mostly the server side setting up the endpoints.
+
+### Grace: 
+
+
+### Isi: 
+
+
+### Aryan: 

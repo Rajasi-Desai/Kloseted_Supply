@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "deploy": "copyfiles client/* server/* .env package*.json deploy",
+    "deploy": "copyfiles client/js/* client/css/* client/docs/* client/html/* client/img/* server/* .env package*.json deploy",
     "start": "node ./server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
