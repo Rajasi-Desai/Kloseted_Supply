@@ -5,7 +5,7 @@ We are dividing the endpoints in such a way that there are two separate parts. O
 ## User endpoints
 
 ### Login
-1. `/user/register`: Register new user
+1. `/user/register?username=<username>&password=<password>`: Register new user
 2. `/user/login`: Login existing user
 3. `/user/id/update?password=<new_password>`: Update user's password
 
@@ -35,16 +35,21 @@ We are dividing the endpoints in such a way that there are two separate parts. O
 # Front-end Implementation
 
 ### Create
-![<placeholder>](<placeholder> "<placeholder>")
+The sign up page allows for the client to register themselves as a new user and add their information to the (prospective) database of users.
+
+![<Signup>](../docs/img/frontend/signup.png "Sign up")
 
 ### Read
-![<placeholder>](<placeholder> "<placeholder>")
+The login page will allow an existing user to log in or out. An `alert()` message will tell the user if their login details are invalid.
+![<Login>](../docs/img/frontend/login.png "Login")
 
 ### Update
-![<placeholder>](<placeholder> "<placeholder>")
+The products page allows the client to update the items that are currently in their cart, whether it is adding new items or adjusting the quantities of existing items.
+![<Products>](../docs/img/frontend/product.png "Products")
 
 ### Delete
-![<placeholder>](<placeholder> "<placeholder>")
+The checkout page will allow the user to review and submit their final order. Clicking the <kbd>&check;Checkout</kbd> button will alert the user that their order has been placed, and clicking the <kbd>&cross;Empty</kbd> button will empty/delete the contents of the user's cart.
+![Checkout](../docs/img/frontend/checkout.png "Checkout")
 
 
 # Deployment
@@ -57,12 +62,14 @@ Link to the hosted application:
 # Contribution
 
 ### Rajasi: 
-I worked on the cart implementation and worked on mostly the server side setting up the endpoints.
+I worked on the cart implementation and worked on mostly the server side setting up the endpoints. I also worked on deploying the site on Heroku and creating the markdown templates.
 
 ### Grace: 
+I worked on changing the product/form page into JS and mainly worked on additional features such as filtering the products and creating a pop out image for each product.
+
+### Isi:
+I standardized the custom datatypes for `User`s, `Cart`s, and `Item`s and implemented checkout functionality.
 
 
-### Isi: 
-
-
-### Aryan: 
+### Aryan:
+I implemented the login and signup pages using JS, allowing the user to both register a new account and log in to access their cart and make orders. I also edited each page to allow the user to log out from any page.
