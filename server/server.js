@@ -223,6 +223,10 @@ app.use('/', express.static('client'));
 // 3. `/user/id/update?password=<new_password>`: Update user's password
 // */
 
+app.get('/', function(req, res){
+    res.redirect('/html/');
+});
+
 app.post('/user/register', async (request, response) => {
     response.send("Work in progress");
 });
