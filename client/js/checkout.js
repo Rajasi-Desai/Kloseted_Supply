@@ -4,6 +4,8 @@
 
 const logintab = document.getElementById("logintab");
 const table = document.querySelector('table');
+const checkout = document.getElementById('checkout');
+const empty = document.getElementById('empty');
 const user = await(await(await fetch('../js/dummy-users.json')).json()).find(u => u.id = localStorage.getItem('id'));
 
 function renderCart() {
@@ -11,7 +13,7 @@ function renderCart() {
 
     if (!user || !user.cart.length) {
         const p = document.createElement('p');
-        p.textContent = 'Your shopping Kart is empty';
+        p.textContent = 'No items';
         table.appendChild(p);
     } else {
         for (const item of user.cart) {
@@ -61,19 +63,18 @@ function renderCart() {
     }
 }
 
-function incrementItem(item, tr) {
-    const span = tr.getElementsByClassName('ammount')[0];
-    span.textContent = ++item.stock;
-}
+checkout.addEventListener('click', e => {
+    user.cart = [];
+    table.innerHTML = '';
+    const p = document.createElement('p');
+    p.textContent = 'Order submitted!';
+    table.appendChild(p);
+});
 
-function decrementItem(item, tr) {
-    if (item.stock === 1) {
-        tr.innerHTML = '';
-    } else {
-        const span = tr.getElementsByClassName('ammount')[0];
-        span.textContent = --item.stock;
-    }
-}
+empty.addEventListener('click', e =>  {
+    user.cart = [];
+    renderCart();
+});
 
 if (localStorage.getItem("loggedIn") === "true")
 {
