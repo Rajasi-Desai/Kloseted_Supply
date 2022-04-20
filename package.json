@@ -6,6 +6,9 @@
   "directories": {
     "doc": "docs"
   },
+  "engines": {
+    "node": "16.11.0"
+  },
   "scripts": {
     "deploy": "copyfiles client/js/* client/css/* client/docs/* client/html/* client/img/* server/* .env package*.json deploy",
     "start": "node ./server/server.js",

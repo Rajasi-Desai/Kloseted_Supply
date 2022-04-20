@@ -167,3 +167,4 @@ categoryIds.forEach((id) => {
 
 //test
 //displayCartItem(4);
+
