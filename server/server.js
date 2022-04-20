@@ -1,7 +1,6 @@
 import express from 'express';
 import logger from 'morgan';
 import { readFile, writeFile } from 'fs/promises';
-import { faker } from '@faker-js/faker';
 
 //ENDPOINT FUNCTIONS//
 //LOGIN 
