@@ -26,9 +26,9 @@
   "homepage": "https://github.com/Rajasi-Desai/326-final-clockwork#readme",
   "description": "",
   "dependencies": {
+    "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "morgan": "^1.10.0",
-    "dotenv": "^16.0.0",
     "pg": "^8.7.3"
   },
   "devDependencies": {
