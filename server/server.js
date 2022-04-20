@@ -7,15 +7,16 @@ import {faker} from '@faker-js/faker';
 //LOGIN 
 
 async function registerUser(name, password, id, cart){
-    response.status(200);
+    response.status(200).json({message: "success"});
 }
 
 //async???
 async function loginUser(name, password){
-    response.status(200);
+    response.status(200).json({message: "success"});
 }
 
 /*
+//will implement later
 async function updatePassword(user, new_password){
     response.status(200);
 }
@@ -51,10 +52,11 @@ async function emptyCart(response, cart){
 //CHECKOUT
 
 async function displayItems(response){
-    response.status(200);
+    response.status(200).json({message: "success"});
 }
 
 /*
+//will be implemented later since we a majorly focusing on user side 
 //ITEM
 
 async function getItem(item) {
