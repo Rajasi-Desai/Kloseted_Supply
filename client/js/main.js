@@ -97,19 +97,26 @@ function getAllItems() {
     return allItems
 }
 
-function displayProductGridItem(productName) {
+function displayProductGridItem(productName, id) {
     const newItemDiv = document.createElement("div");
     const name = document.createElement("p");
     const quant = document.createElement("input");
-
+    const addToCart = document.createElement("button")
+    
     name.textContent = productName
     quant.setAttribute("type", "number");
-    quant.setAttribute("value", "0");
+    quant.setAttribute("value", 0);
     quant.setAttribute("min", "0");
+    addToCart.textContent = "Add to Cart"
 
-    name.setAttribute("id", `product-listing-name-${productName}`);
-    quant.setAttribute("id", `product-listing-quant-${productName}`);
-    newItemDiv.setAttribute("id", `product-listing-div-${productName}`);
+
+    name.setAttribute("id", `product-listing-name-${id}`);
+    quant.setAttribute("id", `product-listing-quant-${id}`);
+    newItemDiv.setAttribute("id", `product-listing-div-${id}`);
+
+    addToCart.addEventListener("click", e => {
+        
+    })
 
     name.addEventListener("mouseover", event => {
         mouseOverLink = true;
@@ -119,7 +126,7 @@ function displayProductGridItem(productName) {
 
         let cardContainer = document.querySelector('[class*="card-container"]');
 
-        let newTag = event.target.innerHTML.trim()
+        let newTag = event.target.innerHTML.trim();
         // console.log(newTag)
 
         //make sure there are no boolean bugs
@@ -147,14 +154,15 @@ function displayProductGridItem(productName) {
                 setTimeout(() => {
                     cardContainer.remove()
                     mouseOverCardContainer = false
-                }, 300)
+                }, 500)
             }
-        }, 50)
+        }, 100)
     })
 
     newItemDiv.classList.add("grid-item");
     newItemDiv.appendChild(name);
     newItemDiv.appendChild(quant);
+    newItemDiv.appendChild(addToCart);
     document.getElementById("grid-container").appendChild(newItemDiv);
 }
 
@@ -166,9 +174,9 @@ function mouseOutOfContainer(cardContainer){
             cardContainer.style.animation = "cardContainerOut 0.3s forwards"
             setTimeout(() => {
                 cardContainer.remove()
-            }, 300)
+            }, 500)
         }
-    }, 50)
+    }, 100)
 }
 
 function mouseInContainer(cardContainer){
@@ -220,7 +228,7 @@ function buildProductGrid() {
         if (categoryFilteredIds.length > 0){
             pd = pd.filter((p) => p.tags.some((tag) => categoryFilteredIds.some((id) => id === tag)))
         }
-        pd.forEach((p) => displayProductGridItem(p.name));
+        pd.forEach((p) => displayProductGridItem(p.name, p.id));
     });
     
 }
