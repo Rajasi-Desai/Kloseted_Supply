@@ -4,13 +4,76 @@
 
 const logintab = document.getElementById("logintab");
 const table = document.querySelector('table');
-const users = await getAllUsers();
+const user = await(await(await fetch('../js/dummy-users.json')).json()).find(u => u.id = localStorage.getItem('id'));
 
-async function getAllUsers() {
-    let users = await fetch('../js/dummy-users.json');
-    return users.json();
+function renderCart() {
+    table.innerHTML = '';
+
+    if (!user || !user.cart.length) {
+        const p = document.createElement('p');
+        p.textContent = 'Your shopping Kart is empty';
+        table.appendChild(p);
+    } else {
+        for (const item of user.cart) {
+            const tr = document.createElement('tr');
+            table.appendChild(tr);
+
+            const quantity = document.createElement('td');
+            quantity.className = 'quantity';
+            tr.appendChild(quantity);
+    
+            const increment = document.createElement('input');
+            increment.type = 'button';
+            increment.className = 'increment';
+            increment.value = '+';
+            increment.addEventListener('click', e => {
+                ++item.stock;
+                renderCart();
+            });
+            quantity.appendChild(increment);
+            
+    
+            const span = document.createElement('span');
+            span.className = 'ammount';
+            span.textContent = item.stock;
+            quantity.appendChild(span);
+    
+            const decrement = document.createElement('input');
+            decrement.type = 'button';
+            decrement.className = 'decrement';
+            decrement.value = '\u2212';
+            decrement.addEventListener('click', e => {
+                if (item.stock === 1) {
+                    tr.innerHTML = '';
+                    user.cart.splice(user.cart.findIndex(i => i.id === item.id), 1);
+                } else {
+                    --item.stock;
+                }
+                renderCart();
+            });
+            quantity.appendChild(decrement);
+
+            const name = document.createElement('td');
+            name.className = 'name';
+            name.textContent = item.name;
+            tr.appendChild(name);
+        }
+    }
 }
 
+function incrementItem(item, tr) {
+    const span = tr.getElementsByClassName('ammount')[0];
+    span.textContent = ++item.stock;
+}
+
+function decrementItem(item, tr) {
+    if (item.stock === 1) {
+        tr.innerHTML = '';
+    } else {
+        const span = tr.getElementsByClassName('ammount')[0];
+        span.textContent = --item.stock;
+    }
+}
 
 if (localStorage.getItem("loggedIn") === "true")
 {
@@ -27,13 +90,4 @@ else
   logintab.removeAttribute("onlick");
 }
 
-console.log(await users[localStorage.getItem('id')]);
-
-console.log(await users()[localStorage.getItem('id')]);
-
-if (!JSON.parse(localStorage.getItem('id')) ||
-    !await users()[localStorage.getItem('id').cart]) {
-    const p = document.createElement('p');
-    p.textContent = 'Your shopping Kart is empty';
-    table.appendChild(p);
-}
+renderCart(table);
