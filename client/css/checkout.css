@@ -15,6 +15,16 @@ table {
   background-color: #881c1c;
   padding: 10px;
   margin-left: 10px;
+  font-size: 20px;
+}
+
+p {
+    background-color: #5b7f95;
+    font-size: 30px;
+    border: 1px solid;
+    display: block;
+    padding: 10px;
+    margin: 0;
 }
 
 td {
@@ -41,13 +51,12 @@ td {
   content: '\00D7';
 }
 
-.icon img {
-  width: 100px;
-  height: 100px;
-  border: 1px solid;
+#checkout {
+  margin: 10px 0 10px 10px;
+  font-size: 30px;
 }
 
-#checkout {
-  margin: 10px;
-  font-size: 30px;
+#empty {
+    margin: 10px 0 10px 10px;
+    font-size: 30px;
 }
