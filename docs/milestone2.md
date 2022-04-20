@@ -50,7 +50,8 @@ We are dividing the endpoints in such a way that there are two separate parts. O
 # Deployment
 
 Link to the hosted application:
-<add link here>
+
+https://git.heroku.com/final-clockwork-326.git
 
 
 # Contribution

@@ -2,4 +2,4 @@
 
 1. `npm install`
 
-**CHECK WHAT OTHER STEPS TO WRITE??????**
+2. `node server/server.js`
