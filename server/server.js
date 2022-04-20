@@ -214,6 +214,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/', express.static('client'));
+//app.use('/html', express.static('html'));
 
 // //LOGIN ENDPOINTS
 // /*
