@@ -93,7 +93,7 @@ app.get('/', function(req, res){
 });
 
 app.post('/user/register', async (request, response) => {
-    response.send("Work in progress");
+    response.send("Work in progress, will add data to database");
 });
 
 //ALL GETs work in the browser
@@ -104,6 +104,7 @@ app.get('/user/login', async (request, response) => {
 app.put('/user/id/update', async (request, response) => {
     //await reload(JSONfile); Reload old stuff
     const options = request.body;
+    response.send("Work in progress");
     //options.password
     //addItem(response, options.item);
     //await saveRecords(); //save stuff
@@ -162,6 +163,7 @@ app.get('/user/id/cart/empty', async (request, response) => {
 */
 
 app.get('/user/id/checkout/view', async (request, response) => {
+    response.send("Work in progress");
     //await reload(JSONfile); Reload old stuff
     //const options = request.query;
     //emptyCart(response);
@@ -169,6 +171,7 @@ app.get('/user/id/checkout/view', async (request, response) => {
 });
 
 app.get('/user/id/cart', async (request, response) => {
+    response.send("Work in progress");
     //await reload(JSONfile); Reload old stuff
     //const options = request.query;
     //emptyCart(response);

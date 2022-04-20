@@ -1,5 +1,7 @@
 //The main file that runs everything
 
+// const { response } = require("express");
+
 const logintab = document.getElementById("logintab");
 if(localStorage.getItem("loggedIn") === "true")
 {
@@ -60,37 +62,175 @@ function displayCartItem(itemId) {
     document.getElementById("currentCart").appendChild(newItemDiv);
 }
 
-async function getAllItems() {
-    let allItems = await fetch("../js/dummy-items.json");
-    return allItems.json();
+let offsetLeft = 0
+let tagText = '';
+
+let storeOffsetLeft = 0;
+let storeOffsetTop = 0;
+
+
+let cursorPastHalfWay = false;
+
+let mouseOverCardContainer = false;
+let mouseOverLink = false;
+
+window.addEventListener("mousemove", event => {
+    let halfWindowWith = window.innerWidth / 2;
+    if (event.x > halfWindowWith) {
+        cursorPastHalfWay = true;
+        offsetLeft = event.x - 45;
+    } else {
+        cursorPastHalfWay = false;
+        offsetLeft = event.x - 45;
+    }
+})
+
+function getYCoordinateOfLink(l) {
+    const rect = l.getBoundingClientRect();
+    return {
+        top: rect.top + window.scrollY
+    };
 }
 
-function displayProductGridItem(productName) {
+function getAllItems() {
+    let allItems = fetch("../js/dummy-items.json").then(res => res.json());
+    return allItems
+}
+
+function displayProductGridItem(productName, id) {
     const newItemDiv = document.createElement("div");
     const name = document.createElement("p");
     const quant = document.createElement("input");
-
+    const addToCart = document.createElement("button")
+    
     name.textContent = productName
     quant.setAttribute("type", "number");
-    quant.setAttribute("value", "0");
+    quant.setAttribute("value", 0);
     quant.setAttribute("min", "0");
+    addToCart.textContent = "Add to Cart"
 
-    name.setAttribute("id", `product-listing-name-${productName}`);
-    quant.setAttribute("id", `product-listing-quant-${productName}`);
-    newItemDiv.setAttribute("id", `product-listing-div-${productName}`);
+
+    name.setAttribute("id", `product-listing-name-${id}`);
+    quant.setAttribute("id", `product-listing-quant-${id}`);
+    newItemDiv.setAttribute("id", `product-listing-div-${id}`);
+
+    addToCart.addEventListener("click", e => {
+        
+    })
+
+    name.addEventListener("mouseover", event => {
+        mouseOverLink = true;
+        storeOffsetTop = getYCoordinateOfLink(event.target).top;
+        storeOffsetTop += 18;
+        storeOffsetLeft = offsetLeft;
+
+        let cardContainer = document.querySelector('[class*="card-container"]');
+
+        let newTag = event.target.innerHTML.trim();
+        // console.log(newTag)
+
+        //make sure there are no boolean bugs
+        if (cardContainer == null) {
+            mouseOverCardContainer = false;
+        }
+
+        //if they want view a card and none are currently rendered 
+        if (!mouseOverCardContainer) {
+            getData(newTag);
+        } else if (newTag !== tagText && cardContainer !== null) {
+            //if they have quickly switched to view another card
+            cardContainer.remove();
+            getData(newTag);
+        }
+        tagText = newTag;
+    })
+    name.addEventListener("mouseout", () => {
+        mouseOverLink = false;
+        let cardContainer = document.querySelector('[class*="card-container"]');
+        setTimeout(() => {
+            if (!mouseOverCardContainer && cardContainer !== null) {
+                //play close animation then delete
+                cardContainer.style.animation = "cardContainerOut 0.3s forwards"
+                setTimeout(() => {
+                    cardContainer.remove()
+                    mouseOverCardContainer = false
+                }, 500)
+            }
+        }, 100)
+    })
 
     newItemDiv.classList.add("grid-item");
     newItemDiv.appendChild(name);
     newItemDiv.appendChild(quant);
+    newItemDiv.appendChild(addToCart);
     document.getElementById("grid-container").appendChild(newItemDiv);
 }
 
-async function buildProductGrid() {
-    let products = await getAllItems();
-    if (categoryFilteredIds.length > 0){
-        products = products.filter((p) => p.tags.some((tag) => categoryFilteredIds.some((id) => id === tag)))
+function mouseOutOfContainer(cardContainer){
+    setTimeout(() => {
+        mouseOverCardContainer = false;
+        if (!mouseOverLink) {
+            //play close animation then delete
+            cardContainer.style.animation = "cardContainerOut 0.3s forwards"
+            setTimeout(() => {
+                cardContainer.remove()
+            }, 500)
+        }
+    }, 100)
+}
+
+function mouseInContainer(cardContainer){
+    mouseOverCardContainer = true;
+}
+
+//get Data for corresponding link being hovered over
+async function getData(tagText) {
+    let allItems =  getAllItems()//.then(res => res.json())
+    let items = allItems;
+
+    //tag text should be the name of the product
+    let theItem = items.then(a => {
+        renderData(a.filter(item => item.name === tagText)[0])
+    })
+}
+
+function renderData(item) {
+    // console.log(item)
+    let cardContainer = document.createElement("div")
+    // let renderContent = generateContent(item.tags, item.image, item.description);
+    cardContainer.setAttribute("class", "card-container");
+    cardContainer.innerHTML = `
+          <div class="card-picture-container">
+            <img src="../img/${item.image}" alt="${item.name}"/> 
+          </div>
+          <div class="card-picture-tags">
+            <p>${item.tags[0]}</p>
+            <p>${item.tags[1]}</p>
+            <p>${item.tags[2]}</p>
+            <p>${item.description}</p>
+          </div>
+    `;
+    if(cursorPastHalfWay){
+        cardContainer.style.clipPath = 'polygoon(-10% 3%, 70% 3%, 75% 0%, 80% 3%, 110% 3%, 110% 110%, -10% 110%)';
     }
-    products.forEach((p) => displayProductGridItem(p.name));
+    //move element to correct position
+    cardContainer.style.top = storeOffsetTop + "px";
+    cardContainer.style.left = storeOffsetLeft + "px";
+
+    //add event listener (hovering)
+    cardContainer.setAttribute("onmouseleave", "mouseOutOfContainer(this)")
+    cardContainer.setAttribute("onmouseover", "mouseInContainer(this)")
+    document.querySelector("body").prepend(cardContainer);
+}
+
+function buildProductGrid() {
+    let products = getAllItems().then(pd => {
+        if (categoryFilteredIds.length > 0){
+            pd = pd.filter((p) => p.tags.some((tag) => categoryFilteredIds.some((id) => id === tag)))
+        }
+        pd.forEach((p) => displayProductGridItem(p.name, p.id));
+    });
+    
 }
 
 let categoryFilter = [
@@ -138,8 +278,7 @@ function buildFilterMenu() {
     categoryFilter.forEach((item) => displayFilterMenuItem(item.labelName, item.checkBoxTag))
 }
 
-buildFilterMenu();
-buildProductGrid();
+
 
 let categoryIds = ['filter-check-hygiene',
     'filter-check-hair-care',
@@ -153,6 +292,11 @@ let categoryIds = ['filter-check-hygiene',
     'filter-check-paperproducts'];
 
 let categoryFilteredIds = []
+
+buildProductGrid();
+buildFilterMenu();
+
+
 categoryIds.forEach((id) => {
     document.getElementById(id).addEventListener("change", function(){
         if (this.checked === true){

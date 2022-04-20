@@ -71,5 +71,13 @@ I worked on changing the product/form page into JS and mainly worked on addition
 I standardized the custom datatypes for `User`s, `Cart`s, and `Item`s and implemented checkout functionality.
 
 
+<<<<<<< HEAD
 ### Aryan:
 I implemented the login and signup pages using JS, allowing the user to both register a new account and log in to access their cart and make orders. I also edited each page to allow the user to log out from any page.
+=======
+### Isi: 
+
+
+### Aryan: 
+I implemented the front-end javascript for the user to log in and log out as well as sign up and register an account.
+>>>>>>> dedeaae8b7b7b363504d7143ab355348c05bcb52

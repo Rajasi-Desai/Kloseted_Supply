@@ -21,9 +21,19 @@ else
   logintab.removeAttribute("onlick");
 }
 
+let response = await fetch("../js/dummy-users.json");
+if(response.ok)
+{
+  var users = await response.json();
+}
+else
+{
+  alert("HTTP-Error: " + response.status);
+}
+
 signupbutton.addEventListener("click", signup);
 
-function signup()
+async function signup()
 {
   if(localStorage.getItem("loggedIn") === "true")
   {
