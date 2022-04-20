@@ -66,3 +66,4 @@ I worked on the cart implementation and worked on mostly the server side setting
 
 
 ### Aryan: 
+I implemented the front-end javascript for the user to log in and log out as well as sign up and register an account.
