@@ -12,8 +12,6 @@ const logintab = document.getElementById("logintab");
 
 const localStorage = window.localStorage;
 
-console.log(localStorage);
-
 let response = await fetch("../js/dummy-users.json");
 if(response.ok)
 {
@@ -50,7 +48,11 @@ loginbutton.addEventListener("click", login);
 
 function login()
 {
-  if(usernameinput.value === "")
+  if(localStorage.getItem("loggedIn") === "true")
+  {
+    window.alert("You are already logged in, please log out first!");
+  }
+  else if(usernameinput.value === "")
   {
     window.alert("Must enter a username!");
   }
