@@ -28,6 +28,8 @@ function getYCoordinateOfLink(l) {
     };
 }
 
+
+
 document.querySelectorAll("[id^='product-listing-name']").forEach(tags => {
     tags.addEventListener("mouseover", event => {
         mouseOverLink = true;
@@ -85,11 +87,10 @@ function mouseOutOfContainer(cardContainer){
 
 function mouseInContainer(cardContainer){
     mouseOverCardContainer = true;
-
 }
 
 //get Data for corresponding link being hovered over
-function getData(tagText) {
+async function getData(tagText) {
     let allItems = await fetch("../js/dummy-items.json");
     let items = allItems.json();
 
