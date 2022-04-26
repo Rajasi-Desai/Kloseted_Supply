@@ -6,7 +6,7 @@ import {faker} from '@faker-js/faker';
  * @property {string} password
  * @property {Cart} cart
  */
-class User {
+export class User {
     #id;
     #password;
     #cart;
@@ -48,8 +48,3 @@ class User {
         this.#password = password;
     }
 }
-
-// 1. /user/register`: Register new user
-// 2. `/user/login`: Login existing user
-// 3. `/user/id/update?password=<new_password>`: Update user's password
-export {User};

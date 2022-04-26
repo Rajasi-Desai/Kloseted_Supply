@@ -114,9 +114,12 @@ function displayProductGridItem(productName, id) {
     quant.setAttribute("id", `product-listing-quant-${id}`);
     newItemDiv.setAttribute("id", `product-listing-div-${id}`);
 
-    addToCart.addEventListener("click", e => {
-        
-    })
+    //changed to display cart item
+    addToCart.addEventListener("click", () => {
+        for (let i = 0; i < quant.value; i++){
+            displayCartItem(id);
+        }
+    });
 
     name.addEventListener("mouseover", event => {
         mouseOverLink = true;
@@ -308,7 +311,3 @@ categoryIds.forEach((id) => {
         buildProductGrid();
     })
 })
-
-//test
-//displayCartItem(4);
-

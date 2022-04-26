@@ -1,5 +1,7 @@
 import express from 'express';
 import logger from 'morgan';
+import expressSession from 'express-session';
+import auth from './auth.js';
 
 //ENDPOINT FUNCTIONS//
 //LOGIN 
@@ -51,35 +53,26 @@ async function displayItems(response) {
     response.status(200);
 }
 
-/*
-//ITEM
-
-async function getItem(item) {
-    response.status(200).json({ id: item.id(), name:item.name(), stock: item.stock(), tags: item.tags(), description: item.description()});
-}
-
-async function createItem(id, name, tags, description, stock){
-    //use item.js
-    response.status(200);
-}
-
-async function updateItem(){
-    response.status(200);
-}
-
-async function deleteItem(){
-    response.status(200);
-}
-*/
-
 // //running the server
 const app = express();
 const port = process.env.PORT || 3000;
+
+// Session configuration
+const sessionConfig = {
+    // set this encryption key in Heroku config (never in GitHub)!
+    secret: process.env.SECRET || 'SECRET',
+    resave: false,
+    saveUninitialized: false,
+};
+
+app.use(expressSession(sessionConfig));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/', express.static('client'));
+
+auth.configure(app);
 
 // //LOGIN ENDPOINTS
 // /*
@@ -177,47 +170,6 @@ app.get('/user/id/cart', async (request, response) => {
     //emptyCart(response);
     //await saveRecords(); //save stuff
 });
-
-/*
-//ITEM ENDPOINTS
-
-1. `/item/id/view`: Allows for viewing a item which will self contain it's tag information, quantity, and description
-2. `/item/id/update?quantity=<value>`: Allows to update an item's quantity
-3. `/item/id/update?tag=<value>` : Allows to update the item's tags.
-4. `/item/id/update?description=<value>`: Allows to update an item's description
-5. `/item/create?name=<item_name>&quantity=<quantity>&tag=<tag_values>&description=<desc_value>`: Allows for creating an item for the database.
-6. `/item/id/delete` : Deletes the item from the database
-
-app.get('/item/id/view', async (request, response) => {
-    //await reload(JSONfile); Reload old stuff
-    //const options = request.query;
-    //emptyCart(response);
-    //await saveRecords(); //save stuff
-});
-
-app.put('/item/id/update', async (request, response) => {
-    //await reload(JSONfile); Reload old stuff
-    const options = request.body;
-    //options.quantity; options.tag; options.description
-    //emptyCart(response);
-    //await saveRecords(); //save stuff
-});
-
-app.post('/item/create', async (request, response) => {
-    //await reload(JSONfile); Reload old stuff
-    const options = request.query;
-    //emptyCart(response);
-    //await saveRecords(); //save stuff
-});
-
-app.delete('/item/id/delete', async (request, response) => {
-    //await reload(JSONfile); Reload old stuff
-    //const options = request.query;
-    //emptyCart(response);
-    //await saveRecords(); //save stuff
-});
-
-*/
 
 
 //start the port and listen commands
