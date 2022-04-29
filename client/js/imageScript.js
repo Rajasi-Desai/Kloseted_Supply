@@ -28,8 +28,6 @@ function getYCoordinateOfLink(l) {
     };
 }
 
-
-
 document.querySelectorAll("[id^='product-listing-name']").forEach(tags => {
     tags.addEventListener("mouseover", event => {
         mouseOverLink = true;

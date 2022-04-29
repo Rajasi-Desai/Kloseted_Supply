@@ -1,39 +1,18 @@
-import {User} from "./user.js";
+import 'dotenv/config';
+import {MongoClient, ServerApiVersion} from 'mongodb';
 
-/**
- * @property {Set<User>} users
- * @property {Set<Item>} items
+/** Database
+ * @property {string} url
  */
 class Database {
-  #users;
-  #items;
-
-  /**
-   * @param {string} users
-   * @param {string} items
-   */
-  constructor(users, items) {
-    const usersResponse = await fetch(users, {method: 'GET'});
-    const itemsResponse = await fetch(items, {method: 'GET'});
-    console.log(usersResponse);
-
-    this.#users = new Set(await usersResponse.json());
-    this.#items = new Set(await itemsResponse.json());
-  }
-
-  /**
-   * @param {{id: string, password: string, cart: Array<{id:
-   *                                                     number,
-   *                                                     name: string,
-   *                                                     image: string,
-   *                                                     stock: number,
-   *                                                     description: string,
-   *                                                     tags: Array<string>},
-   *                                              number>}} user
-   */
-  register(user) {
-    this.#users.add(new User(user));
-  }
+    #url;
+    #client;
+    
+    /**@param {string} url */
+    constructor(url) {
+        this.#url = url;
+        
+    }
 }
 
 export {Database};
@@ -84,7 +63,7 @@ export {Database};
 
   // CREATE a user in the database.
  // async createPerson(id, name, age) {
-   const res = await this.collection.insertOne({ _id: id, name, age });
+//    const res = await this.collection.insertOne({ _id: id, name, age });
     // Note: the result received back from MongoDB does not contain the
     // entire document that was inserted into the database. Instead, it
     // only contains the _id of the document (and an acknowledged field).
@@ -122,179 +101,212 @@ export {Database};
 //   }
 // }
 
-//ITEM CLASS
 
-/**
+/** Item
  * @property {number} id
  * @property {string} name
- * @property {string} image
+ * @property {URL} image
  * @property {number} stock
  * @property {string} description
  * @property {Set<string>} tags
  */
- class Item {
-  #id;
-  #name;
-  #image;
-  #description;
-  #tags;
-  #stock;
-
-  /**
-   * @param {{id: number, name: string, image: string, stock: number, description: string, tags: Array<string>}} item
-   * @returns {Item}
-   **/
-  constructor(item) {
-      this.#id = item.id;
-      this.#name = item.name;
-      this.#image = item.image;
-      this.#stock = item.stock;
-      this.#description = item.description;
-      this.#tags = new Set(item.tags);
-  }
-
-  /** @returns {number} */
-  get id() {
-      return this.#id;
-  }
-
-  /** @returns {string} */
-  get name() {
-      return this.#name;
-  }
-
-  /** @param {string} name */
-  set name(name) {
-      this.#name = name;
-  }
-  
-  /** @returns {string} */
-  get image() {
-    return this.#image;
-  }
-
-  /** @param {string} image */
-  set image(image) {
-    this.#image = image;
-  }
-
-  /** @returns {number} */
-  get stock() {
-      return this.#stock;
-  }
-
-  /** @param {number} stock */
-  set stock(stock) {
-      this.#stock = stock;
-  }
-
-  /** @returns {Set<string>} */
-  get tags() {
-      return this.#tags;
-  }
-
-  /** @param tags */
-  set tags(tags) {
-    this.#tags = tags;
-  }
-
-  /** @param {string} tag */
-  tag(tag) {
-      this.#tags.add(tag);
-  }
-
-  /** @param {string} tag */
-  untag(tag) {
-      this.#tags.delete(tag);
-  }
-
-  /** @returns {string} */
-  get description() {
-      return this.#description;
-  }
-
-  /** @param {string} description */
-  set description(description) {
-      this.#description = description;
-  }
+class Item {
+    #id;
+    #name;
+    #image;
+    #description;
+    #tags;
+    #stock;
+    
+    /**
+     * @param {{id: number, name: string, imageURL: string, stock: number, description: string, tags: Array<string>}} item
+     * @returns {Item}
+     **/
+    constructor(item) {
+        this.#id = item.id;
+        this.#name = item.name;
+        this.#image = new URL(item.imageURL);
+        this.#stock = item.stock;
+        this.#description = item.description;
+        this.#tags = new Set(item.tags);
+    }
+    
+    /** @returns {number} */
+    get id() {
+        return this.#id;
+    }
+    
+    /** @returns {string} */
+    get name() {
+        return this.#name;
+    }
+    
+    /** @param {string} string */
+    set name(name) {
+        this.#name = name;
+    }
+    
+    /** @returns {string} */
+    get image() {
+        return this.#image;
+    }
+    
+    /** @param {string} url */
+    set image(url) {
+        this.#image = new URL(url);
+    }
+    
+    /** @returns {number} */
+    get stock() {
+        return this.stock;
+    }
+    
+    /** @param {number} stock */
+    set stock(stock) {
+        this.stock = stock;
+    }
+    
+    /** @returns {Array<string>} */
+    get tags() {
+        return this.#tags;
+    }
+    
+    /** @param {Array<string>} tags */
+    set tags(tags) {
+        this.#tags = new Set(tags);
+    }
+    
+    /** @param {string} tag */
+    tag(tag) {
+        this.#tags.add(tag);
+    }
+    
+    /** @param {string} tag */
+    untag(tag) {
+        this.#tags.delete(tag);
+    }
+    
+    /** @returns {string} */
+    get description() {
+        return this.#description;
+    }
+    
+    /** @param {string} description */
+    set description(description) {
+        this.#description = description;
+    }
+    
+    /** @returns {{id: number, name: string, imageURL: string, stock: number, description: string, tags: Array<string>}} */
+    toJSON() {
+        return {id: this.#id, name: this.#name, imageURL: this.#image.toJSON(), stock: this.stock, description: this.#description, tags: [...this.#tags]};
+    }
 }
 
-//CART CLASS
-
-/** @property {Map<Item, number>} contents */
+/** Cart
+ * @property {Map<Item, number>} contents */
 class Cart {
-  #contents;
-  
-  /** @param {[{id: number, name: string, image: string, stock: number, description: string, tags: Array<string>}, number]} contents */
-  constructor (contents) {
-      this.#contents = new Map(contents.map(content => [new Item(content[0]), content[1]]));
-  }
+    #contents;
+    
+    /** @param {[{id: number, name: string, imageURL: string, stock: number, description: string, tags: Array<string>}, number]} contents */
+    constructor (contents) {
+        this.#contents = new Map(contents.map(content => [new Item(content[0]), content[1]]));
+    }
 
-  /** @param {Item} item */
-  add(item) {
-      this.#contents.set(item, 1);
-  }
-      
-  /** @param {Item} item */
-  remove(item) {
-      this.#contents.delete(item);
-  }
+    /** 
+     * @param {number} id
+     * @returns {Item}
+     */
+    getItem(id) {
+        return [...this.#contents.keys].find(item => item.id === id);
+    }
+    
+    /** @param {id: number, name: string, imageURL: string, stock: number, description: string, tags: Array<string>} item */
+    addItem(item) {
+        this.#contents.set(new Item(item), 1);
+    }
+    
+    /** @param {number} id */
+    incrementItem(id) {
+        const item = this.getItem(id);
 
-   /** @param {Item} item */
-  increment(item) {
-      this.#contents.set(item, ++this.#contents.get(item));
-  }
+        if (this.#contents.get(item) === 0) {
+            this.#contents.delete(item);
+        } else {
+            this.#contents.set(item, ++this.#contents.get(item));
+        }
+    }
 
-  /** @param {Item} item */
-  decrement(item) {
-      this.#contents.set(item, --this.#contents.get(item));
-  }
-
-  empty() {
-    this.#contents.clear()
-  }
+    /** @param {number} id */
+    decrementItem(id) {
+        const item = this.getItem(id);
+        this.#contents.set(item, ++this.#contents.get(item));
+    }
+    
+    empty() {
+        this.#contents.clear()
+    }
+    
+    /** @returns {[{id: number, name: string, imageURL: string, stock: number, description: string, tags: Array<string>}, number]} */
+    toJSON() {
+        return [...this.#contents].map(content => [content[0].toJSON(), content[1]]);
+    }
 }
 
-/**
+/** User
  * @property {string} id
  * @property {string} password
  * @property {Cart} cart
  */
- export class User {
-  #id;
-  #password;
-  #cart;
+class User {
+    #id;
+    #password;
+    #cart;
+    
+    /**
+     * @param {{id: string, password: string, cart: Array<{id:
+     *                                                     number,
+     *                                                     name: string,
+     *                                                     image: string,
+     *                                                     stock: number,
+     *                                                     description: string,
+     *                                                     tags: Array<string>},
+     *                                              number>}} user
+     */
+    constructor(user) {
+        this.#id = user.id;
+        this.#password = user.password;
+        this.#cart = new Cart(user.cart);
+    }
+    
+    get id() {
+        return this.#id;
+    }
+    
+    get password() {
+        return this.#password;
+    }
+    
+    /** @param {string} password */
+    set password(password) {
+        this.#password = password;
+    }
+    
+    /** @returns {Cart} */
+    get cart() {
+        return this.#cart;
+    }
 
-  /**
-   * @param {{id: string, password: string, cart: Array<{id:
-   *                                                     number,
-   *                                                     name: string,
-   *                                                     image: string,
-   *                                                     stock: number,
-   *                                                     description: string,
-   *                                                     tags: Array<string>},
-   *                                              number>}} user
-   */
-  constructor(user) {
-      this.#id = user.id;
-      this.#password = user.password;
-      this.#cart = new Cart(user.cart);
-  }
-
-  get id() {
-      return this.#id;
-  }
-
-  get password() {
-      return this.#password;
-  }
-
-  get cart() {
-      return this.#cart;
-  }
-
-  /** @param {string} password */
-  set password(password) {
-      this.#password = password;
-  }
+    /**
+     * @returns {{id: string, password: string, cart: Array<{id:
+     *                                                     number,
+     *                                                     name: string,
+     *                                                     image: string,
+     *                                                     stock: number,
+     *                                                     description: string,
+     *                                                     tags: Array<string>},
+     *                                              number>}} user
+     */
+    toJSON() {
+        return {id: this.#id, password: this.#password, cart: this.#cart.toJSON()}
+    }
 }
