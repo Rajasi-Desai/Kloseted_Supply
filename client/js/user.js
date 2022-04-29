@@ -1,5 +1,4 @@
 import {Cart} from './cart.js';
-import {faker} from '@faker-js/faker';
 
 /**
  * @property {string} id
@@ -12,20 +11,19 @@ export class User {
     #cart;
 
     /**
-     * @param {string} id 
-     * @param {string} [password]
+     * @param {{id: string, password: string, cart: Array<{id:
+     *                                                     number,
+     *                                                     name: string,
+     *                                                     image: string,
+     *                                                     stock: number,
+     *                                                     description: string,
+     *                                                     tags: Array<string>},
+     *                                              number>}} user
      */
-    constructor(id, password = '', cart = new Cart()) {
-        if (typeof id !== 'string') {
-            console.error(`Cannot create user with identifier of type ${typeof id}`);
-        }
-        if (typeof password !== 'string') {
-            console.error(`Cannot create user with password of type ${typeof password}`);
-        }
-
-        this.#id = id;
-        this.#password = password;
-        this.#cart = new Cart(id);
+    constructor(user) {
+        this.#id = user.id;
+        this.#password = user.password;
+        this.#cart = new Cart(user.cart);
     }
 
     get id() {
@@ -42,9 +40,6 @@ export class User {
 
     /** @param {string} password */
     set password(password) {
-        if (typeof password !== 'string') {
-            console.error(`Cannot set password of User ${this.#id} to ${typeof password}`);
-        }
         this.#password = password;
     }
 }
