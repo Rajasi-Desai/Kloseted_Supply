@@ -12,7 +12,7 @@ const logintab = document.getElementById("logintab");
 
 const localStorage = window.localStorage;
 
-let response = await fetch("../js/dummy-users.json");
+let response = await fetch("../js/users.json");
 if(response.ok)
 {
   var users = await response.json();
