@@ -13,7 +13,6 @@ async function registerUser(name, password, id, cart) {
     response.status(200);
 }
 
-//async???
 async function loginUser(name, password) {
     response.status(200);
 }
@@ -101,9 +100,6 @@ app.put('/user/id/update', async (request, response) => {
     //await reload(JSONfile); Reload old stuff
     const options = request.body;
     response.send("Work in progress");
-    //options.password
-    //addItem(response, options.item);
-    //await saveRecords(); //save stuff
 });
 
 
@@ -117,38 +113,28 @@ app.put('/user/id/update', async (request, response) => {
 */
 
 app.post('/user/id/cart/add', async (request, response) => {
-    //await reload(JSONfile); Reload old stuff
     const options = request.body;
     addItemCart(response, options.item, options.cart);
-    //await saveRecords(); //save stuff
 });
 
 app.put('/user/id/cart/increment', async (request, response) => {
-    //await reload(JSONfile); Reload old stuff
     const options = request.body;
     incrementItemCart(response, options.item, options.cart);
-    //await saveRecords(); //save stuff
 });
 
 app.put('/user/id/cart/decrement', async (request, response) => {
-    //await reload(JSONfile); Reload old stuff
     const options = request.body;
     decrementItemCart(response, options.item, options.cart);
-    //await saveRecords(); //save stuff
 });
 
 app.delete('/user/id/cart/delete', async (request, response) => {
-    //await reload(JSONfile); Reload old stuff
     const options = request.body;
     deleteItemCart(response, options.item, options.cart);
-    //await saveRecords(); //save stuff
 });
 
 app.get('/user/id/cart/empty', async (request, response) => {
-    //await reload(JSONfile); Reload old stuff
     const options = request.body;
     emptyCart(response, options.cart);
-    //await saveRecords(); //save stuff
 });
 
 
@@ -160,18 +146,10 @@ app.get('/user/id/cart/empty', async (request, response) => {
 
 app.get('/user/id/checkout/view', async (request, response) => {
     response.send("Work in progress");
-    //await reload(JSONfile); Reload old stuff
-    //const options = request.query;
-    //emptyCart(response);
-    //await saveRecords(); //save stuff
 });
 
 app.get('/user/id/cart', async (request, response) => {
     response.send("Work in progress");
-    //await reload(JSONfile); Reload old stuff
-    //const options = request.query;
-    //emptyCart(response);
-    //await saveRecords(); //save stuff
 });
 
 
