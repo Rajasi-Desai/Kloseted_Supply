@@ -1,5 +1,7 @@
 import 'dotenv/config';
-import {MongoClient, ServerApiVersion} from 'mongodb';
+import express from 'express';
+import logger from 'morgan';
+import { MongoClient, ServerApiVersion } from 'mongodb';
 
 /** Database
  * @property {string} url
@@ -7,15 +9,38 @@ import {MongoClient, ServerApiVersion} from 'mongodb';
 class Database {
     #url;
     #client;
+    #data;
+    #items;
+    #users;
     
     /**@param {string} url */
     constructor(url) {
         this.#url = url;
-        
+    }
+
+    async connect() {
+        this.#client = await MongoClient.connect(this.#url, {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+          serverApi: ServerApiVersion.v1,
+      });
+
+      this.#data = this.#client.db('supplies');
+      this.#items = this.#data.collection('items');
+      this.#users = this.#data.collection('users');
+    }
+
+    async close() {
+        this.client.close();
+    }
+
+    async createUser(name, word, score) {
+        const res = await this.users.insertOne({ name, word, score });
+        return res;
     }
 }
 
-export {Database};
+// export {Database};
 
 
 // import 'dotenv/config';
@@ -304,9 +329,11 @@ class User {
      *                                                     stock: number,
      *                                                     description: string,
      *                                                     tags: Array<string>},
-     *                                              number>}} user
+     *                                              number>}}
      */
     toJSON() {
         return {id: this.#id, password: this.#password, cart: this.#cart.toJSON()}
     }
 }
+
+export {Database, User, Cart, Item};
