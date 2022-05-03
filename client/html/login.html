@@ -33,6 +33,7 @@
   <h1>Login Page</h1>
 
   <div id = "wrap" class = "wrapper">
+  <form action = "/login" method = "post">
   <p>
   <label>Username: </label>
   <input id = "usernameinput", type = "text">
@@ -46,7 +47,7 @@
   <p>
   <input id = "rememberme" type = "checkbox" value = "on">
   <label> Remember me?</label>
-  <button id = "loginbutton">Log In</button>
+  <input type = "submit" id = "loginbutton" value = "Log In">
   </p>
 
   <p>
@@ -54,5 +55,6 @@
   </p>
   </div>
   </body>
+  </form>
   <script type="module" src="../js/login.js" defer></script>
 </html>
