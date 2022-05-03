@@ -1,6 +1,6 @@
-import {User} from "user.js";
+import {User} from "database.js";
 
-class Users {
+class users {
     constructor() {
       // we use an in-memory "database"; this isn't persistent but is easy
       // default user
@@ -38,4 +38,4 @@ class Users {
     }
   }
   
-  export default new Users();
+  export default new users();
