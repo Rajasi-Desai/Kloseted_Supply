@@ -20,7 +20,7 @@ else
 
 // import {Cart} from "./cart.js";
 let cartIdCounter = 0;
-let itemIdCounter = 0;
+//let itemIdCounter = 0;
 
 function displayCartItem(itemId) {
     const newItemDiv = document.createElement("div");
@@ -105,7 +105,7 @@ function displayProductGridItem(productName, id) {
     
     name.textContent = productName
     quant.setAttribute("type", "number");
-    quant.setAttribute("value", 0);
+    //quant.setAttribute("value", 0);
     quant.setAttribute("min", "0");
     addToCart.textContent = "Add to Cart"
 

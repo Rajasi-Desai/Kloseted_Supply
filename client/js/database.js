@@ -1,131 +1,145 @@
 import 'dotenv/config';
-import express from 'express';
-import logger from 'morgan';
-import { MongoClient, ServerApiVersion } from 'mongodb';
+import {MongoClient, ServerApiVersion} from 'mongodb';
 
 /** Database
  * @property {string} url
+ * @property {MongoClient} client
+ * @property {Collection<{id: string,
+ *                        password: string,
+ *                        cart: Array<{id: number,
+ *                                     name: string,
+ *                                     image: string,
+ *                                     stock: number,
+ *                                     description: string,
+ *                                     tags: Array<string>},
+ *                              number>}>} users
+ * @property {Collection<{id: number,
+ *                            name: string,
+ *                            image: string,
+ *                            stock: number,
+ *                            description: string,
+ *                            tags: Array<string>}>} items
  */
 class Database {
     #url;
     #client;
-    #data;
-    #items;
     #users;
+    #items;
     
-    /**@param {string} url */
+    /** Constructs new Database
+     * @param {string} url 
+     * @returns {Database}
+     */
     constructor(url) {
         this.#url = url;
     }
 
+    /** Connects Database to MongoDB */
     async connect() {
-        this.#client = await MongoClient.connect(this.#url, {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-          serverApi: ServerApiVersion.v1,
-      });
-
-      this.#data = this.#client.db('supplies');
-      this.#items = this.#data.collection('items');
-      this.#users = this.#data.collection('users');
+        this.#client = await MongoClient.connect(this.#url, {useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1});
+        this.#items = this.#client.db('supplies').collection('items');
+        this.#users = this.#client.db('supplies').collection('users');
     }
 
-    async close() {
-        this.client.close();
+    /** Disconnects Database from MongoDB */
+    async disconnect() {
+        this.#client.close();
     }
 
-    async createUser(name, word, score) {
-        const res = await this.users.insertOne({ name, word, score });
+    /** Registers new user
+     * @param {string} id
+     * @param {string} password
+     */
+    async registerUser(id, password) {
+        return await this.#users.insertOne({id: id, password: password, cart: []});
+    }
+
+    /** Returns given item
+     * @param {string} id
+     * @returns {{id: number,
+     *           name: string,
+     *           image: string,
+     *           stock: number,
+     *           description: string,
+     *           tags: Array<string>}}
+     */
+    async getItem(id) {
+        return await this.#items.findOne({id: id});
+    }
+
+    /** Increments given item's quantity in given user's cart
+     * @param {number} itemID
+     * @param {string} userID
+     */
+    async incrementItem(itemID, userID) {
+        const item = this.#users.findOne({id: userID}.cart.find(item => item.id === itemID));
+
+        if (!item) {
+            this.cartItem(itemID, userID);
+        }
+    }
+    
+    /** Removes given item from Database and returns it
+     * @param {string} id
+     * @returns {{id: number,
+     *           name: string,
+     *           image: string,
+     *           stock: number,
+     *           description: string,
+     *           tags: Array<string>}}
+     */
+    async removeItem(id) {
+        return item;
+    }
+
+    /** Returns given item from Database
+     * @param {string} id
+     * @returns {{id: number,
+     *           name: string,
+     *           image: string,
+     *           stock: number,
+     *           description: string,
+     *           tags: Array<string>}}
+     */
+    async getCart(id) {
+        return await this.#users.findOne({id: id}).cart;
+    }
+
+    /** Removes given item from Database, adds it to given user's cart, and returns it
+     * @param {string} itemID
+     * @param {number} userID
+     * @returns {{id: number,
+     *           name: string,
+     *           image: string,
+     *           stock: number,
+     *           description: string,
+     *           tags: Array<string>}}
+     */
+    async cartItem(itemID, userID) {
+        const item = this.removeItem(itemID);
+        await this.#users.updateOne({id: userID}, {$set: {cart: this.getCart(userID).concat([item])}});
+        return item;
+    }
+    
+    async getUsers() {
+        return await this.#users.find({}).toArray();
+    }
+
+    async getUser(id) {
+        return await this.#users.find({id: id}).toArray();
+    }
+
+    async getItems() {
+        return await this.items.find({}).toArray();
+    }
+
+    async updateItemStock(stockToRemove, itemId) {
+        const item = await this.items.find({id:itemId}).toArray();
+        const res = await this.items.updateOne({id:itemId}, { $set: {stock: item.stock - stockToRemove}});
         return res;
     }
+    
 }
-
-// export {Database};
-
-
-// import 'dotenv/config';
-// import { MongoClient, ServerApiVersion } from 'mongodb';
-
-// export class PeopleDatabase {
-//   constructor(dburl) {
-//     this.dburl = dburl;
-//   }
-
-//   async connect() {
-//     this.client = await MongoClient.connect(this.dburl, {
-//       useNewUrlParser: true,
-//       useUnifiedTopology: true,
-//       serverApi: ServerApiVersion.v1,
-//     });
-
-//     // Get the database.
-//     this.db = this.client.db('peopleDB');
-
-//     // Init the database.
-//     await this.init();
-//   }
-
-//   async init() {
-//     this.collection = this.db.collection('people');
-      //  this.collection2 = this.db.collection("scores")
-
-//     const count = await this.collection.countDocuments();
-
-//     if (count === 0) {
-//       await this.collection.insertMany([
-//         { _id: '1', name: 'Artemis', age: 19 },
-//         { _id: '2', name: 'Parzival', age: 17 },
-//         { _id: '3', name: 'John', age: 30 },
-//         { _id: '4', name: 'Mia', age: 22 },
-//       ]);
-//     }
-//   }
-
-//   // Close the pool.
-//   async close() {
-//     this.client.close();
-//   }
-
-  // CREATE a user in the database.
- // async createPerson(id, name, age) {
-//    const res = await this.collection.insertOne({ _id: id, name, age });
-    // Note: the result received back from MongoDB does not contain the
-    // entire document that was inserted into the database. Instead, it
-    // only contains the _id of the document (and an acknowledged field).
-    //return res;
-  //}
-
-//   // READ a user from the database.
-//   async readPerson(id) {
-//     const res = await this.collection.findOne({ _id: id });
-//     return res;
-//   }
-
-//   // UPDATE a user in the database.
-//   async updatePerson(id, name, age) {
-//     const res = await this.collection.updateOne(
-//       { _id: id },
-//       { $set: { name, age } }
-//     );
-//     return res;
-//   }
-
-//   // DELETE a user from the database.
-//   async deletePerson(id) {
-//     // Note: the result received back from MongoDB does not contain the
-//     // entire document that was deleted from the database. Instead, it
-//     // only contains the 'deletedCount' (and an acknowledged field).
-//     const res = await this.collection.deleteOne({ _id: id });
-//     return res;
-//   }
-
-//   // READ all people from the database.
-//   async readAllPeople() {
-//     const res = await this.collection.find({}).toArray();
-//     return res;
-//   }
-// }
-
 
 /** Item
  * @property {number} id
