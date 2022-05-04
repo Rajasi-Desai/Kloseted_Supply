@@ -22,15 +22,6 @@ class Server {
   
     async initRoutes() {
       const self = this;
-    //   this.app.post('/wordScore', async (request, response) => {
-    //     const options = request.body;
-    //     await self.db.createWordScore(options.name, options.word, options.score);
-    //     response.status(200).json({ status: 'success' });
-    //   });
-    //   this.app.get('/highestWordScores', async (request, response) => {
-    //     let topTenScores = await self.db.getAllWordScores()
-    //     response.status(200).json(topTenScores);
-    //   });
 
         //CART ENDPOINTS
     /*
@@ -79,13 +70,11 @@ class Server {
       */
 
       this.app.get('/user/id/checkout/view', async (request, response) => {
-        //response.send("Work in progress");
         await self.db.getCart(options.cart);
         response.status(200).json({ status: 'success' });
       });
 
       this.app.get('/user/id/cart', async (request, response) => {
-        //response.send("Work in progress");
         await self.db.getCart(options.cart);
         response.status(200).json({ status: 'success' });
       });

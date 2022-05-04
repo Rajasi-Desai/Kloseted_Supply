@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import {MongoClient, ServerApiVersion} from 'mongodb';
 
-/** Object consisting of a URL, MongoClient, and Sets of Users and Items
+/** Object consisting of a URL, MongoClient, and Sets of Users and Items; Database class
  * @property {URL} url
  * @property {MongoClient} client
  * @property {Set<User>} users
@@ -28,7 +28,7 @@ class Database {
         const client = await MongoClient.connect(this.#url, {useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1});
         this.#client = client;
         const users = client.db('supplies').collection('users').find().map(user => new User(user.name, user.password, ))
-        this.#users = users.
+        //this.#users = users.
     }
 
     /**
@@ -131,7 +131,7 @@ class Database {
     
 }
 
-/** Object consisting of an identifier, name, stock, image, description, and Array of tags
+/** Object consisting of an identifier, name, stock, image, description, and Array of tags; Item class
  * @property {number} id
  * @property {string} name
  * @property {number} stock
@@ -275,7 +275,7 @@ class Item {
     }
 }
 
-/** Object consisting of a Map of Items to their quantities
+/** Object consisting of a Map of Items to their quantities; Cart Class
  * @property {Map<Item, number>} contents */
 class Cart {
     #contents;
@@ -344,7 +344,7 @@ class Cart {
 }
 
 /** 
- * Object consisting of a name, password, and Cart
+ * Object consisting of a name, password, and Cart; User Class
  * @property {string} name
  * @property {string} password
  * @property {Cart} cart
