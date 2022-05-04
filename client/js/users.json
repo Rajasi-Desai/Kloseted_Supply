@@ -1,21 +1,21 @@
 [
     {
-      "id": "amangalik",
+      "name": "amangalik",
       "password": "mitski",
       "cart": []
     },
     {
-      "id": "drajasi",
+      "name": "drajasi",
       "password": "kpopstans",
       "cart": []
     },
     {
-      "id": "gmchang",
+      "name": "gmchang",
       "password": "mango",
       "cart": []
     },
     {
-      "id": "ibernoff",
+      "name": "ibernoff",
       "password": "chopin",
       "cart": []
     }
