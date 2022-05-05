@@ -1,7 +1,4 @@
 //The main file that runs everything
-
-// const { response } = require("express");
-
 const logintab = document.getElementById("logintab");
 if(localStorage.getItem("loggedIn") === "true")
 {

@@ -8,8 +8,6 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { Database } from '../client/js/database.js';
 
-
-
 class Server {
     constructor(dburl) {
       this.dburl = dburl;

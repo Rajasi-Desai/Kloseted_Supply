@@ -1,17 +1,13 @@
 {
   "name": "326-final-clockwork",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "type": "module",
   "directories": {
     "doc": "docs"
   },
-  "engines": {
-    "node": "16.11.0"
-  },
   "scripts": {
-    "deploy": "copyfiles client/js/* client/css/* client/docs/* client/html/* client/img/* server/* .env package*.json deploy",
-    "start": "node ./server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,18 +20,10 @@
     "url": "https://github.com/Rajasi-Desai/326-final-clockwork/issues"
   },
   "homepage": "https://github.com/Rajasi-Desai/326-final-clockwork#readme",
-  "description": "",
   "dependencies": {
     "dotenv": "^16.0.0",
-    "express": "^4.17.3",
-    "express-session": "^1.17.2",
-    "morgan": "^1.10.0",
-    "passport": "^0.5.2",
-    "passport-local": "^1.0.0",
-    "pg": "^8.7.3"
-  },
-  "devDependencies": {
-    "@faker-js/faker": "^6.1.2",
-    "copyfiles": "^2.4.1"
+    "express": "^4.18.1",
+    "mongodb": "^4.5.0",
+    "morgan": "^1.10.0"
   }
 }
