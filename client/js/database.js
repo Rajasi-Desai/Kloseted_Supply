@@ -1,14 +1,12 @@
 import 'dotenv/config';
-import {MongoClient, ServerApiVersion} from 'mongodb';
+import {MongoClient} from 'mongodb';
 
-/** Object consisting of a URL, MongoClient, and Sets of Users and Items; Database class
- * @property {URL} url
+/** Database consisting of MongoClient, and Sets of Users and Items
  * @property {MongoClient} client
  * @property {Set<User>} users
  * @property {Set<Item>} items
  */
 class Database {
-    #url;
     #client;
     #users;
     #items;
@@ -18,17 +16,18 @@ class Database {
      * @returns {Database}
      */
     constructor(url) {
-        this.#url = new URL(url);
+        this.#client = new MongoClient(url);
+        this.#users = new Set();
+        this.#items = new Set();
     }
 
     /** 
      * Connects Database to MongoDB
      */
     async connect() {
-        const client = await MongoClient.connect(this.#url, {useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1});
-        this.#client = client;
-        const users = client.db('supplies').collection('users').find().map(user => new User(user.name, user.password, ))
-        //this.#users = users.
+        await this.#client.connect();
+        this.#users = new Set(this.#client.db('supplies').collection('users').find().map(user => new User(user.name, user.password, user.cart)));
+        this.#items = new Set(this.#client.db('supplies').collection('items').find().map(item => new Item(item.id, item.name, item.stock, item.image, item.description, item.tags)));
     }
 
     /**
@@ -39,88 +38,56 @@ class Database {
     }
 
     /** 
-     * Registers new user inDatabase
+     * Registers new user in Database
      * @param {string} name
      * @param {string} password
      */
-    registerUser(name, password) {
-        this.#users.add(new User(name, password));
-        
+    async registerUser(name, password) {
+        const user = new User(name, password);
+        this.#users.add(user);
+        this.#client.db('supplies').collection('users').insertOne(user.toJSON())
     }
 
-    /** Returns given item
-     * @param {string} id
-     * @returns {{id: number,
-     *           name: string,
-     *           image: string,
-     *           stock: number,
-     *           description: string,
-     *           tags: Array<string>}}
+    /**
+     * Returns Database's Users
      */
-    async getItem(id) {
-        return await this.#items.findOne({id: id});
+    get users() {
+        return this.#users;
     }
 
-    /** Increments given item's stock in given user's cart
-     * @param {number} itemID
-     * @param {string} userID
+    /** 
+     * Returns User with given name
+     * @param {string} name
+     * @returns {Item}
      */
-    async incrementItem(itemID, userID) {
-        this.#users.findOneAndUpdate({id: userID}, {$set: {cart: this.getCart(userID).map(item => item.id === itemID)}});
-    }
-    
-    /** Removes given item from Database and returns it
-     * @param {string} id
-     * @returns {{id: number,
-     *           name: string,
-     *           image: string,
-     *           stock: number,
-     *           description: string,
-     *           tags: Array<string>}}
-     */
-    async removeItem(id) {
-        return item;
+     async getUser(name) {
+        return await [...this.#users].find(user => user.name === name);
     }
 
-    /** Returns given item from Database
-     * @param {string} id
-     * @returns {{id: number,
-     *           name: string,
-     *           image: string,
-     *           stock: number,
-     *           description: string,
-     *           tags: Array<string>}}
-     */
-    async getCart(id) {
-        return await this.#users.findOne({id: id}).cart;
-    }
-
-    /** Removes given item from Database, adds it to given user's cart, and returns it
+    /** Adds Item with given identifier to Cart of User with given identifier, and decrements Item's stock in Database
      * @param {string} itemID
      * @param {number} userID
-     * @returns {{id: number,
-     *           name: string,
-     *           image: string,
-     *           stock: number,
-     *           description: string,
-     *           tags: Array<string>}}
      */
-    async cartItem(itemID, userID) {
-        const item = this.removeItem(itemID);
-        await this.#users.updateOne({id: userID}, {$set: {cart: this.getCart(userID).concat([item])}});
-        return item;
+     async cartItem(itemID, username) {
+        const item = this.#users.get(this.getItem(itemID));
+        this.#users.get(this.getUser(username)).cart.add(item);
+        this.decrementItemStock(id);
+    }
+
+    /**
+     * Returns Database's Items
+     */
+    get items() {
+        return this.#items;
     }
     
-    async getUsers() {
-        return await this.#users.find({}).toArray();
-    }
-
-    async getUser(id) {
-        return await this.#users.find({id: id}).toArray();
-    }
-
-    async getItems() {
-        return await this.items.find({}).toArray();
+    /** 
+     * Returns Item with given identifier in Database
+     * @param {string} id
+     * @returns {Item}
+     */
+    getItem(id) {
+        return [...this.#items].find(item => item.id === id);
     }
 
     async updateItemstock(stockToRemove, itemId) {
@@ -128,10 +95,168 @@ class Database {
         const res = await this.items.updateOne({id:itemId}, { $set: {stock: item.stock - stockToRemove}});
         return res;
     }
-    
+
+    /**
+     * Decrements stock of Item with identifier in Database
+     * @param {number} id
+     */
+    decrementItemStock(id) {
+        const item = this.getItem(id);
+        --this.#items.get(this.getItem(id)).stock;
+        this.#client.db('supplies').collection('items').updateOne({id: id}, {$set: {stock: --item.stock}});
+    }
 }
 
-/** Object consisting of an identifier, name, stock, image, description, and Array of tags; Item class
+/** 
+ * User consisting of name, password, and Cart
+ * @property {string} name
+ * @property {string} password
+ * @property {Cart} cart
+ */
+ class User {
+    #name;
+    #password;
+    #cart;
+    
+    /**
+     * Returns new User given name, password, and Cart in JSON format
+     * @param {string} name
+     * @param {string} password
+     * @param {[{id: number, name: string, imageURL: string, stock: number, description: string, tags: Array<string>}, number]} cart
+     */
+    constructor(name, password, cart = []) {
+        this.#name = name;
+        this.#password = password;
+        this.#cart = new Cart(cart);
+    }
+
+    /**
+     * Returns User's name
+     */
+    get name() {
+        return this.#name;
+    }
+    
+    /**
+     * Returns User's password
+     */
+    get password() {
+        return this.#password;
+    }
+    
+    /**
+     * Replaces User's password given new one
+     * @param {string} password
+     */
+    set password(password) {
+        this.#password = password;
+    }
+    
+
+    /**
+     * Returns User's Cart
+     * @returns {Cart}
+     */
+    get cart() {
+        return this.#cart;
+    }
+
+    /**
+     * Returns User in JSON format
+     * @returns {{name: string, password: string, cart: Array<{id: number, name: string, image: string, stock: number, description: string, tags: Array<string>}, number>}}
+     */
+    toJSON() {
+        return {name: this.#name, password: this.#password, cart: this.#cart.toJSON()}
+    }
+}
+
+/** Cart consisting of Map of Items to their quantities
+ * @property {Map<Item, number>} contents */
+ class Cart {
+    #contents;
+    
+    /**
+     * Returns new Cart given its contents in JSON format
+     * @param {[{id: number, name: string, imageURL: string, stock: number, description: string, tags: Array<string>}, number]} contents
+     */
+    constructor (contents) {
+        this.#contents = new Map(contents);
+    }
+
+    /** 
+     * Returns Item in Cart with given identifier
+     * @param {number} id
+     * @returns {Item}
+     */
+    getItem(id) {
+        return [...this.#contents.keys].find(item => item.id === id);
+    }
+    
+    /**
+     * Adds Item in JSON format to cart
+     * @param {id: number, name: string, image: string, stock: number, description: string, tags: Array<string>} item
+     */
+    addItem(item) {
+        this.#contents.set(new Item(item), 1);
+    }
+
+    /**
+     * Returns quantity of Item in Cart with given identifier
+     * @param {number} id 
+     * @return {number}
+     */
+    getItemQuantity(id) {
+        return this.#contents.get(this.getItem(id));
+    }
+    
+    /** 
+     * Increments quantity of Item in Cart with given identifier
+     * @param {number} id
+     */
+    incrementItemQuantity(id) {
+        const item = this.getItem(id);
+
+        if (this.#contents.get(item) === 0) {
+            this.#contents.delete(item);
+        } else {
+            this.#contents.set(item, ++this.#contents.get(item));
+        }
+    }
+    
+    /**
+     * Decrements quantity of Item in Cart with given identifier
+     * @param {number} id
+     */
+    decrementItemQuantity(id) {
+        const item = this.getItem(id);
+        this.#contents.set(item, ++this.#contents.get(item));
+    }
+
+    /**
+     * Removes Item with given identifier from Cart
+     * @param {number} id
+     */
+    removeItem(id) {
+        this.#contents.delete(this.getItem(id));
+    }
+    
+    /**
+     * Removes all Items from Cart
+     */
+    empty() {
+        this.#contents.clear()
+    }
+    
+    /** 
+     * Returns Cart in JSON format
+     * @returns {[{id: number, name: string, imageURL: string, stock: number, description: string, tags: Array<string>}, number]}
+     */
+    toJSON() {
+        return [...this.#contents].map(content => [content[0].toJSON(), content[1]]);
+    }
+}
+
+/** Item consisting of an identifier, name, stock, image, description, and Array of tags
  * @property {number} id
  * @property {string} name
  * @property {number} stock
@@ -148,7 +273,7 @@ class Item {
     #tags;
     
     /**
-     * Returns new Item given an identifier, name, image, stock, description, and Array of tags
+     * Returns new Item given identifier, name, image, stock, description, and Array of tags
      * @param {number} id
      * @param {string} name
      * @param {number} stock 
@@ -182,7 +307,7 @@ class Item {
     }
     
     /**
-     * Replaces Item's name givennew one
+     * Replaces Item's name given new one
      * @param {string} string
      */
     set name(name) {
@@ -198,7 +323,7 @@ class Item {
     }
     
     /**
-     * Replaces Item's image givennew one
+     * Replaces Item's image given new one
      * @param {string} image
      */
     set image(image) {
@@ -214,7 +339,7 @@ class Item {
     }
     
     /**
-     * Replaces Item's stock givennew one
+     * Replaces Item's stock given new one
      * @param {number} stock
      */
     set stock(stock) {
@@ -230,7 +355,7 @@ class Item {
     }
 
     /**
-     * Replaces Item's tags withgiven ones
+     * Replaces Item's tags with given new ones
      * @param {Array<string>} tags
      */
     set tags(tags) {
@@ -262,7 +387,7 @@ class Item {
     }
     
     /** 
-     * Replaces Item's description withgiven one
+     * Replaces Item's description with given one
      * @param {string} description
      */
     set description(description) {
@@ -272,136 +397,6 @@ class Item {
     /** @returns {{id: number, name: string, imageURL: string, stock: number, description: string, tags: Array<string>}} */
     toJSON() {
         return {id: this.#id, name: this.#name, imageURL: this.#image.toJSON(), stock: this.#stock, description: this.#description, tags: [...this.#tags]};
-    }
-}
-
-/** Object consisting of a Map of Items to their quantities; Cart Class
- * @property {Map<Item, number>} contents */
-class Cart {
-    #contents;
-    
-    /**
-     * Returns new Cart
-     */
-    constructor () {
-        this.#contents = new Map();
-    }
-
-    /** 
-     * Returns Item in Cart with given identifier
-     * @param {number} id
-     * @returns {Item}
-     */
-    getItem(id) {
-        return [...this.#contents.keys].find(item => item.id === id);
-    }
-    
-    /**
-     * Adds Item in JSON format to cart
-     * @param {id: number, name: string, image: string, stock: number, description: string, tags: Array<string>} item
-     */
-    addItem(item) {
-        this.#contents.set(new Item(item), 1);
-    }
-    
-    /** 
-     * Increments quantity of Item in Cart with given identifier
-     * @param {number} id
-     */
-    incrementItem(id) {
-        const item = this.getItem(id);
-
-        if (this.#contents.get(item) === 0) {
-            this.#contents.delete(item);
-        } else {
-            this.#contents.set(item, ++this.#contents.get(item));
-        }
-    }
-    
-    /**
-     * Decrements quantity of Item in Cart with given identifier
-     * @param {number} id
-     */
-    decrementItem(id) {
-        const item = this.getItem(id);
-        this.#contents.set(item, ++this.#contents.get(item));
-    }
-    
-    /**
-     * Removes all Items from Cart
-     */
-    empty() {
-        this.#contents.clear()
-    }
-    
-    /** 
-     * Returns Cart in JSON format
-     * @returns {[{id: number, name: string, imageURL: string, stock: number, description: string, tags: Array<string>}, number]}
-     */
-    toJSON() {
-        return [...this.#contents].map(content => [content[0].toJSON(), content[1]]);
-    }
-}
-
-/** 
- * Object consisting of a name, password, and Cart; User Class
- * @property {string} name
- * @property {string} password
- * @property {Cart} cart
- */
-class User {
-    #name;
-    #password;
-    #cart;
-    
-    /**
-     * Returns new User given a name and password
-     * @param {string} name
-     * @param {string} password
-     */
-    constructor(name, password, cart = new Cart()) {
-        this.#name = name;
-        this.#password = password;
-        this.#cart = cart;
-    }
-
-    /**
-     * Returns User's name
-     */
-    get name() {
-        return this.#name;
-    }
-    
-    /**
-     * Returns User's password
-     */
-    get password() {
-        return this.#password;
-    }
-    
-    /**
-     * Replaces User's password givennew one
-     * @param {string} password
-     */
-    set password(password) {
-        this.#password = password;
-    }
-    
-
-    /**
-     * Returns User's Cart
-     * @returns {Cart}
-     */
-    get cart() {
-        return this.#cart;
-    }
-
-    /**
-     * Returns User in JSON format
-     * @returns {{name: string, password: string, cart: Array<{id: number, name: string, image: string, stock: number, description: string, tags: Array<string>}, number>}}
-     */
-    toJSON() {
-        return {name: this.#name, password: this.#password, cart: this.#cart.toJSON()}
     }
 }
 
