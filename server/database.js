@@ -103,6 +103,7 @@ export class Database {
     //Gets all items
     async getAllItems() {
         const items = await this.items.find({}).toArray();
+        console.log(items)
         return items;
     }
 
