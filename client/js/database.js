@@ -26,8 +26,8 @@ class Database {
      */
     async connect() {
         await this.#client.connect();
-        this.#users = new Set(this.#client.db('supplies').collection('users').find().map(user => new User(user.name, user.password, user.cart)));
-        this.#items = new Set(this.#client.db('supplies').collection('items').find().map(item => new Item(item.id, item.name, item.stock, item.image, item.description, item.tags)));
+        this.#users = new Set(this.#client.db('supplies').collection('users').find({}).toArray().map(user => new User(user.name, user.password, user.cart)));
+        this.#items = new Set(this.#client.db('supplies').collection('items').find({}).toArray().map(item => new Item(item.id, item.name, item.stock, item.image, item.description, item.tags)));
     }
 
     /**
