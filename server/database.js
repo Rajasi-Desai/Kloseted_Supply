@@ -56,7 +56,16 @@ export class Database {
         const item = this.items.findOne({id: itemID});
         this.items.updateOne({id: itemID}, {$set: {stock: --item.stock}});
         const cart = this.users.findOne({name: username}).cart;
-        this.users.updateOne({name: username}, {$set: {cart: cart.concat([item])}});
+        
+        for (let i = 0; i < cart.length; ++i) {
+            if (cart[i].id === itemID) {
+                ++cart[i].stock;
+            } else {
+                cart.push(item);
+            }
+        }
+
+        this.users.updateOne({name: username}, {$set: {cart: cart}});
     }
 
     //Dont need this since we are just adding to the array rather than increm that stock
