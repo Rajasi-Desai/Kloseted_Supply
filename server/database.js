@@ -14,7 +14,7 @@ export class Database {
         });
 
         // Get the database.
-        this.db = this.client.db('supplies');
+        this.db = this.client.db('supply');
 
         // Init the database.
         await this.init();
