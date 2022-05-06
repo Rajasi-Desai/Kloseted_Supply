@@ -89,10 +89,24 @@ function getYCoordinateOfLink(l) {
     };
 }
 
-function getAllItems() {
+function getAllItems2() {
     let allItems = fetch("../js/dummy-items.json").then(res => res.json());
     return allItems
 }
+
+async function getAllItems() {
+    const response = await fetch('/gameScore', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    if (!response.ok) {
+      console.error(`Unable to save ${data} to server`);
+    }
+    console.log(response)
+    return response
+  }
 
 function displayProductGridItem(productName, id) {
     const newItemDiv = document.createElement("div");
