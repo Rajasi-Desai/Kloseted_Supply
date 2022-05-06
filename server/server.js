@@ -15,7 +15,7 @@ class Server {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(logger('dev'));
-    this.app.use('/', express.static('./client/html'));
+    this.app.use('/', express.static('client'));
   }
 
   async initRoutes() {
@@ -28,11 +28,12 @@ class Server {
     3. `/user/id/cart/decrement?item=<item_name>` : To decrement the item in the user's cart
     4. `/user/id/cart/delete?item=<item_name>` : Completely removes an item from the user's cart
     5. `/user/id/cart/empty` : Removes all items from the user's cart
+  */
     
     this.app.get('/', function(req, res){
       res.redirect('/html/');
     });
-    */
+    
 
     this.app.post('/user/id/cart/add', async (request, response) => {
       const options = request.body;
