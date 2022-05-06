@@ -97,7 +97,7 @@ class Server {
     }
   }
   
-  const server = new Server(process.env.DB_URL)
+  const server = new Server(process.env.DB_URL);
   server.start();
 
 
