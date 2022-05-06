@@ -30,57 +30,85 @@ export class Database {
         this.client.close();
     }
 
-    // CREATE a user in the database.
-    async createPerson(id, name, age) {
-        const res = await this.collection.insertOne({ _id: id, name, age });
-        // Note: the result received back from MongoDB does not contain the
-        // entire document that was inserted into the database. Instead, it
-        // only contains the _id of the document (and an acknowledged field).
-        return res;
-    }
+    //Registers user
     async registerUser(name, password) {
         const res = await this.users.insertOne({ name: name, password: password, cart: [] });
         return res;
     }
+    //Gets all users
     async getAllUsers() {
-        const res = await this.users.find({}).toArray();
-        return res;
-    }
-    async getUser(name) {
-        const res = await this.users.findOne({name: name});
-        return res;
+        const users = await this.users.find({}).toArray();
+        return users;
     }
 
-    //Adds an item to the users cart
+    //Gets user
+    async getUser(name) {
+        const user = await this.users.findOne({name: name});
+        return user;
+    }
+
+    //Adds item to user's cart
     async addItemCart(itemID, username) {
         const item = this.items.findOne({id: itemID});
-        this.items.updateOne({id: itemID}, {$set: {stock: --item.stock}});
+        const cart = this.users.findOne({name: username}).cart;
+        this.items.updateOne({id: itemID}, {$set: {stock: item.stock - 1}});
+        item.stock = 1;
+        this.users.updateOne({name: username}, {$set: {cart: cart.concat([item])}});
+    }
+
+    //Increments stock of item in users cart
+    async incrementItemCart(itemID, username) {
         const cart = this.users.findOne({name: username}).cart;
         
         for (let i = 0; i < cart.length; ++i) {
             if (cart[i].id === itemID) {
                 ++cart[i].stock;
-            } else {
-                cart.push(item);
             }
         }
 
         this.users.updateOne({name: username}, {$set: {cart: cart}});
     }
 
-    //Dont need this since we are just adding to the array rather than increm that stock
+    //Decrements stock of item in users cart
     async incrementItemCart(itemID, username) {
-        const item = this.items.findOne({id: itemID});
         const cart = this.users.findOne({name: username}).cart;
-        this.users.updateOne({name: username}, {$set: {cart: cart.concat([item])}});
+        
+        for (let i = 0; i < cart.length; ++i) {
+            if (cart[i].id === itemID) {
+                --cart[i].stock;
+            }
+        }
+
+        this.users.updateOne({name: username}, {$set: {cart: cart}});
     }
 
-    async getAllItems() {
-        const res = await this.items.find({}).toArray();
-        return res;
+    //Deletes item from user's cart
+    async deleteItemCart(itemID, username) {
+        const cart = this.users.findOne({name: username}).cart;
+        cart.filter(item => item.id !== itemID);
+        this.users.updateOne({name: username}, {$set: {cart: cart}});
     }
-    async getItem(itemId) {
-        const res = await this.items.findOne({id: itemId});
-        return res;
+    
+    //Empties all items from user's cart
+    async emptyCart(username) {
+        this.users.updateOne({name: username}, {$set: {cart: []}});
+    }
+
+    //Gets user's cart
+    async getCart(username) {
+        const cart = await this.getUser(username).cart;
+        return cart;
+    }
+
+    //Gets all items
+    async getAllItems() {
+        const items = await this.items.find({}).toArray();
+        return items;
+    }
+
+    //Gets item
+    async getItem(itemID) {
+        const item = await this.items.findOne({id: itemID});
+        return item;
     }
 }

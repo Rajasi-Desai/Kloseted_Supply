@@ -9,19 +9,19 @@ import { dirname } from 'path';
 import { Database } from './database.js';
 
 class Server {
-    constructor(dburl) {
-      this.dburl = dburl;
-      this.app = express();
-      this.app.use(express.json());
-      this.app.use(express.urlencoded({ extended: false }));
-      this.app.use(logger('dev'));
-      this.app.use('/', express.static('client'));
-    }
-  
-    async initRoutes() {
-      const self = this;
+  constructor(dburl) {
+    this.dburl = dburl;
+    this.app = express();
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: false }));
+    this.app.use(logger('dev'));
+    this.app.use('/', express.static('client'));
+  }
 
-        //CART ENDPOINTS
+  async initRoutes() {
+    const self = this;
+
+    //CART ENDPOINTS
     /*
     1. `/user/id/cart/add?item=<item_name>` : To add the item to the user's cart
     2. `/user/id/cart/increment?item=<item_name>` : To increment the item in the user's cart
@@ -30,75 +30,69 @@ class Server {
     5. `/user/id/cart/empty` : Removes all items from the user's cart
     */
 
-      this.app.post('/user/id/cart/add', async (request, response) => {
-        const options = request.body;
-        await self.db.addItemCart(options.item, options.cart);
-        response.status(200).json({ status: 'success' });
-      });
+    this.app.post('/user/id/cart/add', async (request, response) => {
+      const options = request.body;
+      await self.db.addItemCart(options.item, options.user);
+      response.status(200).json({ status: 'success' });
+    });
 
-      // this.app.put('/user/id/cart/increment', async (request, response) => {
-      //   const options = request.body;
-      //   await self.db.incrementItemCart(options.item, options.cart);
-      //   response.status(200).json({ status: 'success' });
-      // });
+    this.app.put('/user/id/cart/increment', async (request, response) => {
+      const options = request.body;
+      await self.db.incrementItemCart(options.item, options.user);
+      response.status(200).json({ status: 'success' });
+    });
 
-      // this.app.put('/user/id/cart/decrement', async (request, response) => {
-      //   const options = request.body;
-      //   await self.db.decrementItemCart(options.item, options.cart);
-      //   response.status(200).json({ status: 'success' });
-      // });
+    this.app.put('/user/id/cart/decrement', async (request, response) => {
+      const options = request.body;
+      await self.db.decrementItemCart(options.item, options.user);
+      response.status(200).json({ status: 'success' });
+    });
 
-      // this.app.delete('/user/id/cart/delete', async (request, response) => {
-      //   const options = request.body;
-      //   await self.db.deleteItemCart(options.item, options.cart);
-      //   response.status(200).json({ status: 'success' });
-      // });
+    this.app.delete('/user/id/cart/delete', async (request, response) => {
+      const options = request.body;
+      await self.db.deleteItemCart(options.item, options.user);
+      response.status(200).json({ status: 'success' });
+    });
 
-      // this.app.get('/user/id/cart/empty', async (request, response) => {
-      //   const options = request.body;
-      //   await self.db.emptyCart(options.cart);
-      //   response.status(200).json({ status: 'success' });
-      // });
+    this.app.get('/user/id/cart/empty', async (request, response) => {
+      const options = request.body;
+      await self.db.emptyCart(options.user);
+      response.status(200).json({ status: 'success' });
+    });
 
 
-      //CHECKOUT ENDPOINTS
-      /*
-      1. `/user/id/checkout/view`: Allows user to view items and checkout
-      2. `/user/id/cart`: Allows user to view their cart
-      */
+    //CHECKOUT ENDPOINTS
+    /*
+    1. `/user/id/cart`: Allows user to view their cart
+    */
 
-      // this.app.get('/user/id/checkout/view', async (request, response) => {
-      //   await self.db.getCart(options.cart);
-      //   response.status(200).json({ status: 'success' });
-      // });
-
-      // this.app.get('/user/id/cart', async (request, response) => {
-      //   await self.db.getCart(options.cart);
-      //   response.status(200).json({ status: 'success' });
-      // });
-
-    }
-  
-    async initDb() {
-      this.db = new Database(this.dburl);
-      await this.db.connect();
-    }
-  
-    async start() {
-      await this.initRoutes();
-      await this.initDb();
-      const port = process.env.PORT || 8080;
-      this.app.all('*', async (request, response) => {
-        response.status(404).send(`Not found: ${request.path}`);
-      });
-      this.app.listen(port, () => {
-        console.log(`Server started on http://localhost:${port}`);
-      });
-    }
+    this.app.get('/user/id/cart', async (request, response) => {
+      const options = request.body;
+      await self.db.getCart(options.user);
+      response.status(200).json({ status: 'success' });
+    });
   }
-  
-  const server = new Server(process.env.DB_URL);
-  server.start();
+
+  async initDb() {
+    this.db = new Database(this.dburl);
+    await this.db.connect();
+  }
+
+  async start() {
+    await this.initRoutes();
+    await this.initDb();
+    const port = process.env.PORT || 8080;
+    this.app.all('*', async (request, response) => {
+      response.status(404).send(`Not found: ${request.path}`);
+    });
+    this.app.listen(port, () => {
+      console.log(`Server started on http://localhost:${port}`);
+    });
+  }
+}
+
+const server = new Server(process.env.DB_URL);
+server.start();
 
 
 
@@ -111,7 +105,7 @@ class Server {
 
 
 // //ENDPOINT FUNCTIONS//
-// //LOGIN 
+// //LOGIN
 
 // async function registerUser(name, password, id, cart) {
 //     response.status(200);
