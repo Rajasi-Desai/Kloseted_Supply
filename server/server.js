@@ -76,6 +76,13 @@ class Server {
       await self.db.getCart(options.user);
       response.status(200).json({ status: 'success' });
     });
+
+    //Items
+    this.app.get('/allItems', async (request, response) => {
+      const options = request.body;
+      await self.db.getCart(options.user);
+      response.status(200).json({ status: 'success' });
+    });
   }
 
   async initDb() {
