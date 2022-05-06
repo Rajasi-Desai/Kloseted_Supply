@@ -1,10 +1,10 @@
 import 'dotenv/config';
 import {MongoClient} from 'mongodb';
 
-/** Database consisting of MongoClient, and Sets of Users and Items
+/** Database consisting of MongoClient, and Arrays of Users and Items
  * @property {MongoClient} client
- * @property {Set<User>} users
- * @property {Set<Item>} items
+ * @property {Array<User>} users
+ * @property {Array<Item>} items
  */
 class Database {
     #client;
@@ -17,8 +17,8 @@ class Database {
      */
     constructor(url) {
         this.#client = new MongoClient(url);
-        this.#users = new Set();
-        this.#items = new Set();
+        this.#users = [];
+        this.#items = [];
     }
 
     /** 
@@ -26,8 +26,10 @@ class Database {
      */
     async connect() {
         await this.#client.connect();
-        this.#users = new Set(this.#client.db('supplies').collection('users').find({}).toArray().map(user => new User(user.name, user.password, user.cart)));
-        this.#items = new Set(this.#client.db('supplies').collection('items').find({}).toArray().map(item => new Item(item.id, item.name, item.stock, item.image, item.description, item.tags)));
+        console.error(this.#client.db('supplies').collection('users').find({}).toArray())
+        
+        this.#users = this.#client.db('supplies').collection('users').find({}).toArray().map(user => new User(user.name, user.password, user.cart));
+        this.#items = this.#client.db('supplies').collection('items').find({}).toArray().map(item => new Item(item.id, item.name, item.stock, item.image, item.description, item.tags));
     }
 
     /**
@@ -44,7 +46,7 @@ class Database {
      */
     async registerUser(name, password) {
         const user = new User(name, password);
-        this.#users.add(user);
+        this.#users.push(user);
         this.#client.db('supplies').collection('users').insertOne(user.toJSON())
     }
 
