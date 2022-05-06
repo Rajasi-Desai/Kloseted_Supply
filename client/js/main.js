@@ -101,9 +101,6 @@ async function getAllItems() {
         'Content-Type': 'application/json',
       }
     });
-    if (!response.ok) {
-      console.error(`Unable to save ${data} to server`);
-    }
     console.log(response)
     return response
   }
