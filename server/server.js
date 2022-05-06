@@ -6,7 +6,7 @@ import auth from './auth.js';
 import users from './users.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { Database } from '../client/js/database.js';
+import { Database } from './database.js';
 
 class Server {
     constructor(dburl) {
@@ -97,7 +97,7 @@ class Server {
     }
   }
   
-  const server = new Server(process.env.DATABASE_URL)
+  const server = new Server(process.env.DB_URL)
   server.start();
 
 
