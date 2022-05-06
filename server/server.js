@@ -29,11 +29,11 @@ class Server {
     4. `/user/id/cart/delete?item=<item_name>` : Completely removes an item from the user's cart
     5. `/user/id/cart/empty` : Removes all items from the user's cart
   */
-    
-    this.app.get('/', function(req, res){
+
+    this.app.get('/', function (req, res) {
       res.redirect('/html/');
     });
-    
+
 
     this.app.post('/user/id/cart/add', async (request, response) => {
       const options = request.body;
@@ -80,8 +80,8 @@ class Server {
     //Items
     this.app.get('/getAllItems', async (request, response) => {
       let items = await self.db.getAllItems();
-      response.json(items);
-      response.status(200).json({ status: 'success' });
+      const data = await response.json(items);
+      return data;
     });
   }
 
