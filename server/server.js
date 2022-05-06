@@ -79,8 +79,8 @@ class Server {
 
     //Items
     this.app.get('/getAllItems', async (request, response) => {
-      await self.db.getAllItems();
-      response.status(200).json({ status: 'success' });
+      let items = await self.db.getAllItems();
+      response.status(200).json({ status: 'success', items: items });
     });
   }
 
