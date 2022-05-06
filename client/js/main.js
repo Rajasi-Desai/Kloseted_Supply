@@ -102,7 +102,8 @@ async function getAllItems() {
       }
     });
     console.log(response)
-    return response
+    const data = await response.json();
+    return data;
   }
 
 function displayProductGridItem(productName, id) {
