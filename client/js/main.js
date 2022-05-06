@@ -1,18 +1,16 @@
 //The main file that runs everything
 const logintab = document.getElementById("logintab");
-if(localStorage.getItem("loggedIn") === "true")
-{
-  logintab.innerHTML = "<a href='login.html'>Logout</a>";
-  logintab.onclick = function() {
-    localStorage.setItem("loggedIn", "false");
-    localStorage.removeItem("id");
-    window.location.reload();
-  };
+if (localStorage.getItem("loggedIn") === "true") {
+    logintab.innerHTML = "<a href='login.html'>Logout</a>";
+    logintab.onclick = function () {
+        localStorage.setItem("loggedIn", "false");
+        localStorage.removeItem("id");
+        window.location.reload();
+    };
 }
-else
-{
-  logintab.innerHTML = "<a href='login.html'>Login</a>";
-  logintab.removeAttribute("onlick");
+else {
+    logintab.innerHTML = "<a href='login.html'>Login</a>";
+    logintab.removeAttribute("onlick");
 }
 
 // import {Cart} from "./cart.js";
@@ -95,23 +93,24 @@ function getAllItems2() {
 }
 
 async function getAllItems() {
-    const response = await fetch('/getAllItems', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      }
+    let response = await fetch(`/highestWordScores`, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+        }
     });
-    console.log(response)
+
     const data = await response.json();
+    console.log(data)
     return data;
-  }
+}
 
 function displayProductGridItem(productName, id) {
     const newItemDiv = document.createElement("div");
     const name = document.createElement("p");
     const quant = document.createElement("input");
     const addToCart = document.createElement("button")
-    
+
     name.textContent = productName
     quant.setAttribute("type", "number");
     //quant.setAttribute("value", 0);
@@ -125,7 +124,7 @@ function displayProductGridItem(productName, id) {
 
     //changed to display cart item
     addToCart.addEventListener("click", () => {
-        for (let i = 0; i < quant.value; i++){
+        for (let i = 0; i < quant.value; i++) {
             displayCartItem(id);
         }
     });
@@ -178,7 +177,7 @@ function displayProductGridItem(productName, id) {
     document.getElementById("grid-container").appendChild(newItemDiv);
 }
 
-function mouseOutOfContainer(cardContainer){
+function mouseOutOfContainer(cardContainer) {
     setTimeout(() => {
         mouseOverCardContainer = false;
         if (!mouseOverLink) {
@@ -191,13 +190,13 @@ function mouseOutOfContainer(cardContainer){
     }, 100)
 }
 
-function mouseInContainer(cardContainer){
+function mouseInContainer(cardContainer) {
     mouseOverCardContainer = true;
 }
 
 //get Data for corresponding link being hovered over
 async function getData(tagText) {
-    let allItems =  getAllItems()//.then(res => res.json())
+    let allItems = getAllItems()//.then(res => res.json())
     let items = allItems;
 
     //tag text should be the name of the product
@@ -222,7 +221,7 @@ function renderData(item) {
             <p>${item.description}</p>
           </div>
     `;
-    if(cursorPastHalfWay){
+    if (cursorPastHalfWay) {
         cardContainer.style.clipPath = 'polygoon(-10% 3%, 70% 3%, 75% 0%, 80% 3%, 110% 3%, 110% 110%, -10% 110%)';
     }
     //move element to correct position
@@ -237,12 +236,12 @@ function renderData(item) {
 
 function buildProductGrid() {
     let products = getAllItems().then(pd => {
-        if (categoryFilteredIds.length > 0){
+        if (categoryFilteredIds.length > 0) {
             pd = pd.filter((p) => p.tags.some((tag) => categoryFilteredIds.some((id) => id === tag)))
         }
         pd.forEach((p) => displayProductGridItem(p.name, p.id));
     });
-    
+
 }
 
 let categoryFilter = [
@@ -310,8 +309,8 @@ buildFilterMenu();
 
 
 categoryIds.forEach((id) => {
-    document.getElementById(id).addEventListener("change", function(){
-        if (this.checked === true){
+    document.getElementById(id).addEventListener("change", function () {
+        if (this.checked === true) {
             categoryFilteredIds.push(this.value)
         } else {
             categoryFilteredIds = categoryFilteredIds.filter(id => id !== this.value)
