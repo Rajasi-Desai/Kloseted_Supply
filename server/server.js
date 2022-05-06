@@ -80,7 +80,8 @@ class Server {
     //Items
     this.app.get('/getAllItems', async (request, response) => {
       let items = await self.db.getAllItems();
-      response.status(200).json({ status: 'success', items: items });
+      response.json(items);
+      response.status(200).json({ status: 'success' });
     });
   }
 
