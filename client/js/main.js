@@ -309,6 +309,3 @@ categoryIds.forEach((id) => {
     })
 })
 
-import {Database} from "./database.js";
-const database = new Database('users.json', 'items.json');
-console.log(database);
