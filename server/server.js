@@ -78,9 +78,8 @@ class Server {
     });
 
     //Items
-    this.app.get('/allItems', async (request, response) => {
-      const options = request.body;
-      await self.db.getCart(options.user);
+    this.app.get('/getAllItems', async (request, response) => {
+      await self.db.getAllItems();
       response.status(200).json({ status: 'success' });
     });
   }
