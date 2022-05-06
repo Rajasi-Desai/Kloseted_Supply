@@ -93,7 +93,7 @@ function getAllItems2() {
 }
 
 async function getAllItems() {
-    let response = await fetch(`/highestWordScores`, {
+    let response = await fetch(`/getAllItems`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
