@@ -97,6 +97,9 @@ function getAllItems2() {
 async function getAllItems() {
     const response = await fetch('/getAllItems', {
       method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
     });
     console.log(response)
     return response
