@@ -33,12 +33,28 @@ class Server {
     next();
   } else {
     // Otherwise, redirect to the login page.
-    res.redirect('/login');
+    res.redirect('/client/html/login.html');
   }
   }
 
+  
   async initRoutes() {
     const self = this;
+
+    //USER ENDPOINTS
+
+    this.app.post("/register", async (req, res) =>
+    {
+      await self.db.registerUser(req.body.name, req.body.password);
+      res.status(200).redirect("/client/html/checkout.html");
+    })
+
+    app.get( '/private', checkLoggedIn, // If we are logged in (notice the comma!)...
+      (req, res) => {
+        // Go to the user's page.
+        res.status(200).json({username: req.user});
+      }
+    );
 
     //CART ENDPOINTS
     /*
