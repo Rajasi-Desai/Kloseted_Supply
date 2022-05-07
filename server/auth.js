@@ -10,12 +10,13 @@ const { Strategy } = passportLocal;
 // authenticate a user using a username and password.
 const strategy = new Strategy(async (username, password, done) => {
   const db = new Database(process.env.DATABASE_URL);
+  await db.connect();
       await db.connect();
-  if (!users.findUser(username)) {
+  if (!db.getUser(username) === null) {
     // no such user
     return done(null, false, { message: 'Wrong username' });
   }
-  if (!users.validatePassword(username, password)) {
+  if (db.getUser(username).password !== password) {
     // invalid password
     // should disable logins after N messages
     // delay return to rate-limit brute-force attacks

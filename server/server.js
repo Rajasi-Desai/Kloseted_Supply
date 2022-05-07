@@ -3,9 +3,6 @@ import express from 'express';
 import logger from 'morgan';
 import expressSession from 'express-session';
 import auth from './auth.js';
-import {users} from '../client/js/users.js';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 import { Database } from './database.js';
 
 class Server {
@@ -43,7 +40,7 @@ class Server {
 
     //USER ENDPOINTS
 
-    this.app.post("/register", async (req, res) =>
+    this.app.post("/registerUser", async (req, res) =>
     {
       await self.db.registerUser(req.body.name, req.body.password);
       res.status(200).redirect("/client/html/checkout.html");
@@ -70,31 +67,31 @@ class Server {
     });
     
 
-    this.app.post('/user/id/cart/add', async (request, response) => {
+    this.app.post('/addItemCart', async (request, response) => {
       const options = request.body;
       await self.db.addItemCart(options.item, options.user);
       response.status(200).json({ status: 'success' });
     });
 
-    this.app.put('/user/id/cart/increment', async (request, response) => {
+    this.app.put('/incrementItemCart', async (request, response) => {
       const options = request.body;
       await self.db.incrementItemCart(options.item, options.user);
       response.status(200).json({ status: 'success' });
     });
 
-    this.app.put('/user/id/cart/decrement', async (request, response) => {
+    this.app.put('/decrementItemCart', async (request, response) => {
       const options = request.body;
       await self.db.decrementItemCart(options.item, options.user);
       response.status(200).json({ status: 'success' });
     });
 
-    this.app.delete('/user/id/cart/delete', async (request, response) => {
+    this.app.delete('/deleteItemCart', async (request, response) => {
       const options = request.body;
       await self.db.deleteItemCart(options.item, options.user);
       response.status(200).json({ status: 'success' });
     });
 
-    this.app.get('/user/id/cart/empty', async (request, response) => {
+    this.app.get('/emptyCart', async (request, response) => {
       const options = request.body;
       await self.db.emptyCart(options.user);
       response.status(200).json({ status: 'success' });
@@ -106,7 +103,7 @@ class Server {
     1. `/user/id/cart`: Allows user to view their cart
     */
 
-    this.app.get('/user/id/cart', async (request, response) => {
+    this.app.get('/getCart', async (request, response) => {
       const options = request.body;
       await self.db.getCart(options.user);
       response.status(200).json({ status: 'success' });
