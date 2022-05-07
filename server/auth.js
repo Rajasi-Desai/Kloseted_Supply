@@ -1,6 +1,6 @@
 import passport from 'passport';
 import passportLocal from 'passport-local';
-import {Database} from "./Database.js"
+import { Database } from './database.js';
 
 const { Strategy } = passportLocal;
 
@@ -9,7 +9,7 @@ const { Strategy } = passportLocal;
 // password credentials from the client. The LocalStrategy object is used to
 // authenticate a user using a username and password.
 const strategy = new Strategy(async (username, password, done) => {
-  const db = new Database(process.env.DATABASE_URL);
+  const db = new Database(process.env.DB_URL);
   await db.connect();
   if(username === null)
   {
@@ -21,11 +21,13 @@ const strategy = new Strategy(async (username, password, done) => {
     window.alert("Must enter a password!");
     return done(null, false, { message: 'No password' });
   }
-  if (!db.getUser(username) === null) {
+  let user = await db.getUser(username);
+
+  if (user === null) {
     // no such user
     return done(null, false, { message: 'Wrong username' });
   }
-  if (db.getUser(username).password !== password) {
+  if (user.password !== password) {
     // invalid password
     // should disable logins after N messages
     // delay return to rate-limit brute-force attacks
@@ -44,7 +46,7 @@ passport.use(strategy);
 
 // Convert user object to a unique identifier.
 passport.serializeUser((user, done) => {
-  done(null, user);
+  done(null, {id: user.id, username : user.username});
 });
 
 // Convert a unique identifier to a user object.

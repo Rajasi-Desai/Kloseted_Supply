@@ -25,17 +25,20 @@ class Server {
   
   async initRoutes() {
     const self = this;
-
+/*
     // Our own middleware to check if the user is authenticated
     function checkLoggedIn(req, res, next) {
       if (req.isAuthenticated()) {
+        console.log("yo")
         // If we are authenticated, run the next route.
         next();
       } else {
+        console.log("go")
         // Otherwise, redirect to the login page.
         res.redirect('/html/login.html');
       }
       }
+    */
 
     //USER ENDPOINTS
 
@@ -56,14 +59,19 @@ class Server {
 
     this.app.post("/register", async (req, res) =>
     {
-      await self.db.registerUser(req.body.name, req.body.password);
+      await self.db.registerUser(req.body.username, req.body.password);
       res.status(200).redirect("/html/checkout.html");
     })
 
-    this.app.get( '/private', checkLoggedIn, // If we are logged in (notice the comma!)...
-      (req, res) => {
-        // Go to the user's page.
-        res.status(200).json({username: req.user});
+    this.app.get('/private', (req, res) => {
+        if(req.isAuthenticated())
+        {
+          res.status(200).json({username: req.user.username});
+        }
+        else
+        {
+          res.status(200).json({username: null});
+        }
       }
     );
 
@@ -112,8 +120,9 @@ class Server {
     //Gets user's cart
     this.app.get('/getCart', async (request, response) => {
       const options = request.body;
-      await self.db.getCart(options.user);
+      const cart = await self.db.getCart(options.name);
       response.status(200).json({ status: 'success' });
+      return cart;
     });
 
     //Gets all items from database
@@ -142,6 +151,4 @@ class Server {
 }
 
 const server = new Server(process.env.DB_URL);
-console.log('line 95')
 server.start();
-console.log('line 97')

@@ -45,13 +45,13 @@ Each `Order` document has the following format:
 # Contribution
 
 ### Rajasi: 
-I worked on the markdown file and connected the database to heroku.
+I worked on the markdown file and connected the database to Heroku by adding the config variables.
 
 
 ### Grace: 
 
 
 ### Isi:
-
+I implemented the `Database` class and its methods, connecting to the server endpoints.
 
 ### Aryan:

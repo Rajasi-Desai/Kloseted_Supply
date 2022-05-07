@@ -1,12 +1,23 @@
 // Event listeners to increment and decrement from the cart
 // Event listener on checkout button to decrement the stock of items. Should also alert uesr if there isn't enough stock
-//const { format } = require("morgan");
-
+import { Database } from "../../server/database.js";
 const logintab = document.getElementById("logintab");
 const table = document.querySelector('table');
 const checkout = document.getElementById('checkout');
 const empty = document.getElementById('empty');
-const user = await(await(await fetch('../js/dummy-users.json')).json()).find(u => u.id = localStorage.getItem('id'));
+let response = await fetch("/private", 
+    {
+        method: "GET",
+        headers: {'Content-Type': 'application/json'} 
+    });
+
+const userCheck = await response.json();
+console.log(userCheck);
+const username = userCheck["username"];
+const db = new Database(process.env.DB_URL);
+await db.connect();
+const user = db.getUser(username);
+
 
 function renderCart() {
     table.innerHTML = '';
@@ -76,13 +87,15 @@ empty.addEventListener('click', e =>  {
     renderCart();
 });
 
-if (localStorage.getItem("loggedIn") === "true")
+if(username !== null)
 {
   logintab.innerHTML = "<a href='login.html'>Logout</a>";
-  logintab.onclick = function() {
-    localStorage.setItem("loggedIn", "false");
-    localStorage.removeItem("id");
-    window.location.reload();
+  logintab.onclick = async function() {
+    await fetch("/logout", 
+    {
+        method: "GET",
+        headers: {'Content-Type': 'application/json'} 
+    });
   };
 }
 else
@@ -91,4 +104,16 @@ else
   logintab.removeAttribute("onlick");
 }
 
-renderCart(table);
+async function getUser(username) {
+    let response = await fetch(`/getUser`, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+
+    const user = await response.json();
+    return user;
+}
+
+renderCart();

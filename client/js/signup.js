@@ -1,3 +1,4 @@
+/*
 const logintab = document.getElementById("logintab");
 const usernameinput = document.getElementById("usernameinput");
 const passwordinput = document.getElementById("passwordinput");
@@ -74,3 +75,4 @@ async function signup()
   }
   return;
 }
+*/

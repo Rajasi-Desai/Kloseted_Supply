@@ -3,13 +3,13 @@
 **Subtitle: Kloseted supply**
 ---
 **Semester: Spring 2022**
----
+---  
 
-# Overview: 
-
-> A brief overview of your application. This will be based on what you are submitting as your final web application artifact. You should also mention why your application is innovative.
+# Overview:
 
 We want to create an inventory tracker for the Student Care Supply Closets that is managed by the Dean of Students Office. The Student Care Supply Closets provides free toiletries and household items for students struggling economically. There is currently no way for students to know if they have the items they need in stock. So we want to create an inventory tracker that will let students know what is currently available. Additionally, we want to create a form for someone to ask how much they need for each item. 
+
+Currently, the Supply Closet uses a Microsoft form to handle any requests. So, we wanted to automate this process for them to a certain degree and also make a user-friendly interface for people who are using this resource. The result is our website, Klosested Supply.
 
 # Team Members:
 
@@ -22,7 +22,6 @@ We want to create an inventory tracker for the Student Care Supply Closets that 
 
 
 # User Interface: 
-> A final up-to-date list/table describing your application’s user interface. This should include the name of the UI view and its purpose. You should include a screenshot of each of your UI views.
 
 The following are the UI views of our application and a brief decription of them:
 
@@ -59,103 +58,73 @@ Checkout page is used to "checkout" and submit a request for all the items a use
 ### Map page to find locations
 This page links Google Maps and points out to all the locations that provide free Menstural products.
 
-![Map](../docs/img/mockup/map.png "Map page to find locations")
+![Map](../docs/img/final/Map.png "Map page to find locations")
 
 
 # APIs: 
 > A final up-to-date list/table describing your application’s API
 
-# Database: 
-> A final up-to-date representation of your database including a brief description of each of the entities in your data model and their relationships if any.
 
-Database: supply
 
-There are two collections within this database.
+# Database
 
-## Items
+We implemented our database `supply` with MongoDB. It has three collections: `items`, `users`, and `orders`.
 
-Items collection is used store the current inventory of the Supply Closet. 
+## `items`
 
-Each Item in the database has:
-- id - ID for the given item
-- name - Name of the Item
-- stock - Contains the current stock of the item
-- description - Contains the description of the item
-- tags - Contains the tags of the items. Used for filtering the products page
-- image - Contiains the name of the image file that is used to display the item
+The `items` collection is used store the current inventory of Kloseted Supply.
 
+Each `Item` document has the following format:
 ```json
-item document     
 {    
-    id: Integer,       
-    name: String,  
-    stock: Integer,  
-    description: String,  
-    tags: Array of Strings,  
-    image: String  
+    id: Integer, //Item's identification number
+    name: String, //Item's name
+    stock: Integer, //Item's stock in inventory
+    description: String, //Item's description
+    tags: Array<String>,  //Item's tags
+    image: String  //Filename of Item's image
 }
 ```
 
+## `users` 
+The `users` collection is used to store all the users of the website.
 
-## Users 
-
-Users collection is used to store all the users of the website.
-
-Each User in the database has:
-
-- username - Contains the username of the user
-- password - Contains the password for the user
-- cart - Has the cart of the user
-    -  Each cart consists of:
-        - id - ID of the cart 
-        - items - An array of all items in the cart of type Item along with the quantities of those items in the cart
-
+Each `User` document has the following format:
 ```json
-users document  
 {
-    username: String,
-    password: String,
-    cart: {
-        id: Integer,
-        items: [{
-            item: Item, 
-            quantity: Integer
-            }]
-    }
+    name: String, //User's name
+    password: String, //User's password
+    cart: Array<Item> //User's cart
+}
+```
+
+## `orders` 
+The `orders` collection is used to store all the orders placed on the website.
+
+Each `Order` document has the following format:
+```json
+{
+    username: String, //Name of user who placed the order
+    timestamp: Date, //Time and date user placed the order
+    items: Array<Item> //The items the user ordered
 }
 ```
 
 # URL Routes/Mappings: 
-> A final up-to-date table of all the URL routes that your application supports and a short description of what those routes are used for. You should also indicate any authentication and permissions on those routes.
 
 ## User endpoints
-
-### Login
-1. `/user/register?username=<username>&password=<password>`: Register new user
-2. `/user/login`: Login existing user
-3. `/user/id/update?password=<new_password>`: Update user's password
-
-### Cart
-1. `/user/id/cart/add?item=<item_name>` : To add the item to the user's cart
-2. `/user/id/cart/increment?item=<item_name>` : To increment the item in the user's cart
-3. `/user/id/cart/decrement?item=<item_name>` : To decrement the item in the user's cart
-4. `/user/id/cart/delete?item=<item_name>` : Completely removes an item from the user's cart
-5. `/user/id/cart/empty` : Removes all items from the user's cart
-
-### Checkout
-1. `/user/id/checkout/view`: Allows user to view items and checkout
-2. `/user/id/cart`: Allows user to view their cart
-
-
-## Admin endpoints
-
-### Item
-1. `/item/id/view`: Allows for viewing a item which will self contain it's tag information, quantity, and description
-2. `/item/id/update?quantity=<value>`: Allows to update an item's quantity
-3. `/item/id/update?tag=<value>` : Allows to update the item's tags.
-4. `/item/id/update?description=<value>`: Allows to update an item's description
-5. `/item/create?name=<item_name>&quantity=<quantity>&tag=<tag_values>&description=<desc_value>`: Allows for creating an item for the database.
-6. `/item/id/delete` : Deletes the item from the database
+- `/register`: Registers a new user
+- `/private`: TBD
+## Cart endpoints
+For all cart endpoints, authentication of the user is required
+- `/getCart`: Gets the user's cart
+- `/addItemCart`: Adds the given item to the user's cart
+- `/incrementItemCart`: Increments the quantity of the given item in the user's cart
+- `/decrementItemCart`: Decrements the quantity of the given item in the user's cart
+- `/deleteItem`: Deletes the given item from the user's cart
+- `/emptyCart`: Deletes all items from the user's cart
+## Item endpoints
+## Order endpoints
 
 
 # Authentication/Authorization: 
@@ -176,6 +145,10 @@ users document
 
 # Conclusion: 
 > A conclusion describing your team’s experience in working on this project. This should include what you learned through the design and implementation process, the difficulties you encountered, what your team would have liked to know before starting the project that would have helped you later, and any other technical hurdles that your team encountered.
+
+This project was definitely a fun one to do but required a lot of effort. One of the major things we learned through this was team work and collaboration. All four of us were pair programming most of the time for this project using LiveShare in VScode. 
+
+We would have loved to know about authentication and database stuff beforehand beucause later it came to a point where we were rewriting a lot of the code to have it compatible with these things. 
 
 # Link to the hosted application:
 

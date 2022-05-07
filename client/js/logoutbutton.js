@@ -1,4 +1,5 @@
 const logintab = document.getElementById("logintab");
+
 let response = await fetch("/private", 
     {
         method: "GET",
@@ -7,11 +8,13 @@ let response = await fetch("/private",
 
 const user = await response.json();
 console.log(user);
+const username = user["username"];
+console.log(username);
 
-if(user !== null)
+if(username !== null)
 {
   logintab.innerHTML = "<a href='login.html'>Logout</a>";
-  logintab.onclick = function() {
+  logintab.onclick = async function() {
     await fetch("/logout", 
     {
         method: "GET",

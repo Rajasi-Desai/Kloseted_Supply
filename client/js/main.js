@@ -16,10 +16,27 @@ else {
 //NEED TO CREATE A CART ITEM?
 let cartIdCounter = 0;
 
+async function getCart(username) {
+    const response = await fetch('/getCart', {
+            method: 'GET',
+            headers: {'Content-Type:': 'application/json'},
+            body: JSON.stringify({name: username})
+        });
+
+    const cart = await response.json();
+    return cart;
+}
+
+function displayCart(cart) {
+    for (let i = 0; i < cart.length; i++) {
+        displayCartItem(cart[i].id);
+    }
+}
+
 function displayCartItem(itemId) {
     const newItemDiv = document.createElement("div");
-    const plusButton = document.createElement("button");
-    const minusButton = document.createElement("button");
+    //const plusButton = document.createElement("button");
+    //const minusButton = document.createElement("button");
 
     /*
     plusButton.setAttribute("id", `plus${itemId}`);
@@ -35,7 +52,7 @@ function displayCartItem(itemId) {
     newItemDiv.setAttribute("id", `itemDivId${itemId}`);
 
     const quantityDefault = document.createElement("span");
-    quantityDefault.appendChild(document.createTextNode("1"));
+    quantityDefault.appendChild(document.createTextNode(itemId.stock));
     quantityDefault.setAttribute("id", "number-of-items");
 
     /*
@@ -46,10 +63,15 @@ function displayCartItem(itemId) {
     rightDiv.classList.add("right-div");
 
     */
-
+    
+    const rightDiv = document.createElement("div");
+    rightDiv.appendChild(quantityDefault);
+    rightDiv.classList.add("right-div");
 
     newItemDiv.classList.add("cartItem");
-    newItemDiv.appendChild(document.createTextNode(products[itemId]));
+    newItemDiv.appendChild(document.createTextNode(itemId.name));
+    //console.log(itemId.name);
+    //newItemDiv.appendChild(document.createTextNode(products[itemId]));
     //newItemDiv.appendChild(rightDiv);
     //newItemDiv.appendChild(plusButton);
     newItemDiv.appendChild(quantityDefault);
@@ -89,11 +111,6 @@ function getYCoordinateOfLink(l) {
     };
 }
 
-function getAllItems2() {
-    let allItems = fetch("../js/dummy-items.json").then(res => res.json());
-    return allItems
-}
-
 async function getAllItems() {
     let response = await fetch(`/getAllItems`, {
         method: "GET",
@@ -102,9 +119,7 @@ async function getAllItems() {
         }
     });
 
-    console.log(response)
     const data = await response.json();
-    console.log(data)
     return data;
 }
 
@@ -116,10 +131,8 @@ function displayProductGridItem(productName, id) {
 
     name.textContent = productName
     quant.setAttribute("type", "number");
-    //quant.setAttribute("value", 0);
     quant.setAttribute("min", "0");
     addToCart.textContent = "Add to Cart"
-
 
     name.setAttribute("id", `product-listing-name-${id}`);
     quant.setAttribute("id", `product-listing-quant-${id}`);
@@ -127,9 +140,11 @@ function displayProductGridItem(productName, id) {
 
     //changed to display cart item
     addToCart.addEventListener("click", () => {
-        for (let i = 0; i < quant.value; i++) {
-            displayCartItem(id);
-        }
+        //let itemID = getAllItems().then(result => result.find(item => item.id === id));
+        //itemID.then(displayCartItem);
+        ///?????????????????????????????????????????????//
+        let cart = await getCart(this.username);
+        displayCart(cart)
     });
 
     name.addEventListener("mouseover", event => {
@@ -141,7 +156,6 @@ function displayProductGridItem(productName, id) {
         let cardContainer = document.querySelector('[class*="card-container"]');
 
         let newTag = event.target.innerHTML.trim();
-        // console.log(newTag)
 
         //make sure there are no boolean bugs
         if (cardContainer == null) {
@@ -168,9 +182,9 @@ function displayProductGridItem(productName, id) {
                 setTimeout(() => {
                     cardContainer.remove()
                     mouseOverCardContainer = false
-                }, 500)
+                }, 1000)
             }
-        }, 100)
+        }, 200)
     })
 
     newItemDiv.classList.add("grid-item");
@@ -188,9 +202,9 @@ function mouseOutOfContainer(cardContainer) {
             cardContainer.style.animation = "cardContainerOut 0.3s forwards"
             setTimeout(() => {
                 cardContainer.remove()
-            }, 500)
+            }, 1000)
         }
-    }, 100)
+    }, 200)
 }
 
 function mouseInContainer(cardContainer) {

@@ -113,6 +113,7 @@ export class Database {
         return item;
     }
 
+    //Places order
     async placeOrder(username) {
         const cart = await this.getUser(username).cart;
         this.orders.insertOne({username: username, timestamp: new Date().toISOString(), items: cart});
