@@ -13,24 +13,26 @@ else {
     logintab.removeAttribute("onlick");
 }
 
-// import {Cart} from "./cart.js";
+//NEED TO CREATE A CART ITEM?
 let cartIdCounter = 0;
-//let itemIdCounter = 0;
 
 function displayCartItem(itemId) {
     const newItemDiv = document.createElement("div");
     const plusButton = document.createElement("button");
     const minusButton = document.createElement("button");
 
+    /*
     plusButton.setAttribute("id", `plus${itemId}`);
     minusButton.setAttribute("id", `minus${itemId}`);
-    newItemDiv.setAttribute("id", `itemDivId${itemId}`);
 
     plusButton.appendChild(document.createTextNode("+"));
     minusButton.appendChild(document.createTextNode("-"));
 
     plusButton.classList.add("cartButton");
     minusButton.classList.add("cartButton");
+    */
+
+    newItemDiv.setAttribute("id", `itemDivId${itemId}`);
 
     const quantityDefault = document.createElement("span");
     quantityDefault.appendChild(document.createTextNode("1"));
@@ -49,9 +51,9 @@ function displayCartItem(itemId) {
     newItemDiv.classList.add("cartItem");
     newItemDiv.appendChild(document.createTextNode(products[itemId]));
     //newItemDiv.appendChild(rightDiv);
-    newItemDiv.appendChild(plusButton);
+    //newItemDiv.appendChild(plusButton);
     newItemDiv.appendChild(quantityDefault);
-    newItemDiv.appendChild(minusButton);
+    //newItemDiv.appendChild(minusButton);
 
     //console.log("in");
     document.getElementById("currentCart").appendChild(newItemDiv);
