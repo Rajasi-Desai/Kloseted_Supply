@@ -3,7 +3,7 @@ import express from 'express';
 import logger from 'morgan';
 import expressSession from 'express-session';
 import auth from './auth.js';
-//import users from './users.js';
+import {users} from '../client/js/users.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { Database } from './database.js';
@@ -16,6 +16,25 @@ class Server {
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(logger('dev'));
     this.app.use('/', express.static('client'));
+    const sessionConfig = {
+      // set this encryption key in Heroku config (never in GitHub)!
+      secret: process.env.SECRET || 'SECRET',
+      resave: false,
+      saveUninitialized: false,
+    }
+    app.use(expressSession(sessionConfig));
+    auth.configure(app);
+  }
+
+  // Our own middleware to check if the user is authenticated
+  checkLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    // If we are authenticated, run the next route.
+    next();
+  } else {
+    // Otherwise, redirect to the login page.
+    res.redirect('/login');
+  }
   }
 
   async initRoutes() {

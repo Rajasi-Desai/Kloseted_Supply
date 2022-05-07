@@ -1,20 +1,26 @@
-import {User} from "database.js";
+import {User, Database} from "../../server/database.js";
 
-class users {
+export class users {
     constructor() {
       // we use an in-memory "database"; this isn't persistent but is easy
       // default user
-      this.users = { amangalik: new User("amangalik", "Mitski")};
+      const db = new Database(process.env.DATABASE_URL);
+      await db.connect();
     }
   
     // Returns true iff the user exists.
     findUser(username) {
-      if (!this.users[username]) {
-        return false;
-      } else {
+      let user = await db.getUser(username);
+      if(user !== null)
+      {
         return true;
       }
+      else
+      {
+        return false;
+      }
     }
+    
   
     // Returns true iff the password is the one we have stored (in plaintext = bad
     // but easy).
