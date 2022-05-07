@@ -1,19 +1,43 @@
 //The main file that runs everything
-const logintab = document.getElementById("logintab");
-if (localStorage.getItem("loggedIn") === "true") {
-    logintab.innerHTML = "<a href='login.html'>Logout</a>";
-    logintab.onclick = function () {
-        localStorage.setItem("loggedIn", "false");
-        localStorage.removeItem("id");
-        window.location.reload();
-    };
+let response = await fetch("/private", 
+    {
+        method: "GET",
+        headers: {'Content-Type': 'application/json'} 
+    });
+
+const userCheck = await response.json();
+const username = userCheck["username"];
+const user = await getUser(username);
+
+if(username !== null)
+{
+  logintab.innerHTML = "<a href='login.html'>Logout</a>";
+  logintab.onclick = async function() {
+    await fetch("/logout", 
+    {
+        method: "GET",
+        headers: {'Content-Type': 'application/json'} 
+    });
+  };
 }
-else {
-    logintab.innerHTML = "<a href='login.html'>Login</a>";
-    logintab.removeAttribute("onlick");
+else
+{
+  logintab.innerHTML = "<a href='login.html'>Login</a>";
+  logintab.removeAttribute("onlick");
 }
 
-//NEED TO CREATE A CART ITEM?
+async function getUser(username) {
+    let response = await fetch(`/getUser?username=${username}`, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    const user = await response.json();
+    return user;
+}
+
 let cartIdCounter = 0;
 
 async function getCart(username) {
@@ -35,34 +59,12 @@ function displayCart(cart) {
 
 function displayCartItem(itemId) {
     const newItemDiv = document.createElement("div");
-    //const plusButton = document.createElement("button");
-    //const minusButton = document.createElement("button");
-
-    /*
-    plusButton.setAttribute("id", `plus${itemId}`);
-    minusButton.setAttribute("id", `minus${itemId}`);
-
-    plusButton.appendChild(document.createTextNode("+"));
-    minusButton.appendChild(document.createTextNode("-"));
-
-    plusButton.classList.add("cartButton");
-    minusButton.classList.add("cartButton");
-    */
 
     newItemDiv.setAttribute("id", `itemDivId${itemId}`);
 
     const quantityDefault = document.createElement("span");
     quantityDefault.appendChild(document.createTextNode(itemId.stock));
     quantityDefault.setAttribute("id", "number-of-items");
-
-    /*
-    const rightDiv = document.createElement("div");
-    rightDiv.appendChild(plusButton);
-    rightDiv.appendChild(quantityDefault);
-    rightDiv.appendChild(minusButton);
-    rightDiv.classList.add("right-div");
-
-    */
     
     const rightDiv = document.createElement("div");
     rightDiv.appendChild(quantityDefault);
@@ -70,14 +72,9 @@ function displayCartItem(itemId) {
 
     newItemDiv.classList.add("cartItem");
     newItemDiv.appendChild(document.createTextNode(itemId.name));
-    //console.log(itemId.name);
-    //newItemDiv.appendChild(document.createTextNode(products[itemId]));
-    //newItemDiv.appendChild(rightDiv);
-    //newItemDiv.appendChild(plusButton);
+    newItemDiv.appendChild(rightDiv);
     newItemDiv.appendChild(quantityDefault);
-    //newItemDiv.appendChild(minusButton);
 
-    //console.log("in");
     document.getElementById("currentCart").appendChild(newItemDiv);
 }
 
@@ -223,9 +220,7 @@ async function getData(tagText) {
 }
 
 function renderData(item) {
-    // console.log(item)
     let cardContainer = document.createElement("div")
-    // let renderContent = generateContent(item.tags, item.image, item.description);
     cardContainer.setAttribute("class", "card-container");
     cardContainer.innerHTML = `
           <div class="card-picture-container">
@@ -280,8 +275,6 @@ let categoryFilter = [
     { labelName: 'Paper Products', checkBoxTag: 'paperproducts' }
 ]
 
-
-
 function displayFilterMenuItem(categoryLabel, categoryTag) {
     const newItemDiv = document.createElement("div");
     const check = document.createElement("input");
@@ -306,8 +299,6 @@ function buildFilterMenu() {
     categoryFilter.forEach((item) => displayFilterMenuItem(item.labelName, item.checkBoxTag))
 }
 
-
-
 let categoryIds = ['filter-check-hygiene',
     'filter-check-hair-care',
     'filter-check-body-care',
@@ -324,7 +315,6 @@ let categoryFilteredIds = []
 buildProductGrid();
 buildFilterMenu();
 
-
 categoryIds.forEach((id) => {
     document.getElementById(id).addEventListener("change", function () {
         if (this.checked === true) {
@@ -336,4 +326,3 @@ categoryIds.forEach((id) => {
         buildProductGrid();
     })
 })
-

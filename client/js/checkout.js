@@ -1,6 +1,3 @@
-// Event listeners to increment and decrement from the cart
-// Event listener on checkout button to decrement the stock of items. Should also alert uesr if there isn't enough stock
-
 const logintab = document.getElementById("logintab");
 const table = document.querySelector('table');
 const checkout = document.getElementById('checkout');
@@ -36,6 +33,7 @@ function renderCart() {
             increment.className = 'increment';
             increment.value = '+';
             increment.addEventListener('click', e => {
+                incrementCartItem(item.id);
                 ++item.stock;
                 renderCart();
             });
@@ -101,12 +99,11 @@ else
 }
 
 async function getUser(username) {
-    let response = await fetch(`/getUser`, {
-        method: "POST",
+    let response = await fetch(`/getUser?username=${username}`, {
+        method: "GET",
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({"username": username})
     });
 
     const user = await response.json();
