@@ -4,14 +4,15 @@
 // Keep "is logged in" true or false in local storage
 // Keep the user's id in local storage if they're logged in as well
 
+/*
 const usernameinput = document.getElementById("usernameinput");
 const passwordinput = document.getElementById("passwordinput");
 const rememberme = document.getElementById("rememberme");
 const loginbutton = document.getElementById("loginbutton");
 const logintab = document.getElementById("logintab");
+*/
 
-const localStorage = window.localStorage;
-
+/*
 let response = await fetch("../js/users.json");
 if(response.ok)
 {
@@ -21,14 +22,18 @@ else
 {
   alert("HTTP-Error: " + response.status);
 }
+*/
 
+/*
 if(localStorage.getItem("username") !== null && localStorage.getItem("password") !== null)
 {
   usernameinput.value = localStorage.getItem("username");
   passwordinput.value = localStorage.getItem("password");
   rememberme.value = "on";
 }
+*/
 
+/*
 if(localStorage.getItem("loggedIn") === "true")
 {
   logintab.innerHTML = "<a class='active' href='login.html'>Logout</a>";
@@ -43,9 +48,9 @@ else
   logintab.innerHTML = "<a class='active' href='login.html'>Login</a>";
   logintab.removeAttribute("onlick");
 }
+*/
 
-loginbutton.addEventListener("click", login);
-
+/*
 function login()
 {
   if(localStorage.getItem("loggedIn") === "true")
@@ -83,3 +88,4 @@ function login()
   }
   window.alert("Not a valid account!");
 }
+*/

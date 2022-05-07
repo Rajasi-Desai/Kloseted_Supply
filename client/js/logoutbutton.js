@@ -1,11 +1,22 @@
 const logintab = document.getElementById("logintab");
-if(localStorage.getItem("loggedIn") === "true")
+let response = await fetch("/private", 
+    {
+        method: "GET",
+        headers: {'Content-Type': 'application/json'} 
+    });
+
+const user = await response.json();
+console.log(user);
+
+if(user !== null)
 {
   logintab.innerHTML = "<a href='login.html'>Logout</a>";
   logintab.onclick = function() {
-    localStorage.setItem("loggedIn", "false");
-    localStorage.removeItem("id");
-    window.location.reload();
+    await fetch("/logout", 
+    {
+        method: "GET",
+        headers: {'Content-Type': 'application/json'} 
+    });
   };
 }
 else

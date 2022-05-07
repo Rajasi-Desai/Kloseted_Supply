@@ -19,34 +19,48 @@ class Server {
       resave: false,
       saveUninitialized: false,
     }
-    app.use(expressSession(sessionConfig));
-    auth.configure(app);
+    this.app.use(expressSession(sessionConfig));
+    auth.configure(this.app);
   }
-
-  // Our own middleware to check if the user is authenticated
-  checkLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    // If we are authenticated, run the next route.
-    next();
-  } else {
-    // Otherwise, redirect to the login page.
-    res.redirect('/client/html/login.html');
-  }
-  }
-
   
   async initRoutes() {
     const self = this;
 
+    // Our own middleware to check if the user is authenticated
+    function checkLoggedIn(req, res, next) {
+      if (req.isAuthenticated()) {
+        // If we are authenticated, run the next route.
+        next();
+      } else {
+        // Otherwise, redirect to the login page.
+        res.redirect('/html/login.html');
+      }
+      }
+
     //USER ENDPOINTS
 
-    this.app.post("/registerUser", async (req, res) =>
+    // Handle post data from the login.html form.
+    this.app.post('/login',
+      auth.authenticate('local', {
+        // use username/password authentication
+        successRedirect: '/html/checkout.html', // when we login, go to /private
+        failureRedirect: '/html/login.html', // otherwise, back to login
+      })
+    );
+
+      // Handle logging out (takes us back to the login page).
+    this.app.get('/logout', (req, res) => {
+      req.logout(); // Logs us out!
+      res.redirect('/html/login.html'); // back to login
+    });
+
+    this.app.post("/register", async (req, res) =>
     {
       await self.db.registerUser(req.body.name, req.body.password);
-      res.status(200).redirect("/client/html/checkout.html");
+      res.status(200).redirect("/html/checkout.html");
     })
 
-    app.get( '/private', checkLoggedIn, // If we are logged in (notice the comma!)...
+    this.app.get( '/private', checkLoggedIn, // If we are logged in (notice the comma!)...
       (req, res) => {
         // Go to the user's page.
         res.status(200).json({username: req.user});
@@ -54,43 +68,40 @@ class Server {
     );
 
     //CART ENDPOINTS
-    /*
-    1. `/user/id/cart/add?item=<item_name>` : To add the item to the user's cart
-    2. `/user/id/cart/increment?item=<item_name>` : To increment the item in the user's cart
-    3. `/user/id/cart/decrement?item=<item_name>` : To decrement the item in the user's cart
-    4. `/user/id/cart/delete?item=<item_name>` : Completely removes an item from the user's cart
-    5. `/user/id/cart/empty` : Removes all items from the user's cart
-  */
     
     this.app.get('/', function(req, res){
       res.redirect('/html/');
     });
     
-
+    //Add item to the user's cart
     this.app.post('/addItemCart', async (request, response) => {
       const options = request.body;
       await self.db.addItemCart(options.item, options.user);
       response.status(200).json({ status: 'success' });
     });
 
+    //Increments stock of item in user's cart
     this.app.put('/incrementItemCart', async (request, response) => {
       const options = request.body;
       await self.db.incrementItemCart(options.item, options.user);
       response.status(200).json({ status: 'success' });
     });
 
+    //Decrements stock of item in user's cart
     this.app.put('/decrementItemCart', async (request, response) => {
       const options = request.body;
       await self.db.decrementItemCart(options.item, options.user);
       response.status(200).json({ status: 'success' });
     });
 
+    //Deletes item in user's cart
     this.app.delete('/deleteItemCart', async (request, response) => {
       const options = request.body;
       await self.db.deleteItemCart(options.item, options.user);
       response.status(200).json({ status: 'success' });
     });
 
+    //Empties all items from user's cart
     this.app.get('/emptyCart', async (request, response) => {
       const options = request.body;
       await self.db.emptyCart(options.user);
@@ -98,18 +109,14 @@ class Server {
     });
 
 
-    //CHECKOUT ENDPOINTS
-    /*
-    1. `/user/id/cart`: Allows user to view their cart
-    */
-
+    //Gets user's cart
     this.app.get('/getCart', async (request, response) => {
       const options = request.body;
       await self.db.getCart(options.user);
       response.status(200).json({ status: 'success' });
     });
 
-    //Items
+    //Gets all items from database
     this.app.get('/getAllItems', async (request, response) => {
       let items = await self.db.getAllItems();
       response.status(200).json(items);

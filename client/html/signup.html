@@ -32,25 +32,27 @@
   <h1>Sign Up Page</h1>
 
   <div id = "wrap">
+  <form action = "/register" method = "post">
   <p>
   <label>Username: </label>
-  <input id = "usernameinput", type = "text">
+  <input id = "username", type = "text">
   </p>
   
   <p>
   <label>Password: </label>
-  <input id = "passwordinput", type = "password">
+  <input id = "password", type = "password">
   </p>
 
+  <!--
   <p>
     <label>Verify Password: </label>
     <input id = "verifypasswordinput", type = "password">
     </p>
-
+  -->
   <p>
   <input id = "rememberme" type = "checkbox">
   <label> Remember me?</label>
-  <button id = "signupbutton">Sign Up</button>
+  <input type="submit" value="Sign Up"/>
   </p>
 
   <p>
@@ -58,6 +60,7 @@
   </p>
 
   </div>
+  </form>
   </body>
-  <script type="module" src="../js/signup.js" defer></script>
+  <script type="module" src="../js/logoutbutton.js" defer></script>
 </html>

@@ -11,7 +11,16 @@ const { Strategy } = passportLocal;
 const strategy = new Strategy(async (username, password, done) => {
   const db = new Database(process.env.DATABASE_URL);
   await db.connect();
-      await db.connect();
+  if(username === null)
+  {
+    window.alert("Must enter a username!");
+    return done(null, false, { message: 'No username' });
+  }
+  else if(password === null)
+  {
+    window.alert("Must enter a password!");
+    return done(null, false, { message: 'No password' });
+  }
   if (!db.getUser(username) === null) {
     // no such user
     return done(null, false, { message: 'Wrong username' });

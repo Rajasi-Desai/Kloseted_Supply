@@ -23,6 +23,7 @@ export class Database {
     async init() {
         this.items = this.db.collection('items');
         this.users = this.db.collection('users');
+        this.orders = this.db.collection('orders');
     }
 
     // Close the pool.
@@ -103,7 +104,6 @@ export class Database {
     //Gets all items
     async getAllItems() {
         const items = await this.items.find({}).toArray();
-        console.log(items)
         return items;
     }
 
@@ -112,4 +112,9 @@ export class Database {
         const item = await this.items.findOne({id: itemID});
         return item;
     }
+
+    async placeOrder(username) {
+        const cart = await this.getUser(username).cart;
+        this.orders.insertOne({username: username, timestamp: new Date().toISOString(), items: cart});
+    } 
 }
