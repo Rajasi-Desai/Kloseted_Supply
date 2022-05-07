@@ -13,9 +13,7 @@ let response = await fetch("/private",
 
 const userCheck = await response.json();
 const username = userCheck["username"];
-console.log(username);
 const user = await getUser(username);
-console.log(user);
 
 function renderCart() {
     table.innerHTML = '';
