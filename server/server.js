@@ -75,6 +75,17 @@ class Server {
       }
     );
 
+    this.app.post('/getUser', (req, res) => {
+      if(req.isAuthenticated())
+      {
+        res.status(200).json(self.db.getUser(req.body.username));
+      }
+      else
+      {
+        res.status(200).json(null);
+      }
+    });
+
     //CART ENDPOINTS
     
     this.app.get('/', function(req, res){

@@ -49,7 +49,7 @@ I worked on the markdown file and connected the database to Heroku by adding the
 
 
 ### Grace: 
-
+I worked on the Database class and connected some server endpoints. I also worked on changing on how to get the data from a JSON to getting from a database
 
 ### Isi:
 I implemented the `Database` class and its methods, connecting to the server endpoints.

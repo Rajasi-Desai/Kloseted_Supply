@@ -110,7 +110,7 @@ Each `Order` document has the following format:
 }
 ```
 
-# URL Routes/Mappings: 
+# URL Routes/Mappings
 
 ## User endpoints
 - `/register`: Registers a new user
@@ -127,10 +127,10 @@ For all cart endpoints, authentication of the user is required
 ## Order endpoints
 
 
-# Authentication/Authorization: 
+# Authentication/Authorization:
 > A final up-to-date description of how users are authenticated and any permissions for specific users (if any) that you used in your application. You should mention how they relate to which UI views are accessible.
 
-# Division of Labor:
+# Division of Labor
 
 ### Rajasi: 
 
@@ -143,10 +143,11 @@ For all cart endpoints, authentication of the user is required
 
 ### Aryan:
 
-# Conclusion: 
-> A conclusion describing your team’s experience in working on this project. This should include what you learned through the design and implementation process, the difficulties you encountered, what your team would have liked to know before starting the project that would have helped you later, and any other technical hurdles that your team encountered.
+# Conclusion
 
-This project was definitely a fun one to do but required a lot of effort. One of the major things we learned through this was team work and collaboration. All four of us were pair programming most of the time for this project using LiveShare in VScode. 
+This project was definitely a fun one to do but required a lot of effort. One of the major things we learned through this was team work and collaboration. All four of us were pair programming most of the time for this project using LiveShare in VScode. This allowed us to avoid any merge conflicts on Git and allowed us to work together as a team. 
+
+Since we were learning things in class in a way that we had to change up things in a project again and again, it led to slight confusion and disorganization. But in the end we made things work and compatible.
 
 We would have loved to know about authentication and database stuff beforehand beucause later it came to a point where we were rewriting a lot of the code to have it compatible with these things. 
 
@@ -155,4 +156,6 @@ We would have loved to know about authentication and database stuff beforehand b
 https://final-clockwork-326.herokuapp.com/
 
 # Link to the Video:
+upload to youtube
+
 
