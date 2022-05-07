@@ -45,10 +45,9 @@ Each `Order` document has the following format:
 # Contribution
 
 ### Rajasi: 
-I worked on the markdown file and connected the database to Heroku by adding the config variables.
+I worked on the markdown file and connected the database to Heroku by adding the config variables. I also helped rerouting a few routes. 
 
-
-### Grace: 
+### Grace:
 I worked on the Database class and connected some server endpoints. I also worked on changing on how to get the data from a JSON to getting from a database
 
 ### Isi:

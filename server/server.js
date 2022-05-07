@@ -46,7 +46,7 @@ class Server {
     this.app.post('/login',
       auth.authenticate('local', {
         // use username/password authentication
-        successRedirect: '/html/checkout.html', // when we login, go to /private
+        successRedirect: '/html/checkout.html', // when we login, go to /checkout
         failureRedirect: '/html/login.html', // otherwise, back to login
       })
     );
@@ -61,24 +61,23 @@ class Server {
     {
       await self.db.registerUser(req.body.username, req.body.password);
       res.status(200).redirect("/html/checkout.html");
-    })
+    });
 
-    this.app.get('/private', (req, res) => {
+    this.app.get('/private', async (req, res) => {
         if(req.isAuthenticated())
         {
-          res.status(200).json({username: req.user.username});
+          res.status(200).json({username: req.user});
         }
         else
         {
           res.status(200).json({username: null});
         }
-      }
-    );
+      });
 
-    this.app.post('/getUser', (req, res) => {
+    this.app.get('/getUser', async (req, res) => {
       if(req.isAuthenticated())
       {
-        res.status(200).json(self.db.getUser(req.body.username));
+        res.status(200).json(await self.db.getUser(req.query.username));
       }
       else
       {

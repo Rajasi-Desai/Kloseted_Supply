@@ -46,7 +46,7 @@ passport.use(strategy);
 
 // Convert user object to a unique identifier.
 passport.serializeUser((user, done) => {
-  done(null, {id: user.id, username : user.username});
+  done(null, user);
 });
 
 // Convert a unique identifier to a user object.
