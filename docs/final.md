@@ -73,13 +73,14 @@ This page links Google Maps and points out to all the locations that provide fre
 
 # APIs: 
 > A final up-to-date list/table describing your application’s API
-GET /getAllItems - gets all items in the database
-GET /private - 
-GET /getUser?username=name - gets the user with the username=name
-GET /logout
-GET /getCart?username=name - gets the cart from the user with username=name
-POST /addItemCart?itemID=itemID&username=name - add item with itemID to the user's cart with username=name
-POST /incrementCartItem?itemID=itemID&username=name - increment the stock value of the item
+
+GET /getAllItems - gets all items in the database  
+GET /private -   
+GET /getUser?username=name - gets the user with the username=name  
+GET /logout  
+GET /getCart?username=name - gets the cart from the user with username=name  
+POST /addItemCart?itemID=itemID&username=name - add item with itemID to the user's cart with username=name  
+POST /incrementCartItem?itemID=itemID&username=name - increment the stock value of the item  
 
 
 # Database
