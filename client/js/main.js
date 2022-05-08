@@ -230,7 +230,7 @@ function mouseInContainer(cardContainer) {
 
 //get Data for corresponding link being hovered over
 async function getData(tagText) {
-    let allItems = await getAllItems();
+    let allItems = getAllItems();
     let items = allItems;
 
     //tag text should be the name of the product
