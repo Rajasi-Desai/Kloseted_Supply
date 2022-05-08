@@ -1,30 +1,18 @@
 //The main file that runs everything
-let response = await fetch("/private", 
-    {
-        method: "GET",
-        headers: {'Content-Type': 'application/json'} 
-    });
+
+let cartIdCounter = 0;
+let cartItemCounter = 0;
+
+//CRUD API
+
+let response = await fetch("/private", {
+    method: "GET",
+    headers: { 'Content-Type': 'application/json' }
+});
 
 const userCheck = await response.json();
 const username = userCheck["username"];
 const user = await getUser(username);
-
-if(username !== null)
-{
-  logintab.innerHTML = "<a href='login.html'>Logout</a>";
-  logintab.onclick = async function() {
-    await fetch("/logout", 
-    {
-        method: "GET",
-        headers: {'Content-Type': 'application/json'} 
-    });
-  };
-}
-else
-{
-  logintab.innerHTML = "<a href='login.html'>Login</a>";
-  logintab.removeAttribute("onlick");
-}
 
 async function getUser(username) {
     let response = await fetch(`/getUser?username=${username}`, {
@@ -38,52 +26,84 @@ async function getUser(username) {
     return user;
 }
 
-let cartIdCounter = 0;
+if (username !== null) {
+    logintab.innerHTML = "<a href='login.html'>Logout</a>";
+    logintab.onclick = async function () {
+        await fetch("/logout", {
+            method: "GET",
+            headers: { 'Content-Type': 'application/json' }
+        });
+    };
+}
+else {
+    logintab.innerHTML = "<a href='login.html'>Login</a>";
+    logintab.removeAttribute("onlick");
+}
 
 async function getCart(username) {
-    const response = await fetch('/getCart', {
-            method: 'GET',
-            headers: {'Content-Type:': 'application/json'},
-            body: JSON.stringify({name: username})
-        });
+    const response = await fetch(`/getCart?username=${username}`, {
+        method: 'GET',
+        headers: { 'Content-Type:': 'application/json' }
+    });
 
     const cart = await response.json();
     return cart;
 }
 
-function displayCart(cart) {
-    for (let i = 0; i < cart.length; i++) {
-        displayCartItem(cart[i].id);
+async function addToCart(itemID, username) {
+    let response = await fetch(`/addItemCart?itemID=${itemID}&username=${username}`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    const req = await response.json();
+    return req;
+}
+
+async function incrementCartItem(itemID, username) {
+    let response = await fetch(`/incrementCartItem?itemID=${itemID}&username=${username}`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    const req = await response.json();
+    return req;
+}
+
+//Displaying things on the HTML
+
+//Cart
+function displayCart() {
+    const aItem = document.createElement("a");
+    aItem.setAttribute("href", "#");
+    aItem.setAttribute("id", "cart-items-display")
+
+    aItem.classList.add("cartItem");
+    aItem.appendChild(document.createTextNode(`You have ${cartItemCounter} items in your cart`));
+
+    const currentCart = document.getElementById("currentCart");
+    while (currentCart.firstChild) {
+        currentCart.removeChild(currentCart.firstChild);
     }
+
+    currentCart.appendChild(aItem);
 }
 
-function displayCartItem(itemId) {
-    const newItemDiv = document.createElement("div");
-
-    newItemDiv.setAttribute("id", `itemDivId${itemId}`);
-
-    const quantityDefault = document.createElement("span");
-    quantityDefault.appendChild(document.createTextNode(itemId.stock));
-    quantityDefault.setAttribute("id", "number-of-items");
-    
-    const rightDiv = document.createElement("div");
-    rightDiv.appendChild(quantityDefault);
-    rightDiv.classList.add("right-div");
-
-    newItemDiv.classList.add("cartItem");
-    newItemDiv.appendChild(document.createTextNode(itemId.name));
-    newItemDiv.appendChild(rightDiv);
-    newItemDiv.appendChild(quantityDefault);
-
-    document.getElementById("currentCart").appendChild(newItemDiv);
+function cartDisplayHeader() {
+    cartItemCounter += parseInt(quant.value);
+    displayCart();
 }
 
-let offsetLeft = 0
+//Products page
+let offsetLeft = 0;
 let tagText = '';
 
 let storeOffsetLeft = 0;
 let storeOffsetTop = 0;
-
 
 let cursorPastHalfWay = false;
 
@@ -124,25 +144,33 @@ function displayProductGridItem(productName, id) {
     const newItemDiv = document.createElement("div");
     const name = document.createElement("p");
     const quant = document.createElement("input");
-    const addToCart = document.createElement("button")
+    const addToCart = document.createElement("button");
 
-    name.textContent = productName
+    name.textContent = productName;
     quant.setAttribute("type", "number");
     quant.setAttribute("min", "0");
-    addToCart.textContent = "Add to Cart"
+    addToCart.textContent = "Add to Cart";
 
     name.setAttribute("id", `product-listing-name-${id}`);
     quant.setAttribute("id", `product-listing-quant-${id}`);
     newItemDiv.setAttribute("id", `product-listing-div-${id}`);
 
     //changed to display cart item
-    addToCart.addEventListener("click", () => {
-        //let itemID = getAllItems().then(result => result.find(item => item.id === id));
-        //itemID.then(displayCartItem);
-        ///?????????????????????????????????????????????//
-        let cart = await getCart(this.username);
-        displayCart(cart)
-    });
+    addToCart.addEventListener("click", cartDisplayHeader);
+
+    // async function increaseItemCartTab() {
+    //     const data = JSON.stringify({ name, score });
+    //     const response = await fetch('/gameScore', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: data,
+    //     });
+    //     if (!response.ok) {
+    //         console.error(`Unable to save ${data} to server`);
+    //     }
+    // }
 
     name.addEventListener("mouseover", event => {
         mouseOverLink = true;
@@ -175,13 +203,13 @@ function displayProductGridItem(productName, id) {
         setTimeout(() => {
             if (!mouseOverCardContainer && cardContainer !== null) {
                 //play close animation then delete
-                cardContainer.style.animation = "cardContainerOut 0.3s forwards"
+                cardContainer.style.animation = "cardContainerOut 0.3s forwards";
                 setTimeout(() => {
-                    cardContainer.remove()
-                    mouseOverCardContainer = false
-                }, 1000)
+                    cardContainer.remove();
+                    mouseOverCardContainer = false;
+                }, 1000);
             }
-        }, 200)
+        }, 200);
     })
 
     newItemDiv.classList.add("grid-item");
@@ -196,12 +224,12 @@ function mouseOutOfContainer(cardContainer) {
         mouseOverCardContainer = false;
         if (!mouseOverLink) {
             //play close animation then delete
-            cardContainer.style.animation = "cardContainerOut 0.3s forwards"
+            cardContainer.style.animation = "cardContainerOut 0.3s forwards";
             setTimeout(() => {
                 cardContainer.remove()
-            }, 1000)
+            }, 1000);
         }
-    }, 200)
+    }, 200);
 }
 
 function mouseInContainer(cardContainer) {
@@ -210,17 +238,17 @@ function mouseInContainer(cardContainer) {
 
 //get Data for corresponding link being hovered over
 async function getData(tagText) {
-    let allItems = getAllItems()//.then(res => res.json())
+    let allItems = getAllItems();
     let items = allItems;
 
     //tag text should be the name of the product
     let theItem = items.then(a => {
-        renderData(a.filter(item => item.name === tagText)[0])
+        renderData(a.filter(item => item.name === tagText)[0]);
     })
 }
 
 function renderData(item) {
-    let cardContainer = document.createElement("div")
+    let cardContainer = document.createElement("div");
     cardContainer.setAttribute("class", "card-container");
     cardContainer.innerHTML = `
           <div class="card-picture-container">
@@ -241,8 +269,8 @@ function renderData(item) {
     cardContainer.style.left = storeOffsetLeft + "px";
 
     //add event listener (hovering)
-    cardContainer.setAttribute("onmouseleave", "mouseOutOfContainer(this)")
-    cardContainer.setAttribute("onmouseover", "mouseInContainer(this)")
+    cardContainer.setAttribute("onmouseleave", "mouseOutOfContainer(this)");
+    cardContainer.setAttribute("onmouseover", "mouseInContainer(this)");
     document.querySelector("body").prepend(cardContainer);
 }
 
@@ -253,7 +281,6 @@ function buildProductGrid() {
         }
         pd.forEach((p) => displayProductGridItem(p.name, p.id));
     });
-
 }
 
 let categoryFilter = [
@@ -273,7 +300,7 @@ let categoryFilter = [
     { labelName: 'Menstrual Products', checkBoxTag: 'menstrual' },
     { labelName: 'Baby Items', checkBoxTag: 'babyitems' },
     { labelName: 'Paper Products', checkBoxTag: 'paperproducts' }
-]
+];
 
 function displayFilterMenuItem(categoryLabel, categoryTag) {
     const newItemDiv = document.createElement("div");
@@ -281,7 +308,7 @@ function displayFilterMenuItem(categoryLabel, categoryTag) {
     const label = document.createElement("label");
 
     label.textContent = categoryLabel;
-    label.setAttribute("for", categoryTag)
+    label.setAttribute("for", categoryTag);
     check.setAttribute("type", "checkbox");
 
     label.setAttribute("id", `filter-label-name-${categoryLabel}`);
@@ -296,7 +323,7 @@ function displayFilterMenuItem(categoryLabel, categoryTag) {
 }
 
 function buildFilterMenu() {
-    categoryFilter.forEach((item) => displayFilterMenuItem(item.labelName, item.checkBoxTag))
+    categoryFilter.forEach((item) => displayFilterMenuItem(item.labelName, item.checkBoxTag));
 }
 
 let categoryIds = ['filter-check-hygiene',
@@ -310,7 +337,7 @@ let categoryIds = ['filter-check-hygiene',
     'filter-check-babyitems',
     'filter-check-paperproducts'];
 
-let categoryFilteredIds = []
+let categoryFilteredIds = [];
 
 buildProductGrid();
 buildFilterMenu();
@@ -325,4 +352,4 @@ categoryIds.forEach((id) => {
         document.getElementById("grid-container").innerHTML = "";
         buildProductGrid();
     })
-})
+});
