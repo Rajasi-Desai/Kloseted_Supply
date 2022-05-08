@@ -72,6 +72,7 @@ This page links Google Maps and points out to all the locations that provide fre
 
 
 # APIs: 
+> A final up-to-date list/table describing your application’s API
 
 GET /getAllItems - gets all items in the database  
 GET /private -   

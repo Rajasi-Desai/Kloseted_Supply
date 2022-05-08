@@ -56,7 +56,7 @@ export class Database {
         console.log(cart);
         this.items.updateOne({id: itemID}, {$set: {stock: item.stock - 1}});
         item.stock = 1;
-        this.users.updateOne({name: username}, {$set: {cart: cart.concat([item])}});
+        // this.users.updateOne({name: username}, {$set: {cart: cart.concat([item])}});
     }
 
     //Increments stock of item in users cart
