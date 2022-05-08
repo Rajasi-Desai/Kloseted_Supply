@@ -167,7 +167,8 @@ We would have loved to know about authentication and database stuff beforehand b
 https://final-clockwork-326.herokuapp.com/
 
 # Link to the Video:
-upload to youtube
+
+https://youtu.be/SJ8efC9j-Dk
 
 # Group Grading Rubric
 
