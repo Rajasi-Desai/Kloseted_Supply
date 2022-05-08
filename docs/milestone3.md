@@ -48,9 +48,10 @@ Each `Order` document has the following format:
 I worked on the markdown file and connected the database to Heroku by adding the config variables. I also helped rerouting a few routes. 
 
 ### Grace:
-I worked on the Database class and connected some server endpoints. I also worked on changing on how to get the data from a JSON to getting from a database
+I worked on the Database class and connected some server endpoints. I also worked on changing on how to get the data from a JSON to getting from a database.
 
 ### Isi:
 I implemented the `Database` class and its methods, connecting to the server endpoints.
 
 ### Aryan:
+For the third and final milestone, I implemented all of the authorization and connected CRUD operations for users logging in and registering to the database. As part of this, I allowed the user to access their information while logged in from all pages. I also implemented and fixed server endpoints.

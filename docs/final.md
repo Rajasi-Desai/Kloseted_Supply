@@ -63,8 +63,13 @@ This page links Google Maps and points out to all the locations that provide fre
 
 # APIs: 
 > A final up-to-date list/table describing your application’s API
-GET /getAllItems 
-GET 
+GET /getAllItems - gets all items in the database
+GET /private - 
+GET /getUser?username=name - gets the user with the username=name
+GET /logout
+GET /getCart?username=name - gets the cart from the user with username=name
+POST /addItemCart?itemID=itemID&username=name - add item with itemID to the user's cart with username=name
+POST /incrementCartItem?itemID=itemID&username=name - increment the stock value of the item
 
 
 # Database
@@ -134,16 +139,16 @@ For all cart endpoints, authentication of the user is required
 # Division of Labor
 
 ### Rajasi: 
-For the first milestone, I made the Map page and the Header/Navigation bar for the website. I also added the Cart funtionality with the dropdown and worked on the markdown file. For the second milestone, I worked on the cart implementation and worked on mostly the server side setting up the endpoints. I also worked on deploying the site on Heroku and creating the markdown templates.
+For the first milestone, I made the Map page and the Header/Navigation bar for the website. I also added the Cart funtionality with the dropdown and worked on the markdown file. For the second milestone, I worked on the cart implementation and worked on mostly the server side setting up the endpoints. I also worked on deploying the site on Heroku and creating the markdown templates. For the third milestone, I worked on the markdown file and connected the database to Heroku by adding the config variables. I also helped rerouting a few routes and setting up the server. I also did the overall cleaning of the code.
 
 ### Grace: 
-For the first milestone, I made the product page (called 'form' on the site) which included the grid of products and a prototype of an image that will appear when hovering over a product word. Also made filter/search area to filter through the grid of items. For the second milestone, I worked on changing the product/form page into JS and mainly worked on additional features such as filtering the products and creating a pop out image for each product.
+For the first milestone, I made the product page (called 'form' on the site) which included the grid of products and a prototype of an image that will appear when hovering over a product word. Also made filter/search area to filter through the grid of items. For the second milestone, I worked on changing the product/form page into JS and mainly worked on additional features such as filtering the products and creating a pop out image for each product. For the third milestone, I helped make the database and server. I also worked on changing on how to get the data from a JSON to getting from a database. I made data and put it in the database and connected to MongoDB
 
 ### Isi: 
 For the first milestone, I made the checkout page and helped with the general layout and CSS and of the website. For the second milestone, I standardized the custom datatypes for `User`s, `Cart`s, and `Item`s and implemented checkout functionality.
 
 ### Aryan: 
-For the first milestone, I made the login page as well as the sign up page. For the second milestone, I implemented the login and signup pages using JS, allowing the user to both register a new account and log in to access their cart and make orders. I also edited each page to allow the user to log out from any page.
+For the first milestone, I made the login page as well as the sign up page. For the second milestone, I implemented the login and signup pages using JS, allowing the user to both register a new account and log in to access their cart and make orders. I also edited each page to allow the user to log out from any page. For the third and final milestone, I implemented all of the authorization and CRUD operations for users logging in and registering. I also implemented and fixed server endpoints.
 
 
 # Conclusion

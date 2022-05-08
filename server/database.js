@@ -53,6 +53,7 @@ export class Database {
     async addItemCart(itemID, username) {
         const item = this.items.findOne({id: itemID});
         const cart = this.users.findOne({name: username}).cart;
+        console.log(cart);
         this.items.updateOne({id: itemID}, {$set: {stock: item.stock - 1}});
         item.stock = 1;
         this.users.updateOne({name: username}, {$set: {cart: cart.concat([item])}});

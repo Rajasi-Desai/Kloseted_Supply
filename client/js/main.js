@@ -93,7 +93,11 @@ function displayCart() {
     currentCart.appendChild(aItem);
 }
 
-function cartDisplayHeader() {
+async function addToCartButton(id) {
+    await addToCart(id, username);
+    for (let i = 0; i < cartItemCounter; ++i) {
+        incrementCartItem(id, username);
+    }
     cartItemCounter += parseInt(quant.value);
     displayCart();
 }
@@ -156,21 +160,9 @@ function displayProductGridItem(productName, id) {
     newItemDiv.setAttribute("id", `product-listing-div-${id}`);
 
     //changed to display cart item
-    addToCart.addEventListener("click", cartDisplayHeader);
-
-    // async function increaseItemCartTab() {
-    //     const data = JSON.stringify({ name, score });
-    //     const response = await fetch('/gameScore', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: data,
-    //     });
-    //     if (!response.ok) {
-    //         console.error(`Unable to save ${data} to server`);
-    //     }
-    // }
+    addToCart.addEventListener("click", async () => {
+        addToCartButton(id);
+    });
 
     name.addEventListener("mouseover", event => {
         mouseOverLink = true;
