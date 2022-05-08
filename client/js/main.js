@@ -230,7 +230,7 @@ function mouseInContainer(cardContainer) {
 
 //get Data for corresponding link being hovered over
 async function getData(tagText) {
-    let allItems = getAllItems();
+    let allItems = await getAllItems();
     let items = allItems;
 
     //tag text should be the name of the product
@@ -267,7 +267,8 @@ function renderData(item) {
 }
 
 function buildProductGrid() {
-    let products = getAllItems().then(pd => {
+    let products = await getAllItems()//
+    products.forEach(pd => {
         if (categoryFilteredIds.length > 0) {
             pd = pd.filter((p) => p.tags.some((tag) => categoryFilteredIds.some((id) => id === tag)))
         }
