@@ -1,21 +1,16 @@
-// Event listeners to increment and decrement from the cart
-// Event listener on checkout button to decrement the stock of items. Should also alert uesr if there isn't enough stock
-
 const logintab = document.getElementById("logintab");
 const table = document.querySelector('table');
 const checkout = document.getElementById('checkout');
 const empty = document.getElementById('empty');
-let response = await fetch("/private", 
+let response = await fetch("/private",
     {
         method: "GET",
-        headers: {'Content-Type': 'application/json'} 
+        headers: { 'Content-Type': 'application/json' }
     });
 
 const userCheck = await response.json();
 const username = userCheck["username"];
-console.log(username);
 const user = await getUser(username);
-console.log(user);
 
 function renderCart() {
     table.innerHTML = '';
@@ -25,6 +20,7 @@ function renderCart() {
         p.textContent = 'No items';
         table.appendChild(p);
     } else {
+        console.log(user);
         for (const item of user.cart) {
             const tr = document.createElement('tr');
             table.appendChild(tr);
@@ -32,28 +28,28 @@ function renderCart() {
             const quantity = document.createElement('td');
             quantity.className = 'quantity';
             tr.appendChild(quantity);
-    
+
             const increment = document.createElement('input');
             increment.type = 'button';
             increment.className = 'increment';
             increment.value = '+';
-            increment.addEventListener('click', e => {
+            increment.addEventListener('click', async () => {
                 ++item.stock;
                 renderCart();
             });
             quantity.appendChild(increment);
-            
-    
+
+
             const span = document.createElement('span');
             span.className = 'ammount';
             span.textContent = item.stock;
             quantity.appendChild(span);
-    
+
             const decrement = document.createElement('input');
             decrement.type = 'button';
             decrement.className = 'decrement';
             decrement.value = '\u2212';
-            decrement.addEventListener('click', e => {
+            decrement.addEventListener('click', async () => {
                 if (item.stock === 1) {
                     tr.innerHTML = '';
                     user.cart.splice(user.cart.findIndex(i => i.id === item.id), 1);
@@ -72,7 +68,7 @@ function renderCart() {
     }
 }
 
-checkout.addEventListener('click', e => {
+checkout.addEventListener('click', async () => {
     user.cart = [];
     table.innerHTML = '';
     const p = document.createElement('p');
@@ -80,39 +76,73 @@ checkout.addEventListener('click', e => {
     table.appendChild(p);
 });
 
-empty.addEventListener('click', e =>  {
+empty.addEventListener('click', async () => {
     user.cart = [];
+    emptyCart();
     renderCart();
 });
 
-if(username !== null)
-{
-  logintab.innerHTML = "<a href='login.html'>Logout</a>";
-  logintab.onclick = async function() {
-    await fetch("/logout", 
-    {
-        method: "GET",
-        headers: {'Content-Type': 'application/json'} 
-    });
-  };
+if (username !== null) {
+    logintab.innerHTML = "<a href='login.html'>Logout</a>";
+    logintab.onclick = async function () {
+        await fetch("/logout",
+            {
+                method: "GET",
+                headers: { 'Content-Type': 'application/json' }
+            });
+    };
 }
-else
-{
-  logintab.innerHTML = "<a href='login.html'>Login</a>";
-  logintab.removeAttribute("onlick");
+else {
+    logintab.innerHTML = "<a href='login.html'>Login</a>";
+    logintab.removeAttribute("onlick");
 }
 
 async function getUser(username) {
-    let response = await fetch(`/getUser`, {
-        method: "POST",
+    let response = await fetch(`/getUser?username=${username}`, {
+        method: "GET",
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({"username": username})
     });
 
     const user = await response.json();
     return user;
+}
+
+async function incrementCartItem(itemID, username) {
+    let response = await fetch(`/incrementCartItem?itemID=${itemID}&username=${username}`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    const req = await response.json();
+    return req;
+}
+
+async function decrementCartItem(itemID, username) {
+    let response = await fetch(`/decrementCartItem?itemID=${itemID}&username=${username}`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    const req = await response.json();
+    return req;
+}
+
+async function deleteCartItem(itemID, username) {
+    let response = await fetch(`/deleteCartItem?itemID=${itemID}&username=${username}`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    const req = await response.json();
+    return req;
 }
 
 renderCart();

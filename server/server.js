@@ -18,122 +18,100 @@ class Server {
       secret: process.env.SECRET || 'SECRET',
       resave: false,
       saveUninitialized: false,
-    }
+    };
     this.app.use(expressSession(sessionConfig));
     auth.configure(this.app);
   }
-  
+
   async initRoutes() {
     const self = this;
-/*
-    // Our own middleware to check if the user is authenticated
-    function checkLoggedIn(req, res, next) {
-      if (req.isAuthenticated()) {
-        console.log("yo")
-        // If we are authenticated, run the next route.
-        next();
-      } else {
-        console.log("go")
-        // Otherwise, redirect to the login page.
-        res.redirect('/html/login.html');
-      }
-      }
-    */
-
+   
     //USER ENDPOINTS
 
     // Handle post data from the login.html form.
     this.app.post('/login',
       auth.authenticate('local', {
         // use username/password authentication
-        successRedirect: '/html/checkout.html', // when we login, go to /private
+        successRedirect: '/html/checkout.html', // when we login, go to /checkout
         failureRedirect: '/html/login.html', // otherwise, back to login
       })
     );
 
-      // Handle logging out (takes us back to the login page).
+    // Handle logging out (takes us back to the login page).
     this.app.get('/logout', (req, res) => {
       req.logout(); // Logs us out!
       res.redirect('/html/login.html'); // back to login
     });
 
-    this.app.post("/register", async (req, res) =>
-    {
-      await self.db.registerUser(req.body.username, req.body.password);
+    this.app.post("/register", async (req, res) => {
+      const { username, password } = req.body;
+      await self.db.registerUser(username, password);
       res.status(200).redirect("/html/checkout.html");
-    })
+    });
 
-    this.app.get('/private', (req, res) => {
-        if(req.isAuthenticated())
-        {
-          res.status(200).json({username: req.user.username});
-        }
-        else
-        {
-          res.status(200).json({username: null});
-        }
+    this.app.get('/private', async (req, res) => {
+      if (req.isAuthenticated()) {
+        res.status(200).json({ username: req.user });
       }
-    );
+      else {
+        res.status(200).json({ username: null });
+      }
+    });
 
-    this.app.post('/getUser', (req, res) => {
-      if(req.isAuthenticated())
-      {
-        res.status(200).json(self.db.getUser(req.body.username));
+    this.app.get('/getUser', async (req, res) => {
+      if (req.isAuthenticated()) {
+        res.status(200).json(await self.db.getUser(req.query.username));
       }
-      else
-      {
+      else {
         res.status(200).json(null);
       }
     });
 
     //CART ENDPOINTS
-    
-    this.app.get('/', function(req, res){
+
+    this.app.get('/', function (req, res) {
       res.redirect('/html/');
     });
-    
+
     //Add item to the user's cart
     this.app.post('/addItemCart', async (request, response) => {
-      const options = request.body;
-      await self.db.addItemCart(options.item, options.user);
+      await self.db.addItemCart(request.query.itemID, request.query.username);
       response.status(200).json({ status: 'success' });
     });
 
     //Increments stock of item in user's cart
     this.app.put('/incrementItemCart', async (request, response) => {
-      const options = request.body;
-      await self.db.incrementItemCart(options.item, options.user);
+      await self.db.incrementItemCart(request.query.itemID, request.query.username);
       response.status(200).json({ status: 'success' });
     });
 
     //Decrements stock of item in user's cart
     this.app.put('/decrementItemCart', async (request, response) => {
-      const options = request.body;
-      await self.db.decrementItemCart(options.item, options.user);
+      await self.db.decrementItemCart(request.query.itemID, request.query.username);
       response.status(200).json({ status: 'success' });
     });
 
     //Deletes item in user's cart
     this.app.delete('/deleteItemCart', async (request, response) => {
-      const options = request.body;
-      await self.db.deleteItemCart(options.item, options.user);
+      await self.db.deleteItemCart(request.query.itemID, request.query.username);
       response.status(200).json({ status: 'success' });
     });
 
     //Empties all items from user's cart
     this.app.get('/emptyCart', async (request, response) => {
-      const options = request.body;
-      await self.db.emptyCart(options.user);
+      await self.db.emptyCart(request.query.username);
       response.status(200).json({ status: 'success' });
     });
 
 
     //Gets user's cart
     this.app.get('/getCart', async (request, response) => {
-      const options = request.body;
-      const cart = await self.db.getCart(options.name);
-      response.status(200).json({ status: 'success' });
-      return cart;
+      if (req.isAuthenticated()) {
+        res.status(200).json({ cart: await self.db.getCart(req.query.username) });
+      }
+      else {
+        res.status(200).json({ cart: [] });
+      }
     });
 
     //Gets all items from database
