@@ -180,8 +180,8 @@ upload to youtube
    * 30 points - Users are able to view data
    * 5: Hover to see images and description of items
    * 5: Can filter the 'Form' page based off the tag
-     * 10: Map is viewable and interactive
-     * 10: Can sign up a user and login
+   * 10: Map is viewable and interactive
+   * 10: Can sign up a user and login
 ## Database and Server: 25 points
    * 15: Data is fetched and displays products 
    * 10: Sends back data to the cart, keeps count and displays the count

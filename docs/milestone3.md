@@ -2,7 +2,7 @@
 
 We implemented our database `supply` with MongoDB. It has two collections: `items` and `users`.
 
-## `items`
+![](img%5Cfinal%5CLogin-page.png)## `items`
 
 The `items` collection is used store the current inventory of Kloseted Supply.
 
