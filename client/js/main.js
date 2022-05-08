@@ -267,8 +267,7 @@ function renderData(item) {
 }
 
 function buildProductGrid() {
-    let products = await getAllItems()//
-    products.forEach(pd => {
+    let products = await getAllItems().then(pd => {
         if (categoryFilteredIds.length > 0) {
             pd = pd.filter((p) => p.tags.some((tag) => categoryFilteredIds.some((id) => id === tag)))
         }
