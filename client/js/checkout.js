@@ -34,7 +34,6 @@ function renderCart() {
             increment.className = 'increment';
             increment.value = '+';
             increment.addEventListener('click', async () => {
-                await incrementCartItem(item.id, user.name);
                 ++item.stock;
                 renderCart();
             });
@@ -53,11 +52,9 @@ function renderCart() {
             decrement.addEventListener('click', async () => {
                 if (item.stock === 1) {
                     tr.innerHTML = '';
-                    await deleteCartItem(item.id, user.name);
                     user.cart.splice(user.cart.findIndex(i => i.id === item.id), 1);
                 } else {
                     --item.stock;
-                    await decrementCartItem(item.id, user.name);
                 }
                 renderCart();
             });

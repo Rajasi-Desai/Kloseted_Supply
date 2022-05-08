@@ -25,21 +25,7 @@ class Server {
 
   async initRoutes() {
     const self = this;
-    /*
-        // Our own middleware to check if the user is authenticated
-        function checkLoggedIn(req, res, next) {
-          if (req.isAuthenticated()) {
-            console.log("yo")
-            // If we are authenticated, run the next route.
-            next();
-          } else {
-            console.log("go")
-            // Otherwise, redirect to the login page.
-            res.redirect('/html/login.html');
-          }
-          }
-        */
-
+   
     //USER ENDPOINTS
 
     // Handle post data from the login.html form.
